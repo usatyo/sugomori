@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/components/bottom_menu.dart';
+import 'package:frontend/components/goban.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({super.key});
@@ -11,8 +12,9 @@ class SearchPage extends StatelessWidget {
         children: [
           Expanded(
             child: Container(
+              padding: EdgeInsets.all(10),
               alignment: Alignment.center,
-              child: FilledButton(onPressed: () {}, child: Text("ボタン")),
+              child: Goban(),
             ),
           ),
           BottomMenu(),
