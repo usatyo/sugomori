@@ -15,7 +15,7 @@ class Video {
     return Video(
       id: data['id'],
       title: data['snippet']['title'],
-      thumbnailUrl: data['snippet']['thumbnails']['high']['url'],
+      thumbnailUrl: data['snippet']['thumbnails']['medium']['url'],
       channelTitle: data['snippet']['channelTitle'],
     );
   }

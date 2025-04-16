@@ -24,7 +24,6 @@ class APIService {
     };
 
     var response = await http.get(uri, headers: headers);
-    print(response.body);
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
 

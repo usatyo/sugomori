@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 import 'package:frontend/components/bottom_menu.dart';
 import 'package:frontend/components/goban.dart';
 import 'package:frontend/components/video_card.dart';
@@ -18,17 +19,27 @@ class _SearchPageState extends State<SearchPage> {
   int counter = 0;
   void increment() {
     setState(() {
-      apiService.fetchVideos(videoIds: ["-H4BlqZzAX8"]).then((value) {
-        setState(() {
-          videos = value;
-        });
-      });
+      apiService
+          .fetchVideos(
+            videoIds: [
+              "PTdC1aVH-LQ",
+              "I_z2VROyDoU",
+              "qwF1fXorI-M",
+              "DzNzqRhtnAw",
+            ],
+          )
+          .then((value) {
+            setState(() {
+              videos = value;
+            });
+          });
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Column(
         children: [
           Container(
@@ -38,9 +49,20 @@ class _SearchPageState extends State<SearchPage> {
           ),
           FilledButton(onPressed: increment, child: Text("fetch")),
           Expanded(
-            child: Column(
-              children:
-                  videos.map((video) => VideoCard(videoInfo: video)).toList(),
+            child: Container(
+              padding: EdgeInsets.all(10),
+              child: ScrollShadow(
+                color: Theme.of(context).cardColor,
+                size: 20,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children:
+                        videos
+                            .map((video) => VideoCard(videoInfo: video))
+                            .toList(),
+                  ),
+                ),
+              ),
             ),
           ),
           BottomMenu(),
