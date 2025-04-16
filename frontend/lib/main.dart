@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/page/detail_page.dart';
 import 'package:frontend/page/register_page.dart';
+import 'package:frontend/page/search_page.dart';
 import 'package:frontend/page/setting_page.dart';
 
-import 'page/search_page.dart';
 import 'theme.dart';
 import 'util.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -16,7 +15,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final brightness = View.of(context).platformDispatcher.platformBrightness;
     TextTheme textTheme = createTextTheme(
       context,
       "Noto Sans JP",
@@ -26,11 +24,10 @@ class MyApp extends StatelessWidget {
     MaterialTheme theme = MaterialTheme(textTheme);
     return MaterialApp(
       title: 'sugomori',
-      theme: brightness == Brightness.light ? theme.light() : theme.dark(),
+      theme: theme.light(),
       initialRoute: "/search",
       routes: {
         '/search': (context) => const SearchPage(),
-        '/detail' : (context) => const DetailPage(),
         '/register': (context) => const RegisterPage(),
         '/setting': (context) => const SettingPage(),
       },

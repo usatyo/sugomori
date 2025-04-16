@@ -25,7 +25,9 @@ class MenuBarState extends State<BottomMenu> {
             label: "定石検索",
             icon: Icons.find_in_page,
             route: "/search",
-            selected: ModalRoute.of(context)!.settings.name == "/search",
+            selected:
+                ModalRoute.of(context)!.settings.name == "/search" ||
+                ModalRoute.of(context)!.settings.name == "/detail",
           ),
           BottomMenuItem(
             label: "定石登録",

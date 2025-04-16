@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/model/joseki.dart';
+import 'package:frontend/models/joseki.dart';
 
 class SingleStone extends StatefulWidget {
   const SingleStone({super.key, this.num, this.color});

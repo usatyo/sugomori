@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/components/goban_painter.dart';
 import 'package:frontend/components/single_stone.dart';
-import 'package:frontend/model/joseki.dart';
+import 'package:frontend/models/joseki.dart';
 
 class Goban extends StatefulWidget {
   const Goban({super.key});

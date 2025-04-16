@@ -27,15 +27,38 @@ class BottomMenuItem extends StatelessWidget {
             opacity: selected! ? 1 : 0.5,
             child: Icon(icon, size: 40, color: Theme.of(context).primaryColor),
           ),
-          Text(
-            label!,
-            style: TextStyle(
-              fontSize: 12,
-              color: Theme.of(context).primaryColor,
-            ),
+          Row(
+            spacing: 6,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              selected! ? TextDecoration() : Container(),
+              Text(
+                label!,
+                style: TextStyle(
+                  fontSize: 12,
+                  height: 1,
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              selected! ? TextDecoration() : Container(),
+            ],
           ),
         ],
       ),
+    );
+  }
+}
+
+class TextDecoration extends StatelessWidget {
+  const TextDecoration({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 0.5,
+      width: 6,
+      color: Theme.of(context).primaryColor,
     );
   }
 }
