@@ -11,19 +11,11 @@ class Goban extends StatefulWidget {
 }
 
 class _GobanState extends State<Goban> {
+  Joseki joseki = Joseki([]);
+  StoneColor nextColor = StoneColor.black;
+
   @override
   Widget build(BuildContext context) {
-    Joseki joseki = Joseki([
-      Stone(color: StoneColor.black, x: 3, y: 2),
-      Stone(color: StoneColor.white, x: 3, y: 4),
-      Stone(color: StoneColor.black, x: 2, y: 4),
-      Stone(color: StoneColor.white, x: 2, y: 5),
-      Stone(color: StoneColor.black, x: 2, y: 3),
-      Stone(color: StoneColor.white, x: 3, y: 5),
-      Stone(color: StoneColor.black, x: 5, y: 2),
-      Stone(color: StoneColor.white, x: 3, y: 9),
-    ]);
-
     return SizedBox(
       height: 300,
       width: 300,
@@ -42,9 +34,29 @@ class _GobanState extends State<Goban> {
                   return SingleStone(
                     num: joseki.stoneList.indexOf(stone) + 1,
                     color: stone.color,
+                    onPressed: () {},
                   );
                 }
-                return SingleStone(num: null, color: StoneColor.empty);
+                return SingleStone(
+                  num: null,
+                  color: StoneColor.empty,
+                  onPressed:
+                      () => {
+                        setState(() {
+                          joseki.pushStone(
+                            Stone(
+                              color: nextColor,
+                              x: index ~/ 13,
+                              y: index % 13,
+                            ),
+                          );
+                          nextColor =
+                              (nextColor == StoneColor.black)
+                                  ? StoneColor.white
+                                  : StoneColor.black;
+                        }),
+                      },
+                );
               },
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 13,

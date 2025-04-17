@@ -13,9 +13,32 @@ class Joseki {
 
   Joseki(List<Stone> stones) {
     for (var stone in stones) {
+      pushStone(stone);
+    }
+  }
+
+  void pushStone(Stone stone) {
+    int index = stone.x * 13 + stone.y;
+    stoneList.add(stone);
+    stoneMap[index] = stone;
+  }
+
+  void clear() {
+    stoneList.clear();
+    stoneMap.clear();
+  }
+
+  void popStone() {
+    if (stoneList.isNotEmpty) {
+      Stone stone = stoneList.removeLast();
       int index = stone.x * 13 + stone.y;
-      stoneList.add(stone);
-      stoneMap[index] = stone;
+      stoneMap.remove(index);
+    }
+  }
+
+  void popStones(int count) {
+    for (int i = 0; i < count; i++) {
+      popStone();
     }
   }
 }

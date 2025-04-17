@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:frontend/models/joseki.dart';
 
 class SingleStone extends StatefulWidget {
-  const SingleStone({super.key, this.num, this.color});
+  const SingleStone({super.key, this.num, required this.color, required this.onPressed});
   final int? num;
-  final StoneColor? color;
+  final StoneColor color;
+  final void Function() onPressed;
 
   @override
   State<SingleStone> createState() => _SingleStoneState();
@@ -27,7 +28,7 @@ class _SingleStoneState extends State<SingleStone> {
                       ? Colors.black
                       : Colors.white,
             ),
-            onPressed: () {},
+            onPressed: () => widget.onPressed(),
             child: null,
           ),
           IgnorePointer(
