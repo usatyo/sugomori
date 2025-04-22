@@ -3,6 +3,7 @@ import 'package:frontend/components/goban_painter.dart';
 import 'package:frontend/components/icon_text.dart';
 import 'package:frontend/components/single_stone.dart';
 import 'package:frontend/models/joseki.dart';
+import 'package:frontend/util/go_rule.dart';
 
 class Goban extends StatefulWidget {
   const Goban({super.key});
@@ -13,11 +14,12 @@ class Goban extends StatefulWidget {
 
 class _GobanState extends State<Goban> {
   Joseki joseki = Joseki([]);
+  StoneMatrix stoneMatrix = getProcessedBoard([]);
   StoneColor nextColor = StoneColor.black;
-  void reverseColor() {
+
+  void refreshStoneMatrix() {
     setState(() {
-      nextColor =
-          (nextColor == StoneColor.black) ? StoneColor.white : StoneColor.black;
+      stoneMatrix = getProcessedBoard(joseki.stoneList);
     });
   }
 
@@ -41,28 +43,25 @@ class _GobanState extends State<Goban> {
                       itemCount: 13 * 13,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
-                        if (joseki.stoneMap.containsKey(index)) {
-                          final stone = joseki.stoneMap[index]!;
-                          return SingleStone(
-                            num: joseki.stoneList.indexOf(stone) + 1,
-                            color: stone.color,
-                            onPressed: () {},
-                          );
-                        }
+                        int x = index ~/ 13;
+                        int y = index % 13;
+                        Stone stone = stoneMatrix[x][y];
                         return SingleStone(
-                          num: null,
-                          color: StoneColor.empty,
+                          index: stone.index,
+                          color: stone.color,
                           onPressed:
                               () => {
                                 setState(() {
-                                  joseki.pushStone(
-                                    Stone(
-                                      color: nextColor,
-                                      x: index ~/ 13,
-                                      y: index % 13,
-                                    ),
-                                  );
-                                  reverseColor();
+                                  if (!joseki.pushStone(
+                                    color: nextColor,
+                                    x: x,
+                                    y: y,
+                                    isPassed: false,
+                                  )) {
+                                    return;
+                                  }
+                                  nextColor = reversedColor(nextColor);
+                                  refreshStoneMatrix();
                                 }),
                               },
                         );
@@ -90,7 +89,8 @@ class _GobanState extends State<Goban> {
                   onPressed: () {
                     setState(() {
                       joseki.popStone();
-                      reverseColor();
+                      nextColor = reversedColor(nextColor);
+                      refreshStoneMatrix();
                     });
                   },
                 ),
@@ -100,7 +100,8 @@ class _GobanState extends State<Goban> {
                   onPressed: () {
                     setState(() {
                       joseki.popStones(5);
-                      reverseColor();
+                      nextColor = reversedColor(nextColor);
+                      refreshStoneMatrix();
                     });
                   },
                 ),
@@ -109,7 +110,16 @@ class _GobanState extends State<Goban> {
                   icon: Icons.repeat,
                   onPressed: () {
                     setState(() {
-                      reverseColor();
+                      if (!joseki.pushStone(
+                        color: nextColor,
+                        x: -1,
+                        y: -1,
+                        isPassed: true,
+                      )) {
+                        return;
+                      }
+                      nextColor = reversedColor(nextColor);
+                      refreshStoneMatrix();
                     });
                   },
                 ),
@@ -120,6 +130,7 @@ class _GobanState extends State<Goban> {
                     setState(() {
                       joseki.clear();
                       nextColor = StoneColor.black;
+                      refreshStoneMatrix();
                     });
                   },
                 ),

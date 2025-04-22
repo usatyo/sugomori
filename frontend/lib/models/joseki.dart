@@ -1,38 +1,61 @@
+import 'package:frontend/util/go_rule.dart';
+
+const int boardSize = 19;
 enum StoneColor { black, white, empty }
 
+StoneColor reversedColor(StoneColor color) {
+  if (color == StoneColor.black) {
+    return StoneColor.white;
+  } else if (color == StoneColor.white) {
+    return StoneColor.black;
+  } else {
+    return StoneColor.empty;
+  }
+}
+
+// pass:
 class Stone {
-  Stone({required this.color, required this.x, required this.y});
+  Stone(this.color, this.x, this.y, this.index, this.isPassed) {
+    assert(-1 <= x && x < boardSize);
+    assert(-1 <= y && y < boardSize);
+  }
   final StoneColor color;
   final int x;
   final int y;
+  final int index;
+  final bool isPassed;
 }
 
+typedef StoneList = List<Stone>;
+typedef StoneMatrix = List<StoneList>;
+
 class Joseki {
-  List<Stone> stoneList = [];
-  Map<int, Stone> stoneMap = {};
+  StoneList stoneList = [];
 
-  Joseki(List<Stone> stones) {
-    for (var stone in stones) {
-      pushStone(stone);
+  Joseki(StoneList stones);
+
+  bool pushStone({
+    required StoneColor color,
+    required int x,
+    required int y,
+    required bool isPassed,
+  }) {
+    stoneList.add(Stone(color, x, y, stoneList.length, isPassed));
+    if (getProcessedBoard(stoneList).isNotEmpty) {
+      return true;
+    } else {
+      stoneList.removeLast();
+      return false;
     }
-  }
-
-  void pushStone(Stone stone) {
-    int index = stone.x * 13 + stone.y;
-    stoneList.add(stone);
-    stoneMap[index] = stone;
   }
 
   void clear() {
     stoneList.clear();
-    stoneMap.clear();
   }
 
   void popStone() {
     if (stoneList.isNotEmpty) {
-      Stone stone = stoneList.removeLast();
-      int index = stone.x * 13 + stone.y;
-      stoneMap.remove(index);
+      stoneList.removeLast();
     }
   }
 
@@ -40,5 +63,9 @@ class Joseki {
     for (int i = 0; i < count; i++) {
       popStone();
     }
+  }
+
+  List<Stone> getPassedStones() {
+    return stoneList.where((stone) => stone.isPassed).toList();
   }
 }

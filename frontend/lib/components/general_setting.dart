@@ -27,7 +27,11 @@ class _GeneralSettingState extends State<GeneralSetting> {
               children: [
                 Text("ダークモード"),
                 Expanded(child: SizedBox.shrink()),
-                Switch(value: isDarkMode, onChanged: onDarkModeChanged),
+                Switch(
+                  value: isDarkMode,
+                  onChanged: onDarkModeChanged,
+                  trackOutlineWidth: WidgetStatePropertyAll(0),
+                ),
               ],
             ),
           ),

@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:frontend/models/joseki.dart';
 
 class SingleStone extends StatefulWidget {
-  const SingleStone({super.key, this.num, required this.color, required this.onPressed});
-  final int? num;
+  const SingleStone({
+    super.key,
+    required this.index,
+    required this.color,
+    required this.onPressed,
+  });
+  final int index;
   final StoneColor color;
   final void Function() onPressed;
 
@@ -35,7 +40,7 @@ class _SingleStoneState extends State<SingleStone> {
             ignoring: true,
             child: Center(
               child: Text(
-                "${widget.num ?? ""}",
+                "${widget.index == -1 ? "" : widget.index + 1}",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color:
