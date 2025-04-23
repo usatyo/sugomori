@@ -41,7 +41,6 @@ void main() {
     expect(selfCapturedStones.length, equals(0));
     expect(otherCapturedStones.length, equals(1));
   });
-
   test("other captured (edge)", () {
     stoneMatrix[2][0] = Stone(StoneColor.white, 2, 0, -1, false);
     stoneMatrix[3][0] = Stone(StoneColor.black, 3, 0, -1, false);

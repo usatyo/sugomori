@@ -15,11 +15,8 @@ class IconText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        IconButton.filled(
-          onPressed: onPressed,
-          icon: Icon(icon, size: 20),
-          tooltip: hintText,
-        ),
+        IconButton.filled(onPressed: onPressed, icon: Icon(icon, size: 20)),
+        Text(hintText, style: TextStyle(fontSize: 10)),
       ],
     );
   }

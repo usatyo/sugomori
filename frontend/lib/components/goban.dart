@@ -110,14 +110,12 @@ class _GobanState extends State<Goban> {
                   icon: Icons.repeat,
                   onPressed: () {
                     setState(() {
-                      if (!joseki.pushStone(
+                      joseki.pushStone(
                         color: nextColor,
                         x: -1,
                         y: -1,
                         isPassed: true,
-                      )) {
-                        return;
-                      }
+                      );
                       nextColor = reversedColor(nextColor);
                       refreshStoneMatrix();
                     });
