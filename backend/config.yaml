@@ -1,0 +1,7 @@
+package: api
+output: ./generated/sample.gen.go
+generate:
+    echo-server: true
+    models: true
+output-options:
+    skip-prune: true
