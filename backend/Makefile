@@ -10,10 +10,6 @@ start: ## コンテナを構築 & コンテナに入る
 	@docker compose up -d
 	@docker compose exec usatyo-env /bin/bash -login
 
-.PHONY: generate
-generate: ## scheme.yaml からコード生成
-	@oapi-codegen -config config.yaml scheme.yaml
-
 .PHONY: down
 down: ## コンテナ停止
 	@docker compose down
