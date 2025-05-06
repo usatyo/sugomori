@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/services/joseki_api_service.dart';
 
 class GeneralSetting extends StatefulWidget {
   const GeneralSetting({super.key});
@@ -9,9 +10,17 @@ class GeneralSetting extends StatefulWidget {
 
 class _GeneralSettingState extends State<GeneralSetting> {
   bool isDarkMode = false;
+  JosekiApiService josekiApiService = JosekiApiService.instance;
+  String message = "";
+
   void onDarkModeChanged(bool value) {
     setState(() {
       isDarkMode = value;
+      josekiApiService.fetchPong().then((value) {
+        setState(() {
+          message = value;
+        });
+      });
     });
   }
 
@@ -35,20 +44,17 @@ class _GeneralSettingState extends State<GeneralSetting> {
               ],
             ),
           ),
-          // Divider(
-          //   height: 1,
-          //   color: Colors.black12,
-          // ),
-          // Padding(
-          //   padding: EdgeInsets.only(left: 15, right: 10),
-          //   child: Row(
-          //     children: [
-          //       Text("使用言語"),
-          //       Expanded(child: SizedBox.shrink()),
-          //       Switch(value: true, onChanged: null),
-          //     ],
-          //   ),
-          // ),
+          Divider(height: 1, color: Colors.black12),
+          Padding(
+            padding: EdgeInsets.only(left: 15, right: 10),
+            child: Row(
+              children: [
+                Text(message),
+                Expanded(child: SizedBox.shrink()),
+                Switch(value: true, onChanged: null),
+              ],
+            ),
+          ),
         ],
       ),
     );
