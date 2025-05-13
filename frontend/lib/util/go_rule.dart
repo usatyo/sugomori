@@ -10,6 +10,7 @@ StoneMatrix getProcessedBoard(StoneList stoneList) {
       (j) => Stone(StoneColor.empty, i, j, -1, false),
     ),
   );
+  int hash = 0;
   Set<int> visited = {};
   StoneList selfCapturedStones, otherCapturedStones;
 
@@ -25,13 +26,9 @@ StoneMatrix getProcessedBoard(StoneList stoneList) {
       stone,
       stoneMatrix,
     );
-    StoneMatrix newStoneMatrix = generateStoneMatrix(
-      stone,
-      stoneMatrix,
-      otherCapturedStones,
-    );
+    hash = gobanHash(otherCapturedStones, stone, hash);
     if (otherCapturedStones.isNotEmpty) {
-      if (isSameWithPast(newStoneMatrix, visited)) {
+      if (visited.contains(hash)) {
         return [];
       }
     } else {
@@ -39,8 +36,13 @@ StoneMatrix getProcessedBoard(StoneList stoneList) {
         return [];
       }
     }
+    StoneMatrix newStoneMatrix = generateStoneMatrix(
+      stone,
+      stoneMatrix,
+      otherCapturedStones,
+    );
     stoneMatrix = newStoneMatrix;
-    visited.add(gobanHash(stoneMatrix));
+    visited.add(hash);
   }
 
   return stoneMatrix;
@@ -141,8 +143,4 @@ StoneMatrix generateStoneMatrix(
   );
 
   return newStoneMatrix;
-}
-
-bool isSameWithPast(StoneMatrix stoneMatrix, Set<int> visited) {
-  return visited.contains(gobanHash(stoneMatrix));
 }

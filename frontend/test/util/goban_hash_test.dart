@@ -34,10 +34,18 @@ void main() {
   });
 
   test("same joseki", () {
-    expect(gobanHash(hoshi1) == gobanHash(hoshi2), equals(true));
+    expect(
+      gobanHash([], Stone(StoneColor.black, 3, 3, 0, false), 0) ==
+          gobanHash([], Stone(StoneColor.black, 3, 3, 0, false), 0),
+      equals(true),
+    );
   });
 
   test("different joseki", () {
-    expect(gobanHash(hoshi1) != gobanHash(komoku), equals(true));
+    expect(
+      gobanHash([], Stone(StoneColor.black, 3, 3, 0, false), 0) !=
+          gobanHash([], Stone(StoneColor.black, 3, 2, 0, false), 0),
+      equals(true),
+    );
   });
 }
