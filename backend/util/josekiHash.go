@@ -1,49 +1,43 @@
 package util
 
 import (
+	"math/rand"
+
 	"github.com/usatyo/sugomori/model"
 )
 
-const mod = (1 << 61) - 1
-const mask30 = (1 << 30) - 1
-const mask31 = (1 << 31) -1
-const base = 1000000007
+var table = generateArray()
 
-func mul(a int64, b int64) int64 {
-  var au int64 = a >> 31
-  var ad int64 = a & mask31
-  var bu int64 = b >> 31
-  var bd int64 = b & mask31
-  var mid int64 = ad * bu + au * bd
-  var midu int64 = mid >> 30
-  var midd int64 = mid & mask30
-  return calcMod(au * bu * 2 + midu + (midd << 31) + ad * bd)
-}
-
-func calcMod(x int64) int64 {
-  var xu int64 = x >> 61
-  var xd int64 = x & mod
-  var res int64 = xu + xd
-  if res >= mod {res -= mod}
-  return res
-}
-
-func JosekiHash(stone []model.Stone) []int64 {
-	ret := make([]int64, len(stone) + 1)
-	ret = append(ret, 0)
-	var val int64 = 0
-	var pow int64 = 1
-	for _, s := range stone {
-		if s.Color == model.Black {
-			val += mul(pow, int64(s.X * model.BoardSize + s.Y + 1))
-		} else if s.Color == model.White {
-			val += mul(pow, int64(s.X * model.BoardSize + s.Y + model.All + 1))
-		} else {
-			val += mul(pow, int64(model.All * 2 + 1))
+func generateArray() [][][]int64 {
+	random := rand.New(rand.NewSource(0))
+	ret := make([][][]int64, model.BoardSize)
+	for i := range model.BoardSize {
+		ret[i] = make([][]int64, model.BoardSize)
+		for j := range model.BoardSize {
+			ret[i][j] = make([]int64, model.All * 2)
+			for k := range model.All {
+				ret[i][j][k] = random.Int63()
+			}
 		}
-		val = calcMod(val)
-		ret = append(ret, val)
-		pow = mul(pow, base)
 	}
 	return ret
+}
+
+func JosekiHash(stones *[]model.Stone) {
+	val := int64(0)
+	for i := range *stones {
+		if (*stones)[i].Color == model.Black {
+			val ^= table[(*stones)[i].X][(*stones)[i].Y][i]
+		} else {
+			val ^= table[(*stones)[i].X][(*stones)[i].Y][i + model.All]
+		}
+		(*stones)[i].Hash = val
+	}
+}
+
+func New(stones []model.Stone) *model.Joseki {
+	JosekiHash(&stones)
+	return &model.Joseki{
+		Stones: stones,
+	}
 }
