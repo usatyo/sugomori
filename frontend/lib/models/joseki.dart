@@ -24,6 +24,14 @@ class Stone {
   final int y;
   final int index;
   final bool isPassed;
+
+  Map<String, dynamic> toJson() {
+    return {
+      'color': color == StoneColor.black ? 0 : 1,
+      'x': x,
+      'y': y,
+    };
+  }
 }
 
 typedef StoneList = List<Stone>;
