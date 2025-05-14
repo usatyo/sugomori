@@ -1,8 +1,22 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:frontend/components/bottom_menu.dart';
+import 'package:frontend/components/goban.dart';
+import 'package:frontend/models/joseki.dart';
+import 'package:frontend/services/joseki_api_service.dart';
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
+
+  @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  JosekiApiService josekiApiService = JosekiApiService.instance;
+  String videoId = "";
+  Joseki joseki = Joseki([]);
 
   @override
   Widget build(BuildContext context) {
@@ -10,11 +24,18 @@ class RegisterPage extends StatelessWidget {
       appBar: AppBar(),
       body: Column(
         children: [
+          Container(
+            padding: EdgeInsets.all(10),
+            alignment: Alignment.center,
+            child: Goban(joseki: joseki),
+          ),
           Expanded(
             child: Container(
               padding: EdgeInsets.all(10),
               alignment: Alignment.center,
-              child: FilledButton(onPressed: () {}, child: Text("bb")),
+              child: FilledButton(onPressed: () {
+                josekiApiService.sendJoseki(joseki, Random().nextInt(100000).toString());
+              }, child: Text("register")),
             ),
           ),
           BottomMenu(),

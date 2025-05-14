@@ -3,6 +3,7 @@ import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 import 'package:frontend/components/bottom_menu.dart';
 import 'package:frontend/components/goban.dart';
 import 'package:frontend/components/video_card.dart';
+import 'package:frontend/models/joseki.dart';
 import 'package:frontend/models/youtube.dart';
 import 'package:frontend/services/youtube_api_service.dart';
 
@@ -17,6 +18,8 @@ class _SearchPageState extends State<SearchPage> {
   APIService apiService = APIService.instance;
   List<Video> videos = [];
   int counter = 0;
+  Joseki joseki = Joseki([]);
+
   void increment() {
     setState(() {
       apiService
@@ -45,7 +48,7 @@ class _SearchPageState extends State<SearchPage> {
           Container(
             padding: EdgeInsets.all(10),
             alignment: Alignment.center,
-            child: Goban(),
+            child: Goban(joseki: joseki),
           ),
           FilledButton(onPressed: increment, child: Text("fetch")),
           Expanded(

@@ -14,7 +14,7 @@ class JosekiRequest {
       'stones': stones.map((stone) => stone.toJson()).toList(),
     },
     'video': {
-      'videoId': videoId,
+      'id': videoId,
     },
   };
 }

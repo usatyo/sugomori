@@ -15,7 +15,7 @@ func generateArray() [][][]int64 {
 		ret[i] = make([][]int64, model.BoardSize)
 		for j := range model.BoardSize {
 			ret[i][j] = make([]int64, model.All * 2)
-			for k := range model.All {
+			for k := range model.All * 2 {
 				ret[i][j][k] = random.Int63()
 			}
 		}
@@ -27,9 +27,9 @@ func JosekiHash(stones *[]model.Stone) {
 	val := int64(0)
 	for i := range *stones {
 		if (*stones)[i].Color == model.Black {
-			val ^= table[(*stones)[i].X][(*stones)[i].Y][i]
+			val = val ^ table[(*stones)[i].X][(*stones)[i].Y][i]
 		} else {
-			val ^= table[(*stones)[i].X][(*stones)[i].Y][i + model.All]
+			val = val ^ table[(*stones)[i].X][(*stones)[i].Y][i + model.All]
 		}
 		(*stones)[i].Hash = val
 	}

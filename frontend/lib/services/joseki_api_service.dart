@@ -29,7 +29,7 @@ class JosekiApiService {
     }
   }
 
-  Future<void> sendJoseki(List<Stone> stones, String videoId) async {
+  Future<void> sendJoseki(Joseki joseki, String videoId) async {
     Uri uri = Uri.http(_baseUrl, '/joseki');
     Map<String, String> headers = {
       HttpHeaders.contentTypeHeader: 'application/json',
@@ -39,11 +39,12 @@ class JosekiApiService {
       uri,
       headers: headers,
       body: json.encode(
-        JosekiRequest(stones: stones, videoId: videoId).toJson(),
+        JosekiRequest(stones: joseki.stoneList, videoId: videoId).toJson(),
       ),
     );
     if (response.statusCode == 200) {
-      // var data = json.decode(response.body);
+      var data = json.decode(response.body);
+      print(data["message"]);
     } else {
       throw json.decode(response.body)['error']['message'];
     }

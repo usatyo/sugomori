@@ -80,6 +80,7 @@ func GetCountRanking(limit int) []model.Stone {
 func CreateVideoNode(video model.Video, last model.Stone) {
 	query := `
 		MERGE (s:Stone {x: $x, y: $y, color: $color, hash: $hash})
+		ON CREATE SET s.count = 0
 		MERGE (v:Video {videoId: $videoId})
 		MERGE (s)-[:Relate]->(v)
 	`

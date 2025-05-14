@@ -6,20 +6,20 @@ import 'package:frontend/models/joseki.dart';
 import 'package:frontend/util/go_rule.dart';
 
 class Goban extends StatefulWidget {
-  const Goban({super.key});
+  const Goban({super.key, required this.joseki});
+  final Joseki joseki;
 
   @override
   State<Goban> createState() => _GobanState();
 }
 
 class _GobanState extends State<Goban> {
-  Joseki joseki = Joseki([]);
   StoneMatrix stoneMatrix = getProcessedBoard([]);
   StoneColor nextColor = StoneColor.black;
 
   void refreshStoneMatrix() {
     setState(() {
-      stoneMatrix = getProcessedBoard(joseki.stoneList);
+      stoneMatrix = getProcessedBoard(widget.joseki.stoneList);
     });
   }
 
@@ -52,7 +52,7 @@ class _GobanState extends State<Goban> {
                           onPressed:
                               () => {
                                 setState(() {
-                                  if (!joseki.pushStone(
+                                  if (!widget.joseki.pushStone(
                                     color: nextColor,
                                     x: x,
                                     y: y,
@@ -88,7 +88,7 @@ class _GobanState extends State<Goban> {
                   icon: Icons.keyboard_arrow_up,
                   onPressed: () {
                     setState(() {
-                      joseki.popStone();
+                      widget.joseki.popStone();
                       nextColor = reversedColor(nextColor);
                       refreshStoneMatrix();
                     });
@@ -99,7 +99,7 @@ class _GobanState extends State<Goban> {
                   icon: Icons.keyboard_double_arrow_up,
                   onPressed: () {
                     setState(() {
-                      joseki.popStones(5);
+                      widget.joseki.popStones(5);
                       nextColor = reversedColor(nextColor);
                       refreshStoneMatrix();
                     });
@@ -110,7 +110,7 @@ class _GobanState extends State<Goban> {
                   icon: Icons.repeat,
                   onPressed: () {
                     setState(() {
-                      joseki.pushStone(
+                      widget.joseki.pushStone(
                         color: nextColor,
                         x: -1,
                         y: -1,
@@ -126,7 +126,7 @@ class _GobanState extends State<Goban> {
                   icon: Icons.delete,
                   onPressed: () {
                     setState(() {
-                      joseki.clear();
+                      widget.joseki.clear();
                       nextColor = StoneColor.black;
                       refreshStoneMatrix();
                     });
