@@ -16,7 +16,7 @@ class _GeneralSettingState extends State<GeneralSetting> {
   void onDarkModeChanged(bool value) {
     setState(() {
       isDarkMode = value;
-      josekiApiService.fetchPong().then((value) {
+      josekiApiService.fetchHello().then((value) {
         setState(() {
           message = value;
         });
