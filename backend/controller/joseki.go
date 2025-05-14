@@ -13,3 +13,7 @@ func GetJoseki(c echo.Context) error {
 func PostJoseki(c echo.Context) error {
 	return c.String(http.StatusOK, "Hello")
 }
+
+func GetRanking(c echo.Context) error {
+	return c.String(http.StatusOK, "Hello")
+}

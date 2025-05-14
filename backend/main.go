@@ -21,8 +21,18 @@ func main() {
 	tsukehiki = append(tsukehiki, model.Stone{Color: model.Black, X: 5, Y: 3, Hash: 0})
 	tsukehiki = append(tsukehiki, model.Stone{Color: model.Black, X: 3, Y: 5, Hash: 0})
 
-	service.PostJoseki(*util.New(tsukehiki), "test")
+	service.PostJoseki(*util.New(append(tsukehiki, model.Stone{Color: model.Black, X: 9, Y: 4, Hash: 0})), model.Video{Id: "tsukehiki1"})
+	service.PostJoseki(*util.New(append(tsukehiki, model.Stone{Color: model.Black, X: 9, Y: 3, Hash: 0})), model.Video{Id: "tsukehiki2"})
 
+	videos := db.GetVideosFromHash(0, 10, 3)
+	for _, video := range videos {
+		println(video.Id)
+	}
+	path := db.GetJosekiPath(3758025965957661012)
+	for _, stone := range path {
+		println(stone.X, stone.Y, stone.Color)
+	}
+	
 	// e := echo.New()
 
 	// e.GET("/", controller.Hello)
