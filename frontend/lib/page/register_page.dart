@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:frontend/components/bottom_menu.dart';
 import 'package:frontend/components/goban.dart';
@@ -33,9 +31,15 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Container(
               padding: EdgeInsets.all(10),
               alignment: Alignment.center,
-              child: FilledButton(onPressed: () {
-                josekiApiService.sendJoseki(joseki, Random().nextInt(100000).toString());
-              }, child: Text("register")),
+              child: FilledButton(
+                onPressed: () {
+                  josekiApiService.postJoseki(
+                    joseki,
+                    "PTdC1aVH-LQ",
+                  );
+                },
+                child: Text("register"),
+              ),
             ),
           ),
           BottomMenu(),

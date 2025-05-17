@@ -4,10 +4,10 @@ import 'dart:io';
 import 'package:frontend/models/youtube.dart';
 import 'package:http/http.dart' as http;
 
-class APIService {
-  APIService._instantiate();
+class YoutubeApiService {
+  YoutubeApiService._instantiate();
 
-  static final APIService instance = APIService._instantiate();
+  static final YoutubeApiService instance = YoutubeApiService._instantiate();
 
   final String _baseUrl = 'www.googleapis.com';
 

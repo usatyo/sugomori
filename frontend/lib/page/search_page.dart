@@ -5,7 +5,7 @@ import 'package:frontend/components/goban.dart';
 import 'package:frontend/components/video_card.dart';
 import 'package:frontend/models/joseki.dart';
 import 'package:frontend/models/youtube.dart';
-import 'package:frontend/services/youtube_api_service.dart';
+import 'package:frontend/services/joseki_api_service.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -15,27 +15,15 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  APIService apiService = APIService.instance;
   List<Video> videos = [];
   int counter = 0;
   Joseki joseki = Joseki([]);
+  JosekiApiService josekiApiService = JosekiApiService.instance;
 
-  void increment() {
+  void fetchVideos() async {
+    List<Video> newVideos = await josekiApiService.getVideos(joseki);
     setState(() {
-      apiService
-          .fetchVideos(
-            videoIds: [
-              "PTdC1aVH-LQ",
-              "I_z2VROyDoU",
-              "qwF1fXorI-M",
-              "DzNzqRhtnAw",
-            ],
-          )
-          .then((value) {
-            setState(() {
-              videos = value;
-            });
-          });
+      videos = newVideos;
     });
   }
 
@@ -50,7 +38,7 @@ class _SearchPageState extends State<SearchPage> {
             alignment: Alignment.center,
             child: Goban(joseki: joseki),
           ),
-          FilledButton(onPressed: increment, child: Text("fetch")),
+          FilledButton(onPressed: fetchVideos, child: Text("fetch")),
           Expanded(
             child: Container(
               padding: EdgeInsets.all(10),

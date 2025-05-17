@@ -14,8 +14,12 @@ func main() {
 	e := echo.New()
 
 	e.GET("/", controller.HealthCheck)
-	e.GET("/video", controller.GetVideos)
+
+	// GetVideos という名前だが、bodyに Joseki を含むので、POSTメソッドで受け取る
+	e.POST("/video", controller.GetVideos)
+	
 	e.GET("/ranking", controller.GetRanking)
+	
 	e.POST("/joseki", controller.PostJoseki)
 
 	e.Start(":8080")

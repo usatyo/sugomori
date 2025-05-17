@@ -1,10 +1,10 @@
 import 'package:frontend/models/joseki.dart';
 
-class JosekiRequest {
+class JosekiVideoRequest {
   final List<Stone> stones;
   final String videoId;
 
-  JosekiRequest({
+  JosekiVideoRequest({
     required this.stones,
     required this.videoId,
   });
@@ -16,5 +16,17 @@ class JosekiRequest {
     'video': {
       'id': videoId,
     },
+  };
+}
+
+class StonesRequest {
+  final List<Stone> stones;
+
+  StonesRequest({
+    required this.stones,
+  });
+
+  Map<String, dynamic> toJson() => {
+    'stones': stones.map((stone) => stone.toJson()).toList(),
   };
 }
