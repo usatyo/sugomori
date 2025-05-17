@@ -15,7 +15,7 @@ StoneColor reversedColor(StoneColor color) {
 
 // pass:
 class Stone {
-  Stone(this.color, this.x, this.y, this.index, this.isPassed) {
+  Stone(this.color, this.x, this.y, this.index) {
     assert(-1 <= x && x < boardSize);
     assert(-1 <= y && y < boardSize);
   }
@@ -23,7 +23,10 @@ class Stone {
   final int x;
   final int y;
   final int index;
-  final bool isPassed;
+
+  bool isPassed() {
+    return x == -1 && y == -1;
+  }
 
   Map<String, dynamic> toJson() {
     return {
@@ -46,9 +49,9 @@ class Joseki {
     required StoneColor color,
     required int x,
     required int y,
-    required bool isPassed,
   }) {
-    stoneList.add(Stone(color, x, y, stoneList.length, isPassed));
+    Stone stone = Stone(color, x, y, stoneList.length);
+    stoneList.add(stone);
     if (getProcessedBoard(stoneList).isNotEmpty) {
       return true;
     } else {
@@ -74,6 +77,6 @@ class Joseki {
   }
 
   List<Stone> getPassedStones() {
-    return stoneList.where((stone) => stone.isPassed).toList();
+    return stoneList.where((stone) => stone.isPassed()).toList();
   }
 }

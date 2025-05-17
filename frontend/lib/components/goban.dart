@@ -56,7 +56,6 @@ class _GobanState extends State<Goban> {
                                     color: nextColor,
                                     x: x,
                                     y: y,
-                                    isPassed: false,
                                   )) {
                                     return;
                                   }
@@ -114,7 +113,6 @@ class _GobanState extends State<Goban> {
                         color: nextColor,
                         x: -1,
                         y: -1,
-                        isPassed: true,
                       );
                       nextColor = reversedColor(nextColor);
                       refreshStoneMatrix();

@@ -7,7 +7,7 @@ StoneMatrix getProcessedBoard(StoneList stoneList) {
     boardSize,
     (i) => List.generate(
       boardSize,
-      (j) => Stone(StoneColor.empty, i, j, -1, false),
+      (j) => Stone(StoneColor.empty, i, j, -1),
     ),
   );
   int hash = 0;
@@ -16,7 +16,7 @@ StoneMatrix getProcessedBoard(StoneList stoneList) {
 
   for (int i = 0; i < stoneList.length; i++) {
     Stone stone = stoneList[i];
-    if (stone.isPassed) {
+    if (stone.isPassed()) {
       continue;
     }
     if (isOverlapStone(stone, stoneMatrix)) {
@@ -118,7 +118,7 @@ StoneMatrix generateStoneMatrix(
     (i) => List.generate(
       boardSize,
       (j) =>
-          Stone(stoneMatrix[i][j].color, i, j, stoneMatrix[i][j].index, false),
+          Stone(stoneMatrix[i][j].color, i, j, stoneMatrix[i][j].index),
     ),
   );
 
@@ -130,7 +130,6 @@ StoneMatrix generateStoneMatrix(
       capturedStone.x,
       capturedStone.y,
       -1,
-      false,
     );
   }
   // add new stone
@@ -139,7 +138,6 @@ StoneMatrix generateStoneMatrix(
     newStone.x,
     newStone.y,
     newStone.index,
-    false,
   );
 
   return newStoneMatrix;

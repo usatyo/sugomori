@@ -9,42 +9,33 @@ void main() {
   setUp(() {
     hoshi1 = List.generate(
       boardSize,
-      (i) => List.generate(
-        boardSize,
-        (j) => Stone(StoneColor.empty, i, j, -1, false),
-      ),
+      (i) => List.generate(boardSize, (j) => Stone(StoneColor.empty, i, j, -1)),
     );
-    hoshi1[3][3] = Stone(StoneColor.black, 3, 3, 0, false);
+    hoshi1[3][3] = Stone(StoneColor.black, 3, 3, 0);
     hoshi2 = List.generate(
       boardSize,
-      (i) => List.generate(
-        boardSize,
-        (j) => Stone(StoneColor.empty, i, j, -1, false),
-      ),
+      (i) => List.generate(boardSize, (j) => Stone(StoneColor.empty, i, j, -1)),
     );
-    hoshi2[3][3] = Stone(StoneColor.black, 3, 3, 0, false);
+    hoshi2[3][3] = Stone(StoneColor.black, 3, 3, 0);
     komoku = List.generate(
       boardSize,
-      (i) => List.generate(
-        boardSize,
-        (j) => Stone(StoneColor.empty, i, j, -1, false),
-      ),
+      (i) => List.generate(boardSize, (j) => Stone(StoneColor.empty, i, j, -1)),
     );
-    komoku[3][2] = Stone(StoneColor.black, 3, 2, 0, false);
+    komoku[3][2] = Stone(StoneColor.black, 3, 2, 0);
   });
 
   test("same joseki", () {
     expect(
-      gobanHash([], Stone(StoneColor.black, 3, 3, 0, false), 0) ==
-          gobanHash([], Stone(StoneColor.black, 3, 3, 0, false), 0),
+      gobanHash([], Stone(StoneColor.black, 3, 3, 0), 0) ==
+          gobanHash([], Stone(StoneColor.black, 3, 3, 0), 0),
       equals(true),
     );
   });
 
   test("different joseki", () {
     expect(
-      gobanHash([], Stone(StoneColor.black, 3, 3, 0, false), 0) !=
-          gobanHash([], Stone(StoneColor.black, 3, 2, 0, false), 0),
+      gobanHash([], Stone(StoneColor.black, 3, 3, 0), 0) !=
+          gobanHash([], Stone(StoneColor.black, 3, 2, 0), 0),
       equals(true),
     );
   });
