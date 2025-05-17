@@ -16,6 +16,17 @@ class _RegisterPageState extends State<RegisterPage> {
   String videoId = "";
   Joseki joseki = Joseki([]);
 
+  void onChangeUrl(String url) {
+    setState(() {
+      Uri uri = Uri.parse(url);
+      if (uri.host != "www.youtube.com" && uri.host != "youtu.be") {
+        videoId = "";
+        return;
+      }
+      videoId = uri.queryParameters['v'] ?? "";
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,18 +39,30 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Goban(joseki: joseki),
           ),
           Expanded(
-            child: Container(
-              padding: EdgeInsets.all(10),
-              alignment: Alignment.center,
-              child: FilledButton(
-                onPressed: () {
-                  josekiApiService.postJoseki(
-                    joseki,
-                    "PTdC1aVH-LQ",
-                  );
-                },
-                child: Text("register"),
-              ),
+            child: Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(10),
+                  alignment: Alignment.center,
+                  child: TextField(
+                    onChanged: onChangeUrl,
+                    decoration: InputDecoration(
+                      labelText: "Youtube URL",
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.all(10),
+                  alignment: Alignment.center,
+                  child: FilledButton(
+                    onPressed: () {
+                      josekiApiService.postJoseki(joseki, videoId);
+                    },
+                    child: Text("register"),
+                  ),
+                ),
+              ],
             ),
           ),
           BottomMenu(),

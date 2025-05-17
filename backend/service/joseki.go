@@ -8,6 +8,7 @@ import (
 
 func GetVideos(joseki model.Joseki) []model.Video {
 	util.JosekiHash(&joseki)
+	db.CreateJosekiNodes(joseki)
 	var targetHash int64 = 0
 	if len(joseki.Stones) > 0 {
 		targetHash = joseki.Stones[len(joseki.Stones)-1].Hash

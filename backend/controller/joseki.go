@@ -18,9 +18,17 @@ func GetVideos(c echo.Context) error {
 		})
 	}
 	videos := service.GetVideos(request)
-	data := model.VideoResponse{
-		Code: 200,
-		Data: videos,
+	var data model.VideoResponse
+	if len(videos) == 0 {
+		data = model.VideoResponse{
+			Code: 200,
+			Data: make([]model.Video, 0),
+		}
+	} else {
+		data = model.VideoResponse{
+			Code: 200,
+			Data: videos,
+		}
 	}
 	return c.JSON(http.StatusOK, data)
 }
