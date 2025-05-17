@@ -23,7 +23,9 @@ func generateArray() [][][]int64 {
 	return ret
 }
 
-func JosekiHash(stones *[]model.Stone) {
+func JosekiHash(joseki *model.Joseki) {
+	*joseki = GetNormalizedJoseki(*joseki)
+	stones := &((*joseki).Stones)
 	val := int64(0)
 	for i := range *stones {
 		if (*stones)[i].X == -1 && (*stones)[i].Y == -1 {
@@ -38,7 +40,10 @@ func JosekiHash(stones *[]model.Stone) {
 }
 
 func New(stones []model.Stone) *model.Joseki {
-	JosekiHash(&stones)
+	joseki := model.Joseki {
+		Stones: stones,
+	}
+	JosekiHash(&joseki)
 	return &model.Joseki{
 		Stones: stones,
 	}

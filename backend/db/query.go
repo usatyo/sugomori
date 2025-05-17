@@ -41,7 +41,7 @@ func GetJosekiPath(hash int64) []model.Stone {
 	if err != nil {
 		panic(err)
 	}
-	return convertToStoneList(res)
+	return convertToJoseki(res).Stones
 }
 
 func GetCountRanking(limit int) []model.Stone {
@@ -96,7 +96,7 @@ func CreateVideoNode(video model.Video, last model.Stone) {
 	neo4j.ExecuteQueryWithDatabase("neo4j"))
 }
 		
-func CreateJosekiNodes(stones []model.Stone) {
+func CreateJosekiNodes(joseki model.Joseki) {
 	query := `
 		UNWIND $stones AS item
 		MERGE (s1:Stone {x: item.fromX, y: item.fromY, color: item.fromColor, hash: item.fromHash})
@@ -106,7 +106,7 @@ func CreateJosekiNodes(stones []model.Stone) {
 		MERGE (s1)-[:Move]->(s2)
 	`
 	neo4j.ExecuteQuery(Ctx, Driver, query,
-		map[string]any{"stones": convertToPathMap(stones)},
+		map[string]any{"stones": convertToPathMap(joseki)},
 		neo4j.EagerResultTransformer,
 		neo4j.ExecuteQueryWithDatabase("neo4j"))
 }

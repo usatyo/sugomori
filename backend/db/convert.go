@@ -26,28 +26,30 @@ func convertToVideoList(res *neo4j.EagerResult, limit int) []model.Video {
 	return videos
 }
 
-func convertToStoneList(res *neo4j.EagerResult) []model.Stone {
-	var stones []model.Stone
+func convertToJoseki(res *neo4j.EagerResult) model.Joseki {
+	var joseki model.Joseki = model.Joseki{
+		Stones: []model.Stone{},
+	}
 	for _, item := range res.Records {
 		record, flag := item.Get("collection")
 		if !flag {
 			continue
 		}
 		props := record.(dbtype.Node).Props
-		stones = append(stones, model.Stone{
+		joseki.Stones = append(joseki.Stones, model.Stone{
 			X: int(props["x"].(int64)),
 			Y: int(props["y"].(int64)),
 			Color: model.Color(props["color"].(int64)),
 			Hash: props["hash"].(int64),
 		})
 	}
-	return stones
+	return joseki
 }
 
-func convertToPathMap(stones []model.Stone) []map[string]any {
+func convertToPathMap(joseki model.Joseki) []map[string]any {
 	var result []map[string]any
 	prev := model.Stone{X: -1, Y: -1, Color: -1, Hash: 0}
-	for _, stone := range stones {
+	for _, stone := range joseki.Stones {
 		result = append(result, map[string]any{
 			"fromX": prev.X,
 			"fromY": prev.Y,

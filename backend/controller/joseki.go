@@ -17,7 +17,7 @@ func GetVideos(c echo.Context) error {
 			Message: "Invalid request",
 		})
 	}
-	videos := service.GetVideos(request.Stones)
+	videos := service.GetVideos(request)
 	data := model.VideoResponse{
 		Code: 200,
 		Data: videos,

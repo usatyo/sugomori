@@ -6,11 +6,11 @@ import (
 	"github.com/usatyo/sugomori/util"
 )
 
-func GetVideos(stones []model.Stone) []model.Video {
-	util.JosekiHash(&stones)
+func GetVideos(joseki model.Joseki) []model.Video {
+	util.JosekiHash(&joseki)
 	var targetHash int64 = 0
-	if len(stones) > 0 {
-		targetHash = stones[len(stones)-1].Hash
+	if len(joseki.Stones) > 0 {
+		targetHash = joseki.Stones[len(joseki.Stones)-1].Hash
 	}
 	videos := db.GetVideosFromHash(targetHash, 8, 5)
 	return videos
@@ -32,9 +32,9 @@ func GetRanking(limit int) []model.RankingData {
 }
 
 func PostJoseki(joseki model.Joseki, video model.Video) {
-	util.JosekiHash(&joseki.Stones)
+	util.JosekiHash(&joseki)
 	db.CreateVideoNode(video, joseki.Stones[len(joseki.Stones) - 1])
-	db.CreateJosekiNodes(joseki.Stones)
+	db.CreateJosekiNodes(joseki)
 }
 
 
