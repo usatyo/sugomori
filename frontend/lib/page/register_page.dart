@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/components/atoms/button.dart';
 import 'package:frontend/components/bottom_menu.dart';
 import 'package:frontend/components/goban.dart';
 import 'package:frontend/models/joseki.dart';
@@ -31,42 +32,34 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.all(10),
-            alignment: Alignment.center,
-            child: Goban(joseki: joseki),
-          ),
-          Expanded(
-            child: Column(
-              children: [
-                Container(
-                  padding: EdgeInsets.all(10),
-                  alignment: Alignment.center,
-                  child: TextField(
-                    onChanged: onChangeUrl,
-                    decoration: InputDecoration(
-                      labelText: "Youtube URL",
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(10),
-                  alignment: Alignment.center,
-                  child: FilledButton(
-                    onPressed: () {
-                      josekiApiService.postJoseki(joseki, videoId);
-                    },
-                    child: Text("register"),
-                  ),
-                ),
-              ],
+      bottomNavigationBar: BottomMenu(),
+      body: Container(
+        padding: EdgeInsets.all(10),
+        child: Column(
+          spacing: 10,
+          children: [
+            Container(
+              alignment: Alignment.center,
+              child: Goban(joseki: joseki),
             ),
-          ),
-          BottomMenu(),
-        ],
+            TextField(
+              onChanged: onChangeUrl,
+              decoration: InputDecoration(
+                labelText: "Youtube URL",
+                contentPadding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+            Button(
+              text: "登録",
+              onPressed: () {
+                josekiApiService.postJoseki(joseki, videoId);
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -35,12 +35,12 @@ class MenuBarState extends State<BottomMenu> {
             route: "/register",
             selected: ModalRoute.of(context)!.settings.name == "/register",
           ),
-          BottomMenuItem(
-            label: "設定",
-            icon: Icons.settings,
-            route: "/setting",
-            selected: ModalRoute.of(context)!.settings.name == "/setting",
-          ),
+          // BottomMenuItem(
+          //   label: "設定",
+          //   icon: Icons.settings,
+          //   route: "/setting",
+          //   selected: ModalRoute.of(context)!.settings.name == "/setting",
+          // ),
         ],
       ),
     );

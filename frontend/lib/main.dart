@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/page/register_page.dart';
 import 'package:frontend/page/search_page.dart';
-import 'package:frontend/page/setting_page.dart';
+// import 'package:frontend/page/setting_page.dart';
 
 import 'theme.dart';
 import 'util.dart';
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/search': (context) => const SearchPage(),
         '/register': (context) => const RegisterPage(),
-        '/setting': (context) => const SettingPage(),
+        // '/setting': (context) => const SettingPage(),
       },
     );
   }

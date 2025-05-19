@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
+import 'package:frontend/components/atoms/button.dart';
 import 'package:frontend/components/bottom_menu.dart';
 import 'package:frontend/components/goban.dart';
 import 'package:frontend/components/video_card.dart';
@@ -31,33 +32,31 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.all(10),
-            alignment: Alignment.center,
-            child: Goban(joseki: joseki),
-          ),
-          FilledButton(onPressed: fetchVideos, child: Text("fetch")),
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.all(10),
-              child: ScrollShadow(
-                color: Theme.of(context).cardColor,
-                size: 20,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children:
-                        videos
-                            .map((video) => VideoCard(videoInfo: video))
-                            .toList(),
-                  ),
+      bottomNavigationBar: BottomMenu(),
+      body: Container(
+        padding: EdgeInsets.all(10),
+        child: Column(
+          spacing: 10,
+          children: [
+            Container(
+              alignment: Alignment.center,
+              child: Goban(joseki: joseki),
+            ),
+            Button(text: "検索", onPressed: fetchVideos),
+            ScrollShadow(
+              color: Theme.of(context).cardColor,
+              size: 20,
+              child: SingleChildScrollView(
+                child: Column(
+                  children:
+                      videos
+                          .map((video) => VideoCard(videoInfo: video))
+                          .toList(),
                 ),
               ),
             ),
-          ),
-          BottomMenu(),
-        ],
+          ],
+        ),
       ),
     );
   }
