@@ -17,7 +17,7 @@ func GetVideosFromHash(hash int64, hop int, limit int) []model.Video {
 	`
 	res, err := neo4j.ExecuteQuery(Ctx, Driver,
 		query,
-		map[string]any {"hash": hash, "hop": hop},
+		map[string]any{"hash": hash, "hop": hop},
 		neo4j.EagerResultTransformer,
 		neo4j.ExecuteQueryWithDatabase("neo4j"))
 	if err != nil {
@@ -35,7 +35,7 @@ func GetJosekiPath(hash int64) []model.Stone {
 	`
 	res, err := neo4j.ExecuteQuery(Ctx, Driver,
 		query,
-		map[string]any {"hash": hash},
+		map[string]any{"hash": hash},
 		neo4j.EagerResultTransformer,
 		neo4j.ExecuteQueryWithDatabase("neo4j"))
 	if err != nil {
@@ -53,7 +53,7 @@ func GetCountRanking(limit int) []model.Stone {
 	`
 	res, err := neo4j.ExecuteQuery(Ctx, Driver,
 		query,
-		map[string]any {"limit": limit},
+		map[string]any{"limit": limit},
 		neo4j.EagerResultTransformer,
 		neo4j.ExecuteQueryWithDatabase("neo4j"))
 	if err != nil {
@@ -68,10 +68,10 @@ func GetCountRanking(limit int) []model.Stone {
 		node := record.(neo4j.Node)
 		props := node.Props
 		stones = append(stones, model.Stone{
-			X: int(props["x"].(int64)),
-			Y: int(props["y"].(int64)),
+			X:     int(props["x"].(int64)),
+			Y:     int(props["y"].(int64)),
 			Color: model.Color(props["color"].(int64)),
-			Hash: props["hash"].(int64),
+			Hash:  props["hash"].(int64),
 		})
 	}
 	return stones
@@ -86,16 +86,16 @@ func CreateVideoNode(video model.Video, last model.Stone) {
 	`
 	neo4j.ExecuteQuery(Ctx, Driver, query,
 		map[string]any{
-			"x": last.X,
-			"y": last.Y,
-			"color": last.Color,
-			"hash": last.Hash,
+			"x":       last.X,
+			"y":       last.Y,
+			"color":   last.Color,
+			"hash":    last.Hash,
 			"videoId": video.Id,
 		},
-	neo4j.EagerResultTransformer,
-	neo4j.ExecuteQueryWithDatabase("neo4j"))
+		neo4j.EagerResultTransformer,
+		neo4j.ExecuteQueryWithDatabase("neo4j"))
 }
-		
+
 func CreateJosekiNodes(joseki model.Joseki) {
 	query := `
 		UNWIND $stones AS item

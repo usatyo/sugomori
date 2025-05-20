@@ -8,11 +8,19 @@ build: ## イメージを構築
 .PHONY: start
 start: ## コンテナを構築 & コンテナに入る
 	@docker compose up -d
-	@docker compose exec usatyo-env /bin/bash -login
+	@docker compose exec backend /bin/bash -login
 
 .PHONY: down
 down: ## コンテナ停止
 	@docker compose down
+
+.PHONY: deploy
+deploy: ## Google Cloud にデプロイ
+	@gcloud builds submit --region=asia-east1 --substitutions=_AR_REPO_NAME="sugomori-backend"
+
+.PHONY: format
+format: ## backend ディレクトリの Go ファイルをすべてフォーマット
+	@go fmt ./...
 
 .PHONY: help
 help: ## ヘルプ

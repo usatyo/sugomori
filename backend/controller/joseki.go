@@ -13,7 +13,7 @@ func GetVideos(c echo.Context) error {
 	var request model.Joseki
 	if err := c.Bind(&request); err != nil {
 		return c.JSON(http.StatusBadRequest, model.ErrorResponse{
-			Code: 400,
+			Code:    400,
 			Message: "Invalid request",
 		})
 	}
@@ -39,7 +39,7 @@ func GetRanking(c echo.Context) error {
 		panic(err)
 	}
 	res := service.GetRanking(limit)
-	data := model.RankingResponse {
+	data := model.RankingResponse{
 		Code: 200,
 		Data: res,
 	}
@@ -50,19 +50,19 @@ func PostJoseki(c echo.Context) error {
 	var request model.JosekiPostRequest
 	if err := c.Bind(&request); err != nil {
 		return c.JSON(http.StatusBadRequest, model.ErrorResponse{
-			Code: 400,
+			Code:    400,
 			Message: "Invalid request",
 		})
 	}
 	if len(request.Joseki.Stones) == 0 {
 		return c.JSON(http.StatusBadRequest, model.ErrorResponse{
-			Code: 400,
+			Code:    400,
 			Message: "At least 1 stones are required",
 		})
 	}
 	service.PostJoseki(request.Joseki, request.Video)
 	data := model.HelloResponse{
-		Code: 200,
+		Code:    200,
 		Message: "Joseki added",
 	}
 	return c.JSON(http.StatusOK, data)

@@ -10,17 +10,20 @@ import (
 func main() {
 	util.LoadEnv()
 	db.Initialize()
-	
+
 	e := echo.New()
 
 	e.GET("/", controller.HealthCheck)
 
 	// GetVideos という名前だが、bodyに Joseki を含むので、POSTメソッドで受け取る
 	e.POST("/video", controller.GetVideos)
-	
+
 	e.GET("/ranking", controller.GetRanking)
-	
+
 	e.POST("/joseki", controller.PostJoseki)
 
-	e.Start(":8080")
+	err := e.Start(":8080")
+	if err != nil {
+		panic(err)
+	}
 }

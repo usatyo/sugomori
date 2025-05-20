@@ -37,10 +37,10 @@ func convertToJoseki(res *neo4j.EagerResult) model.Joseki {
 		}
 		props := record.(dbtype.Node).Props
 		joseki.Stones = append(joseki.Stones, model.Stone{
-			X: int(props["x"].(int64)),
-			Y: int(props["y"].(int64)),
+			X:     int(props["x"].(int64)),
+			Y:     int(props["y"].(int64)),
 			Color: model.Color(props["color"].(int64)),
-			Hash: props["hash"].(int64),
+			Hash:  props["hash"].(int64),
 		})
 	}
 	return joseki
@@ -51,14 +51,14 @@ func convertToPathMap(joseki model.Joseki) []map[string]any {
 	prev := model.Stone{X: -1, Y: -1, Color: -1, Hash: 0}
 	for _, stone := range joseki.Stones {
 		result = append(result, map[string]any{
-			"fromX": prev.X,
-			"fromY": prev.Y,
+			"fromX":     prev.X,
+			"fromY":     prev.Y,
 			"fromColor": prev.Color,
-			"fromHash": prev.Hash,
-			"toX": stone.X,
-			"toY": stone.Y,
-			"toColor": stone.Color,
-			"toHash": stone.Hash,
+			"fromHash":  prev.Hash,
+			"toX":       stone.X,
+			"toY":       stone.Y,
+			"toColor":   stone.Color,
+			"toHash":    stone.Hash,
 		})
 		prev = stone
 	}

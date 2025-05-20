@@ -1,21 +1,13 @@
 services:
   backend:
-    platform: linux/x86_64
+    # platform: linux/x86_64
+    environment:
+      - GO_ENV=production
+    env_file:
+      - .env
     build:
       context: .
       dockerfile: ./Dockerfile
     ports:
       - 8080:8080
     stdin_open: true
-
-  # db:
-  #   image: mysql
-  #   container_name: db
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: password
-  #     MYSQL_DATABASE: joseki
-  #     TZ: "Asia/Tokyo"
-  #   volumes:
-  #     - ./db/my.cnf:/etc/mysql/conf.d/my.cnf
-  #   ports:
-  #     - 3306:3306

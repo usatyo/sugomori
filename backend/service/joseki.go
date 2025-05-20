@@ -34,8 +34,6 @@ func GetRanking(limit int) []model.RankingData {
 
 func PostJoseki(joseki model.Joseki, video model.Video) {
 	util.JosekiHash(&joseki)
-	db.CreateVideoNode(video, joseki.Stones[len(joseki.Stones) - 1])
+	db.CreateVideoNode(video, joseki.Stones[len(joseki.Stones)-1])
 	db.CreateJosekiNodes(joseki)
 }
-
-
