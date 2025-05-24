@@ -30,11 +30,15 @@ func GetRanking(limit int) []model.RankingData {
 	}
 	rankings := db.GetCountRanking(limit)
 	var result []model.RankingData
+
+	// TODO: 動的に取得する
+	count := 10
+	
 	for _, ranking := range rankings {
 		joseki := db.GetJosekiPath(ranking.Hash)
 		result = append(result, model.RankingData{
 			Stones: joseki.ToData().Stones,
-			Count:  10,
+			Count:  &count,
 		})
 	}
 	return result

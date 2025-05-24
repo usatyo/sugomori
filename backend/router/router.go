@@ -3,8 +3,10 @@ package router
 import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"github.com/go-playground/validator/v10"
 
 	"github.com/usatyo/sugomori/controller"
+	val "github.com/usatyo/sugomori/validator"
 )
 
 func Routing() {
@@ -14,6 +16,8 @@ func Routing() {
 		Format: "method=${method}, uri=${uri}, status=${status}\n",
 	}))
 	e.Use(middleware.Recover())
+
+	e.Validator = &val.CustomValidator{Validator: validator.New()}
 
 	e.GET("/", controller.HealthCheck)
 

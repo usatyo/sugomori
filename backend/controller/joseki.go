@@ -14,6 +14,10 @@ func GetVideos(c echo.Context) error {
 	if err := c.Bind(&request); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest)
 	}
+	if err := c.Validate(&request); err != nil {
+		println(err.Error())
+		return echo.NewHTTPError(http.StatusBadRequest)
+	}
 	videos := service.GetVideos(request)
 	var data model.VideoResponse
 	if len(videos) == 0 {
@@ -43,6 +47,9 @@ func GetRanking(c echo.Context) error {
 func PostJoseki(c echo.Context) error {
 	var request model.JosekiPostRequest
 	if err := c.Bind(&request); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest)
+	}
+	if err := c.Validate(&request); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest)
 	}
 	if len(request.Joseki.Stones) == 0 {

@@ -2,18 +2,19 @@ package model
 
 func (s *StoneData) ToModel() Stone {
 	return Stone{
-		Color: Color(s.Color),
-		X:     s.X,
-		Y:     s.Y,
+		Color: Color(*(s.Color)),
+		X:     *s.X,
+		Y:     *s.Y,
 		Hash:  0,
 	}
 }
 
 func (s *Stone) ToData() StoneData {
+	color := int(s.Color)
 	return StoneData{
-		Color: int(s.Color),
-		X:     s.X,
-		Y:     s.Y,
+		Color: &color,
+		X:     &s.X,
+		Y:     &s.Y,
 	}
 }
 
