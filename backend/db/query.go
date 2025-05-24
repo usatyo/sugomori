@@ -84,7 +84,7 @@ func CreateVideoNode(video model.Video, last model.Stone) {
 		MERGE (v:Video {videoId: $videoId})
 		MERGE (s)-[:Relate]->(v)
 	`
-	neo4j.ExecuteQuery(Ctx, Driver, query,
+	_, err := neo4j.ExecuteQuery(Ctx, Driver, query,
 		map[string]any{
 			"x":       last.X,
 			"y":       last.Y,
@@ -94,6 +94,10 @@ func CreateVideoNode(video model.Video, last model.Stone) {
 		},
 		neo4j.EagerResultTransformer,
 		neo4j.ExecuteQueryWithDatabase("neo4j"))
+
+	if err != nil {
+		panic(err)
+	}
 }
 
 func CreateJosekiNodes(joseki model.Joseki) {
@@ -105,8 +109,12 @@ func CreateJosekiNodes(joseki model.Joseki) {
 		ON CREATE SET s2.count = 0
 		MERGE (s1)-[:Move]->(s2)
 	`
-	neo4j.ExecuteQuery(Ctx, Driver, query,
+	_, err := neo4j.ExecuteQuery(Ctx, Driver, query,
 		map[string]any{"stones": convertToPathMap(joseki)},
 		neo4j.EagerResultTransformer,
 		neo4j.ExecuteQueryWithDatabase("neo4j"))
+
+	if err != nil {
+		panic(err)
+	}
 }

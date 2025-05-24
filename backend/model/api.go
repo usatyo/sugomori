@@ -1,22 +1,18 @@
 package model
 
 type HelloResponse struct {
-	Code    int    `json:"code"`
 	Message string `json:"message"`
 }
 
 type VideoResponse struct {
-	Code int         `json:"code"`
 	Data []VideoData `json:"data"`
 }
 
 type RankingResponse struct {
-	Code int           `json:"code"`
 	Data []RankingData `json:"data"`
 }
 
 type ErrorResponse struct {
-	Code    int    `json:"code"`
 	Message string `json:"message"`
 }
 
@@ -25,16 +21,17 @@ type JosekiPostRequest struct {
 	Video  VideoData  `json:"video"`
 }
 
+type VideoGetRequest = JosekiData
+
 type RankingData struct {
 	Stones []StoneData `json:"stones"`
-	Count  int         `json:"count"`
+	Count  int         `json:"count" validate:"required,min=0"`
 }
 
 type StoneData struct {
-	Color int   `json:"color"`
-	X     int   `json:"x"`
-	Y     int   `json:"y"`
-	Hash  int64 `json:"hash"`
+	Color int   `json:"color" validate:"required,oneof=0 1"`
+	X     int   `json:"x" validate:"required,min=-1,max=18"`
+	Y     int   `json:"y" validate:"required,min=-1,max=18"`
 }
 
 type JosekiData struct {

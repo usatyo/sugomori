@@ -5,7 +5,7 @@ func (s *StoneData) ToModel() Stone {
 		Color: Color(s.Color),
 		X:     s.X,
 		Y:     s.Y,
-		Hash:  s.Hash,
+		Hash:  0,
 	}
 }
 
@@ -14,7 +14,6 @@ func (s *Stone) ToData() StoneData {
 		Color: int(s.Color),
 		X:     s.X,
 		Y:     s.Y,
-		Hash:  s.Hash,
 	}
 }
 
