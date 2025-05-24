@@ -6,7 +6,10 @@ import (
 	"github.com/usatyo/sugomori/util"
 )
 
-func GetVideos(joseki model.Joseki) []model.Video {
+// API の型定義で受け取って、API の型定義で返す
+
+func GetVideos(josekiData model.JosekiData) []model.VideoData {
+	joseki := josekiData.ToModel()
 	util.JosekiHash(&joseki)
 	db.CreateJosekiNodes(joseki)
 	var targetHash int64 = 0
@@ -14,7 +17,11 @@ func GetVideos(joseki model.Joseki) []model.Video {
 		targetHash = joseki.Stones[len(joseki.Stones)-1].Hash
 	}
 	videos := db.GetVideosFromHash(targetHash, 8, 5)
-	return videos
+	var videoDatas []model.VideoData
+	for _, video := range videos {
+		videoDatas = append(videoDatas, video.ToData())
+	}
+	return videoDatas
 }
 
 func GetRanking(limit int) []model.RankingData {
@@ -24,15 +31,18 @@ func GetRanking(limit int) []model.RankingData {
 	rankings := db.GetCountRanking(limit)
 	var result []model.RankingData
 	for _, ranking := range rankings {
+		joseki := db.GetJosekiPath(ranking.Hash)
 		result = append(result, model.RankingData{
-			Stones: db.GetJosekiPath(ranking.Hash),
+			Stones: joseki.ToData().Stones,
 			Count:  10,
 		})
 	}
 	return result
 }
 
-func PostJoseki(joseki model.Joseki, video model.Video) {
+func PostJoseki(josekiData model.JosekiData, videoData model.VideoData) {
+	joseki := josekiData.ToModel()
+	video := videoData.ToModel()
 	util.JosekiHash(&joseki)
 	db.CreateVideoNode(video, joseki.Stones[len(joseki.Stones)-1])
 	db.CreateJosekiNodes(joseki)

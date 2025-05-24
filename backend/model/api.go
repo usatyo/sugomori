@@ -6,18 +6,13 @@ type HelloResponse struct {
 }
 
 type VideoResponse struct {
-	Code int     `json:"code"`
-	Data []Video `json:"data"`
+	Code int         `json:"code"`
+	Data []VideoData `json:"data"`
 }
 
 type RankingResponse struct {
 	Code int           `json:"code"`
 	Data []RankingData `json:"data"`
-}
-
-type RankingData struct {
-	Stones []Stone `json:"stones"`
-	Count  int     `json:"count"`
 }
 
 type ErrorResponse struct {
@@ -26,6 +21,26 @@ type ErrorResponse struct {
 }
 
 type JosekiPostRequest struct {
-	Joseki Joseki `json:"joseki"`
-	Video  Video  `json:"video"`
+	Joseki JosekiData `json:"joseki"`
+	Video  VideoData  `json:"video"`
+}
+
+type RankingData struct {
+	Stones []StoneData `json:"stones"`
+	Count  int         `json:"count"`
+}
+
+type StoneData struct {
+	Color int   `json:"color"`
+	X     int   `json:"x"`
+	Y     int   `json:"y"`
+	Hash  int64 `json:"hash"`
+}
+
+type JosekiData struct {
+	Stones []StoneData `json:"stones"`
+}
+
+type VideoData struct {
+	Id string `json:"id"`
 }

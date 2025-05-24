@@ -3,4 +3,3 @@
 "Logger" で調べる
 github.com/go-playground/validator
 全体に共通の処理があれば middleware が便利、cors とかにも必要そう
-model と api で型定義は別々に書く

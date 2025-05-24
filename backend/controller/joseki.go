@@ -10,7 +10,7 @@ import (
 )
 
 func GetVideos(c echo.Context) error {
-	var request model.Joseki
+	var request model.JosekiData
 	if err := c.Bind(&request); err != nil {
 		return c.JSON(http.StatusBadRequest, model.ErrorResponse{
 			Code:    400,
@@ -22,7 +22,7 @@ func GetVideos(c echo.Context) error {
 	if len(videos) == 0 {
 		data = model.VideoResponse{
 			Code: 200,
-			Data: make([]model.Video, 0),
+			Data: make([]model.VideoData, 0),
 		}
 	} else {
 		data = model.VideoResponse{

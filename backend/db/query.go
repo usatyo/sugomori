@@ -26,7 +26,7 @@ func GetVideosFromHash(hash int64, hop int, limit int) []model.Video {
 	return convertToVideoList(res, limit)
 }
 
-func GetJosekiPath(hash int64) []model.Stone {
+func GetJosekiPath(hash int64) model.Joseki {
 	query := `
 		MATCH path=(:Stone {hash: 0})-[:Move*]->(:Stone {hash: $hash})
 		WITH reduce(output = [], n IN nodes(path) | output + n ) as nodeCollection
@@ -41,7 +41,7 @@ func GetJosekiPath(hash int64) []model.Stone {
 	if err != nil {
 		panic(err)
 	}
-	return convertToJoseki(res).Stones
+	return convertToJoseki(res)
 }
 
 func GetCountRanking(limit int) []model.Stone {

@@ -11,16 +11,16 @@ const (
 )
 
 type Stone struct {
-	Color Color `json:"color"`
-	X     int   `json:"x"`
-	Y     int   `json:"y"`
-	Hash  int64 `json:"hash"`
+	Color Color
+	X     int
+	Y     int
+	Hash  int64
 }
 
 type Joseki struct {
-	Stones []Stone `json:"stones"`
+	Stones []Stone
 }
 
 type Video struct {
-	Id string `json:"id"`
+	Id string
 }
