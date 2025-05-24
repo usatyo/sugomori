@@ -15,7 +15,6 @@ func GetVideos(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest)
 	}
 	if err := c.Validate(&request); err != nil {
-		println(err.Error())
 		return echo.NewHTTPError(http.StatusBadRequest)
 	}
 	videos := service.GetVideos(request)
@@ -36,6 +35,12 @@ func GetRanking(c echo.Context) error {
 	limit, err := strconv.Atoi(c.QueryParam("limit"))
 	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest)
+	}
+	if limit <= 0 {
+		return echo.NewHTTPError(http.StatusBadRequest, "value 'limit' must be greater than 0")
+	}
+	if limit >= 100 {
+		return echo.NewHTTPError(http.StatusBadRequest, "value 'limit' must be less than 100")
 	}
 	res := service.GetRanking(limit)
 	data := model.RankingResponse{

@@ -1,3 +1,2 @@
-github.com/go-playground/validator
 全体に共通の処理があれば middleware が便利、cors とかにも必要そう
 テストを書く
