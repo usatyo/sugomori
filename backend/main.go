@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	util.LoadEnv()
+	util.LoadEnvVar()
 	db.Initialize()
 	router.Routing()
 }

@@ -19,14 +19,14 @@ func Routing() {
 
 	e.Validator = &val.CustomValidator{Validator: validator.New()}
 
-	e.GET("/", controller.HealthCheck)
+	e.GET("/", controller.HealthCheckHandler)
 
 	// GetVideos という名前だが、bodyに Joseki を含むので、POSTメソッドで受け取る
-	e.POST("/video", controller.GetVideos)
+	e.POST("/video", controller.GetVideoHandler)
 
-	e.GET("/ranking", controller.GetRanking)
+	e.GET("/ranking", controller.GetRankingHandler)
 
-	e.POST("/joseki", controller.PostJoseki)
+	e.POST("/joseki", controller.PostJosekiHandler)
 
 	err := e.Start(":8080")
 	if err != nil {

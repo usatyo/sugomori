@@ -9,7 +9,7 @@ import (
 	"github.com/usatyo/sugomori/service"
 )
 
-func GetVideos(c echo.Context) error {
+func GetVideoHandler(c echo.Context) error {
 	var request model.VideoGetRequest
 	if err := c.Bind(&request); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest)
@@ -31,7 +31,7 @@ func GetVideos(c echo.Context) error {
 	return c.JSON(http.StatusOK, data)
 }
 
-func GetRanking(c echo.Context) error {
+func GetRankingHandler(c echo.Context) error {
 	limit, err := strconv.Atoi(c.QueryParam("limit"))
 	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest)
@@ -49,7 +49,7 @@ func GetRanking(c echo.Context) error {
 	return c.JSON(http.StatusOK, data)
 }
 
-func PostJoseki(c echo.Context) error {
+func PostJosekiHandler(c echo.Context) error {
 	var request model.JosekiPostRequest
 	if err := c.Bind(&request); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest)
