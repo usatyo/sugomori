@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	ResponseJSON = `{"message":"OK"}` + "\n"
+	ResponseHealthJSON = `{"message":"OK"}` + "\n"
 )
 
 func TestHealthCheck(t *testing.T) {
@@ -24,6 +24,6 @@ func TestHealthCheck(t *testing.T) {
 	// Assertions
 	if assert.NoError(t, controller.HealthCheckHandler(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)
-		assert.Equal(t, ResponseJSON, rec.Body.String())
+		assert.Equal(t, ResponseHealthJSON, rec.Body.String())
 	}
 }
