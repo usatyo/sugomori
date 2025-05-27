@@ -1,6 +1,18 @@
 # makeを打った時のコマンド
 .DEFAULT_GOAL := help
 
+.PHONY: dev
+dev: ## 開発環境を起動
+	@go run main.go
+
+.PHONY: test
+test: ## テストを実行
+	@go test ./...
+
+.PHONY: format
+format: ## backend ディレクトリの Go ファイルをすべてフォーマット
+	@go fmt ./...
+
 .PHONY: build
 build: ## イメージを構築
 	@docker compose build
@@ -17,10 +29,6 @@ down: ## コンテナ停止
 .PHONY: deploy
 deploy: ## Google Cloud にデプロイ
 	@gcloud builds submit --region=asia-east1 --substitutions=_AR_REPO_NAME="sugomori-backend"
-
-.PHONY: format
-format: ## backend ディレクトリの Go ファイルをすべてフォーマット
-	@go fmt ./...
 
 .PHONY: help
 help: ## ヘルプ

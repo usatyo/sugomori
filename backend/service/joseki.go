@@ -33,7 +33,7 @@ func GetRanking(limit int) []model.RankingData {
 
 	// TODO: 動的に取得する
 	count := 10
-	
+
 	for _, ranking := range rankings {
 		joseki := db.GetJosekiPath(ranking.Hash)
 		result = append(result, model.RankingData{

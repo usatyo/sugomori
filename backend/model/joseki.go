@@ -10,6 +10,13 @@ const (
 	White
 )
 
+func InversedColor(c Color) Color {
+	if c == Black {
+		return White
+	}
+	return Black
+}
+
 type Stone struct {
 	Color Color
 	X     int
