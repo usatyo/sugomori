@@ -1,8 +1,8 @@
 # makeを打った時のコマンド
 .DEFAULT_GOAL := help
 
-.PHONY: start
-start: ## ios シミュレータでデバッグを開始
+.PHONY: dev
+dev: ## ios シミュレータでデバッグを開始
 	@flutter run --dart-define-from-file=dart_defines/dev.env
 
 .PHONY: help
