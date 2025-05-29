@@ -16,7 +16,7 @@ import (
 )
 
 var (
-	RequestPostJosekiJSON = `{
+	RequestPostJosekiOKJSON = `{
 		"joseki": {"stones": [
 			{"x": 3, "y": 2, "color": 0},
 			{"x": 3, "y": 4, "color": 1},
@@ -25,16 +25,16 @@ var (
 		]},
 		"video": {"id": "aj0I_Z6bK9E"}
 	}`
-	ResponsePostJosekiJSON = `{"message":"Joseki added"}` + "\n"
+	ResponsePostJosekiOKJSON = `{"message":"Joseki added"}` + "\n"
 )
 
-func TestPostJoseki200(t *testing.T) {
+func TestPostJosekiOK(t *testing.T) {
 	util.LoadEnvVar("../.env.dev")
 	db.Initialize()
 
 	e := echo.New()
 	e.Validator = &val.CustomValidator{Validator: validator.New()}
-	req := httptest.NewRequest(http.MethodPost, "/joseki", strings.NewReader(RequestPostJosekiJSON))
+	req := httptest.NewRequest(http.MethodPost, "/joseki", strings.NewReader(RequestPostJosekiOKJSON))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
@@ -42,12 +42,12 @@ func TestPostJoseki200(t *testing.T) {
 	// Assertions
 	if assert.NoError(t, controller.PostJosekiHandler(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)
-		assert.Equal(t, ResponsePostJosekiJSON, rec.Body.String())
+		assert.Equal(t, ResponsePostJosekiOKJSON, rec.Body.String())
 	}
 }
 
 var (
-	RequestGetVideoJSON = `{
+	RequestGetVideoOKJSON = `{
 		"stones": [
 			{"x": 3, "y": 2, "color": 0},
 			{"x": 3, "y": 4, "color": 1},
@@ -55,16 +55,16 @@ var (
 			{"x": 2, "y": 3, "color": 1}
 		]
 	}`
-	ResponseGetVideoJSON = `{"data":[{"id":"aj0I_Z6bK9E"}]}` + "\n"
+	ResponseGetVideoOKJSON = `{"data":[{"id":"aj0I_Z6bK9E"}]}` + "\n"
 )
 
-func TestGetVideo200(t *testing.T) {
+func TestGetVideoOK(t *testing.T) {
 	util.LoadEnvVar("../.env.dev")
 	db.Initialize()
 
 	e := echo.New()
 	e.Validator = &val.CustomValidator{Validator: validator.New()}
-	req := httptest.NewRequest(http.MethodPost, "/video", strings.NewReader(RequestGetVideoJSON))
+	req := httptest.NewRequest(http.MethodPost, "/video", strings.NewReader(RequestGetVideoOKJSON))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
@@ -72,6 +72,32 @@ func TestGetVideo200(t *testing.T) {
 	// Assertions
 	if assert.NoError(t, controller.GetVideoHandler(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)
-		assert.Equal(t, ResponseGetVideoJSON, rec.Body.String())
+		assert.Equal(t, ResponseGetVideoOKJSON, rec.Body.String())
+	}
+}
+
+var (
+	RequestPostJosekiEmptyJSON = `{
+		"joseki": {"stones": []},
+		"video": {"id": "aj0I_Z6bK9E"}
+	}`
+	ResponsePostJosekiEmptyJSON = `{"message":"At least 1 stones are required"}` + "\n"
+)
+
+func TestPostJosekiEmpty(t *testing.T) {
+	util.LoadEnvVar("../.env.dev")
+	db.Initialize()
+
+	e := echo.New()
+	e.Validator = &val.CustomValidator{Validator: validator.New()}
+	req := httptest.NewRequest(http.MethodPost, "/joseki", strings.NewReader(RequestPostJosekiEmptyJSON))
+	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+
+	// Assertions
+	if assert.NoError(t, controller.PostJosekiHandler(c)) {
+		assert.Equal(t, http.StatusBadRequest, rec.Code)
+		assert.Equal(t, ResponsePostJosekiEmptyJSON, rec.Body.String())
 	}
 }
