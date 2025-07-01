@@ -49,6 +49,9 @@ class _SearchPageState extends State<SearchPage> {
               child: SingleChildScrollView(
                 child: Column(
                   children:
+                      videos.isEmpty
+                          ? [Text("動画が見つかりませんでした")]
+                          :
                       videos
                           .map((video) => VideoCard(videoInfo: video))
                           .toList(),
