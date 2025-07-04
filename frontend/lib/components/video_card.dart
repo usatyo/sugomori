@@ -32,6 +32,7 @@ class _VideoCardState extends State<VideoCard> {
               child: Container(
                 padding: EdgeInsets.all(10),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       style: TextStyle(

@@ -20,11 +20,22 @@ class _SearchPageState extends State<SearchPage> {
   int counter = 0;
   Joseki joseki = Joseki([]);
   JosekiApiService josekiApiService = JosekiApiService.instance;
+  bool isLoading = false;
+  String errorMessage = "";
 
   void fetchVideos() async {
+    setState(() {
+      isLoading = true;
+    });
     List<Video> newVideos = await josekiApiService.getVideos(joseki);
     setState(() {
+      if (newVideos.isEmpty) {
+        errorMessage = "動画が見つかりませんでした";
+      } else {
+        errorMessage = "";
+      }
       videos = newVideos;
+      isLoading = false;
     });
   }
 
@@ -42,22 +53,26 @@ class _SearchPageState extends State<SearchPage> {
               alignment: Alignment.center,
               child: Goban(joseki: joseki),
             ),
-            Button(text: "検索", onPressed: fetchVideos),
-            ScrollShadow(
-              color: Theme.of(context).cardColor,
-              size: 20,
-              child: SingleChildScrollView(
-                child: Column(
-                  children:
-                      videos.isEmpty
-                          ? [Text("動画が見つかりませんでした")]
-                          :
-                      videos
-                          .map((video) => VideoCard(videoInfo: video))
-                          .toList(),
+            Button(text: "検索", onPressed: isLoading ? null : fetchVideos),
+            if (isLoading)
+              const Expanded(child: Center(child: CircularProgressIndicator())),
+            if (!isLoading)
+              Expanded(
+                child: ScrollShadow(
+                  color: Theme.of(context).cardColor,
+                  size: 20,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children:
+                          videos.isEmpty
+                              ? [Text(errorMessage)]
+                              : videos
+                                  .map((video) => VideoCard(videoInfo: video))
+                                  .toList(),
+                    ),
+                  ),
                 ),
               ),
-            ),
           ],
         ),
       ),
