@@ -1,0 +1,16 @@
+{
+  "@@locale":"en",
+  "menu_search": "Search",
+  "menu_register": "Register",
+  "menu_setting": "Setting",
+  "title_setting": "Setting",
+  "button_search": "Search",
+  "button_register": "Register",
+  "button_start": "Start",
+  "goban_back": "Back",
+  "goban_back5": "5 Back",
+  "goban_pass": "Pass",
+  "goban_clear": "Clear",
+  "setting_language": "Language",
+  "message_video_not_found": "No videos found"
+}

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/components/bottom_menu_item.dart';
+import 'package:frontend/l10n/app_localizations.dart';
 
 class BottomMenu extends StatefulWidget {
   const BottomMenu({super.key});
@@ -22,7 +23,7 @@ class MenuBarState extends State<BottomMenu> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           BottomMenuItem(
-            label: "定石検索",
+            label: AppLocalizations.of(context)!.menu_search,
             icon: Icons.find_in_page,
             route: "/search",
             selected:
@@ -30,17 +31,17 @@ class MenuBarState extends State<BottomMenu> {
                 ModalRoute.of(context)!.settings.name == "/detail",
           ),
           BottomMenuItem(
-            label: "定石登録",
+            label: AppLocalizations.of(context)!.menu_register,
             icon: Icons.note_add,
             route: "/register",
             selected: ModalRoute.of(context)!.settings.name == "/register",
           ),
-          // BottomMenuItem(
-          //   label: "設定",
-          //   icon: Icons.settings,
-          //   route: "/setting",
-          //   selected: ModalRoute.of(context)!.settings.name == "/setting",
-          // ),
+          BottomMenuItem(
+            label: AppLocalizations.of(context)!.menu_setting,
+            icon: Icons.settings,
+            route: "/setting",
+            selected: ModalRoute.of(context)!.settings.name == "/setting",
+          ),
         ],
       ),
     );

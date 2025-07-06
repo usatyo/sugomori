@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:flutter_svg/svg.dart';
 import 'package:frontend/components/atoms/button.dart';
+import 'package:frontend/l10n/app_localizations.dart';
 
 class StartPage extends StatefulWidget {
   const StartPage({super.key});
@@ -33,7 +34,7 @@ class _StartPageState extends State<StartPage> {
             ),
           ),
           Button(
-            text: '続ける',
+            text: AppLocalizations.of(context)!.button_start,
             onPressed: () {
               Navigator.pushNamed(context, '/search');
             },

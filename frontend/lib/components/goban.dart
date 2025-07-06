@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/components/goban_painter.dart';
 import 'package:frontend/components/icon_text.dart';
 import 'package:frontend/components/single_stone.dart';
+import 'package:frontend/l10n/app_localizations.dart';
 import 'package:frontend/models/joseki.dart';
 import 'package:frontend/util/go_rule.dart';
 
@@ -83,7 +84,7 @@ class _GobanState extends State<Goban> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 IconText(
-                  hintText: "1手戻る",
+                  hintText: AppLocalizations.of(context)!.goban_back,
                   icon: Icons.keyboard_arrow_up,
                   onPressed: () {
                     setState(() {
@@ -94,7 +95,7 @@ class _GobanState extends State<Goban> {
                   },
                 ),
                 IconText(
-                  hintText: "5手戻る",
+                  hintText: AppLocalizations.of(context)!.goban_back5,
                   icon: Icons.keyboard_double_arrow_up,
                   onPressed: () {
                     setState(() {
@@ -105,22 +106,18 @@ class _GobanState extends State<Goban> {
                   },
                 ),
                 IconText(
-                  hintText: "手抜き",
+                  hintText: AppLocalizations.of(context)!.goban_pass,
                   icon: Icons.repeat,
                   onPressed: () {
                     setState(() {
-                      widget.joseki.pushStone(
-                        color: nextColor,
-                        x: -1,
-                        y: -1,
-                      );
+                      widget.joseki.pushStone(color: nextColor, x: -1, y: -1);
                       nextColor = reversedColor(nextColor);
                       refreshStoneMatrix();
                     });
                   },
                 ),
                 IconText(
-                  hintText: "クリア",
+                  hintText: AppLocalizations.of(context)!.goban_clear,
                   icon: Icons.delete,
                   onPressed: () {
                     setState(() {

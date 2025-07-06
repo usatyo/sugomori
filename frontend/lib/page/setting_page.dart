@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/components/bottom_menu.dart';
 import 'package:frontend/components/general_setting.dart';
+import 'package:frontend/l10n/app_localizations.dart';
 
 class SettingPage extends StatelessWidget {
   const SettingPage({super.key});
@@ -16,7 +17,7 @@ class SettingPage extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 30, vertical: 0),
             child: Text(
-              "設定",
+              AppLocalizations.of(context)!.title_setting,
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
           ),

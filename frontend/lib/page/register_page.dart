@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/components/atoms/button.dart';
 import 'package:frontend/components/bottom_menu.dart';
 import 'package:frontend/components/goban.dart';
+import 'package:frontend/l10n/app_localizations.dart';
 import 'package:frontend/models/joseki.dart';
 import 'package:frontend/services/joseki_api_service.dart';
 
@@ -53,7 +54,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
             Button(
-              text: "登録",
+              text: AppLocalizations.of(context)!.button_register,
               onPressed: () {
                 josekiApiService.postJoseki(joseki, videoId);
               },

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/l10n/app_localizations.dart';
 import 'package:frontend/page/register_page.dart';
 import 'package:frontend/page/search_page.dart';
+import 'package:frontend/page/setting_page.dart';
 import 'package:frontend/page/start_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 // import 'package:frontend/page/setting_page.dart';
 
 import 'theme.dart';
@@ -11,8 +15,42 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  static void setLocale(BuildContext context, Locale newLocale) {
+    _MyAppState state = context.findAncestorStateOfType<_MyAppState>()!;
+    state.setLocale(newLocale);
+  }
+
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Locale? locale;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSavedLanguage();
+  }
+
+  void setLocale(Locale newLocale) {
+    setState(() {
+      locale = newLocale;
+    });
+  }
+
+  void _loadSavedLanguage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? savedLanguageCode = prefs.getString('languageCode');
+    if (savedLanguageCode != null) {
+      setState(() {
+        locale = Locale(savedLanguageCode);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +69,11 @@ class MyApp extends StatelessWidget {
         '/start': (context) => const StartPage(),
         '/search': (context) => const SearchPage(),
         '/register': (context) => const RegisterPage(),
-        // '/setting': (context) => const SettingPage(),
+        '/setting': (context) => const SettingPage(),
       },
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: const [Locale('en'), Locale('ja')],
+      locale: locale,
     );
   }
 }

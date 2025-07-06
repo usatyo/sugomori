@@ -4,6 +4,7 @@ import 'package:frontend/components/atoms/button.dart';
 import 'package:frontend/components/bottom_menu.dart';
 import 'package:frontend/components/goban.dart';
 import 'package:frontend/components/video_card.dart';
+import 'package:frontend/l10n/app_localizations.dart';
 import 'package:frontend/models/joseki.dart';
 import 'package:frontend/models/youtube.dart';
 import 'package:frontend/services/joseki_api_service.dart';
@@ -30,7 +31,7 @@ class _SearchPageState extends State<SearchPage> {
     List<Video> newVideos = await josekiApiService.getVideos(joseki);
     setState(() {
       if (newVideos.isEmpty) {
-        errorMessage = "動画が見つかりませんでした";
+        errorMessage = AppLocalizations.of(context)!.message_video_not_found;
       } else {
         errorMessage = "";
       }
@@ -53,7 +54,10 @@ class _SearchPageState extends State<SearchPage> {
               alignment: Alignment.center,
               child: Goban(joseki: joseki),
             ),
-            Button(text: "検索", onPressed: isLoading ? null : fetchVideos),
+            Button(
+              text: AppLocalizations.of(context)!.button_search,
+              onPressed: isLoading ? null : fetchVideos,
+            ),
             if (isLoading)
               const Expanded(child: Center(child: CircularProgressIndicator())),
             if (!isLoading)

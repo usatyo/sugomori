@@ -3,28 +3,28 @@ import 'package:flutter/material.dart';
 class BottomMenuItem extends StatelessWidget {
   const BottomMenuItem({
     super.key,
-    this.label,
-    this.icon,
-    this.route,
-    this.selected,
+    required this.label,
+    required this.icon,
+    required this.route,
+    required this.selected,
   });
-  final String? label;
-  final IconData? icon;
-  final String? route;
-  final bool? selected;
+  final String label;
+  final IconData icon;
+  final String route;
+  final bool selected;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (route != null && ModalRoute.of(context)?.settings.name != route) {
-          Navigator.pushNamed(context, route!);
+        if (ModalRoute.of(context)?.settings.name != route) {
+          Navigator.pushNamed(context, route);
         }
       },
       child: Column(
         children: [
           Opacity(
-            opacity: selected! ? 1 : 0.5,
+            opacity: selected ? 1 : 0.5,
             child: Icon(icon, size: 40, color: Theme.of(context).primaryColor),
           ),
           Row(
@@ -32,16 +32,16 @@ class BottomMenuItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              selected! ? TextDecoration() : Container(),
+              selected ? TextDecoration() : Container(),
               Text(
-                label!,
+                label,
                 style: TextStyle(
                   fontSize: 12,
                   height: 1,
                   color: Theme.of(context).primaryColor,
                 ),
               ),
-              selected! ? TextDecoration() : Container(),
+              selected ? TextDecoration() : Container(),
             ],
           ),
         ],
