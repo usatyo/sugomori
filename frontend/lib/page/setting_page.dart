@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/components/bottom_menu.dart';
-import 'package:frontend/components/general_setting.dart';
+import 'package:frontend/components/bottom_menu/bottom_menu.dart';
+import 'package:frontend/components/setting/general_setting.dart';
 import 'package:frontend/l10n/app_localizations.dart';
 
 class SettingPage extends StatelessWidget {

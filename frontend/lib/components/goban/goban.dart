@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/components/goban_painter.dart';
-import 'package:frontend/components/icon_text.dart';
-import 'package:frontend/components/single_stone.dart';
+import 'package:frontend/components/goban/goban_painter.dart';
+import 'package:frontend/components/goban/icon_text.dart';
+import 'package:frontend/components/goban/single_stone.dart';
 import 'package:frontend/l10n/app_localizations.dart';
 import 'package:frontend/models/joseki.dart';
 import 'package:frontend/util/go_rule.dart';

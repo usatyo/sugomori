@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
-import 'package:frontend/components/bottom_menu.dart';
+import 'package:frontend/components/bottom_menu/bottom_menu.dart';
 // import 'package:frontend/components/goban.dart';
 import 'package:frontend/models/joseki.dart';
 import 'package:frontend/models/youtube.dart';

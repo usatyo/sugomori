@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/components/bottom_menu_item.dart';
+import 'package:frontend/components/bottom_menu/bottom_menu_item.dart';
 import 'package:frontend/l10n/app_localizations.dart';
 
 class BottomMenu extends StatefulWidget {
