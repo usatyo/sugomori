@@ -4,7 +4,7 @@ import 'package:frontend/page/detail_page.dart';
 
 class VideoCard extends StatefulWidget {
   const VideoCard({super.key, required this.videoInfo});
-  final Video videoInfo;
+  final Video? videoInfo;
 
   @override
   State<VideoCard> createState() => _VideoCardState();
@@ -13,49 +13,94 @@ class VideoCard extends StatefulWidget {
 class _VideoCardState extends State<VideoCard> {
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      child: InkWell(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => DetailPage(videoInfo: widget.videoInfo),
-            ),
-          );
-        },
-        child: Row(
-          children: [
-            Image.network(widget.videoInfo.thumbnailUrl, width: 150),
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.all(10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+    if (widget.videoInfo == null) {
+      return Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        child: InkWell(
+          onTap: () {},
+          child: Row(
+            children: [
+              Container(
+                width: 150,
+                height: 150 * 9 / 16,
+                color: Colors.grey[300],
+              ),
+              // Image.network(widget.videoInfo!.thumbnailUrl, width: 150),
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        "video title",
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
                       ),
-                      widget.videoInfo.title,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                    ),
-                    Text(
-                      style: TextStyle(fontSize: 14, color: Colors.grey),
-                      widget.videoInfo.channelTitle,
-                      overflow: TextOverflow.clip,
-                      maxLines: 1,
-                    ),
-                  ],
+                      Text(
+                        style: TextStyle(fontSize: 14, color: Colors.grey),
+                        "channel title",
+                        overflow: TextOverflow.clip,
+                        maxLines: 1,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    } else {
+      return Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        child: InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DetailPage(videoInfo: widget.videoInfo!),
+              ),
+            );
+          },
+          child: Row(
+            children: [
+              Image.network(widget.videoInfo!.thumbnailUrl, width: 150),
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        widget.videoInfo!.title,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                      ),
+                      Text(
+                        style: TextStyle(fontSize: 14, color: Colors.grey),
+                        widget.videoInfo!.channelTitle,
+                        overflow: TextOverflow.clip,
+                        maxLines: 1,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
   }
 }

@@ -41,11 +41,11 @@ class _GobanState extends State<Goban> {
                     CustomPaint(size: Size.infinite, painter: GobanPainter()),
                     GridView.builder(
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: 13 * 13,
+                      itemCount: screenBoardSize * screenBoardSize,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
-                        int x = index ~/ 13;
-                        int y = index % 13;
+                        int x = index ~/ screenBoardSize;
+                        int y = index % screenBoardSize;
                         Stone stone = stoneMatrix[x][y];
                         return SingleStone(
                           index: stone.index,
@@ -66,12 +66,11 @@ class _GobanState extends State<Goban> {
                               },
                         );
                       },
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 13,
-                            mainAxisSpacing: 2,
-                            crossAxisSpacing: 2,
-                          ),
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: screenBoardSize,
+                        mainAxisSpacing: 2,
+                        crossAxisSpacing: 2,
+                      ),
                     ),
                   ],
                 ),

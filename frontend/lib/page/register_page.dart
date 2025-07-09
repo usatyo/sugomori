@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:frontend/components/atoms/button.dart';
 import 'package:frontend/components/bottom_menu/bottom_menu.dart';
 import 'package:frontend/components/goban/goban.dart';
+import 'package:frontend/components/search/video_card.dart';
 import 'package:frontend/l10n/app_localizations.dart';
 import 'package:frontend/models/joseki.dart';
+import 'package:frontend/models/youtube.dart';
 import 'package:frontend/services/joseki_api_service.dart';
+import 'package:frontend/services/youtube_api_service.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -16,6 +19,7 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   JosekiApiService josekiApiService = JosekiApiService.instance;
   String videoId = "";
+  Video? videoInfo;
   Joseki joseki = Joseki([]);
 
   void onChangeUrl(String url) {
@@ -23,9 +27,21 @@ class _RegisterPageState extends State<RegisterPage> {
       Uri uri = Uri.parse(url);
       if (uri.host != "www.youtube.com" && uri.host != "youtu.be") {
         videoId = "";
+        videoInfo = null;
         return;
       }
       videoId = uri.queryParameters['v'] ?? "";
+      YoutubeApiService youtubeApiService = YoutubeApiService.instance;
+      youtubeApiService
+          .fetchVideos(videoIds: [videoId])
+          .then(
+            (videos) => {
+              if (videos.isNotEmpty)
+                {videoInfo = videos[0]}
+              else
+                {videoInfo = null},
+            },
+          );
     });
   }
 
@@ -53,6 +69,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ),
             ),
+            VideoCard(videoInfo: videoInfo),
             Button(
               text: AppLocalizations.of(context)!.button_register,
               onPressed: () {

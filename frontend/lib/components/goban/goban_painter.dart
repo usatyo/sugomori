@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/models/joseki.dart';
 
 class GobanPainter extends CustomPainter {
   @override
@@ -8,30 +9,19 @@ class GobanPainter extends CustomPainter {
       Paint()..color = Color(0xffebd480),
     );
 
-    final double gridSize = size.width / 13;
+    final double gridSize = size.width / screenBoardSize;
 
-    canvas.drawCircle(
-      Offset(gridSize / 2 + gridSize * 3, gridSize / 2 + gridSize * 3),
-      2,
-      Paint()..color = Colors.black,
-    );
-    canvas.drawCircle(
-      Offset(gridSize / 2 + gridSize * 3, gridSize / 2 + gridSize * 9),
-      2,
-      Paint()..color = Colors.black,
-    );
-    canvas.drawCircle(
-      Offset(gridSize / 2 + gridSize * 9, gridSize / 2 + gridSize * 3),
-      2,
-      Paint()..color = Colors.black,
-    );
-    canvas.drawCircle(
-      Offset(gridSize / 2 + gridSize * 9, gridSize / 2 + gridSize * 9),
-      2,
-      Paint()..color = Colors.black,
-    );
+    for (int x = 3; x < 19; x += 6) {
+      for (int y = 3; y < 19; y += 6) {
+        canvas.drawCircle(
+          Offset(gridSize / 2 + gridSize * x, gridSize / 2 + gridSize * y),
+          2,
+          Paint()..color = Colors.black,
+        );
+      }
+    }
 
-    for (int i = 0; i < 13; i++) {
+    for (int i = 0; i < screenBoardSize; i++) {
       final double x = gridSize * i + gridSize / 2;
       final double y = gridSize * i + gridSize / 2;
 

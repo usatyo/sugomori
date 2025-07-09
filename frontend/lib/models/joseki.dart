@@ -1,6 +1,7 @@
 import 'package:frontend/util/go_rule.dart';
 
 const int boardSize = 19;
+const int screenBoardSize = 14;
 enum StoneColor { black, white, empty }
 
 StoneColor reversedColor(StoneColor color) {
