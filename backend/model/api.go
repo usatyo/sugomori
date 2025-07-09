@@ -12,6 +12,10 @@ type RankingResponse struct {
 	Data []RankingData `json:"data"`
 }
 
+type JosekiResponse struct {
+	Data []JosekiData `json:"data"`
+}
+
 type ErrorResponse struct {
 	Message string `json:"message"`
 }

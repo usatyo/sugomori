@@ -68,3 +68,9 @@ func PostJosekiHandler(c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, data)
 }
+
+func GetJosekiHandler(c echo.Context) error {
+	videoId := c.QueryParam("videoId")
+	data := service.GetJoseki(videoId)
+	return c.JSON(http.StatusOK, data)
+}

@@ -28,6 +28,8 @@ func Routing() {
 
 	e.POST("/joseki", controller.PostJosekiHandler)
 
+	e.GET("/joseki", controller.GetJosekiHandler)
+
 	err := e.Start(":8080")
 	if err != nil {
 		panic(err)

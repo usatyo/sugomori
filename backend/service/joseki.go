@@ -51,3 +51,12 @@ func PostJoseki(josekiData model.JosekiData, videoData model.VideoData) {
 	db.CreateVideoNode(video, joseki.Stones[len(joseki.Stones)-1])
 	db.CreateJosekiNodes(joseki)
 }
+
+func GetJoseki(videoId string) []model.JosekiData {
+	joseki := db.GetJosekiList(videoId)
+	josekiData := make([]model.JosekiData, 0, len(joseki))
+	for _, j := range joseki {
+		josekiData = append(josekiData, j.ToData())
+	}
+	return josekiData
+}

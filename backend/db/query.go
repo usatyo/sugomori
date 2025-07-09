@@ -118,3 +118,28 @@ func CreateJosekiNodes(joseki model.Joseki) {
 		panic(err)
 	}
 }
+
+func GetJosekiList(videoId string) []model.Joseki {
+	query := `
+		MATCH (s:Stone)-[:Relate]->(v:Video {videoId: $videoId})
+		RETURN s.hash
+	`
+	res, err := neo4j.ExecuteQuery(Ctx, Driver,
+		query,
+		map[string]any{"videoId": videoId},
+		neo4j.EagerResultTransformer,
+		neo4j.ExecuteQueryWithDatabase("neo4j"))
+	if err != nil {
+		panic(err)
+	}
+	joseki := make([]model.Joseki, 0, len(res.Records))
+	for _, item := range res.Records {
+		record, flag := item.Get("s.hash")
+		if !flag {
+			continue
+		}
+		hash := record.(int64)
+		joseki = append(joseki, GetJosekiPath(hash))
+	}
+	return joseki
+}
