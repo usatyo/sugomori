@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/components/setting/language_setting.dart';
+import 'package:frontend/components/setting/language_dropdown.dart';
+import 'package:frontend/l10n/app_localizations.dart';
 import 'package:frontend/services/joseki_api_service.dart';
 
 class GeneralSetting extends StatefulWidget {
@@ -33,7 +34,16 @@ class _GeneralSettingState extends State<GeneralSetting> {
         children: [
           Padding(
             padding: EdgeInsets.only(left: 15, right: 10),
-            child: LanguageSetting(),
+            child: Row(
+              children: [
+                Text(
+                  AppLocalizations.of(context)!.setting_language,
+                  style: TextStyle(fontSize: 16),
+                ),
+                Expanded(child: SizedBox.shrink()),
+                LanguageDropdown(),
+              ],
+            ),
           ),
           // Padding(
           //   padding: EdgeInsets.only(left: 15, right: 10),

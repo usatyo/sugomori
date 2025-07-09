@@ -72,7 +72,12 @@ class _MyAppState extends State<MyApp> {
         '/setting': (context) => const SettingPage(),
       },
       localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: const [Locale('en'), Locale('ja')],
+      supportedLocales: const [
+        Locale('en'),
+        Locale('ja'),
+        Locale('ko'),
+        Locale('zh'),
+      ],
       locale: locale,
     );
   }
