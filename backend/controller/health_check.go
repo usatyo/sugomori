@@ -8,7 +8,7 @@ import (
 )
 
 func HealthCheckHandler(c echo.Context) error {
-	return c.JSON(http.StatusOK, model.HelloResponse{
+	return c.JSON(http.StatusOK, model.MessageResponse{
 		Message: "OK",
 	})
 }

@@ -30,6 +30,8 @@ func Routing() {
 
 	e.GET("/joseki", controller.GetJosekiHandler)
 
+	e.DELETE("/joseki", controller.DeleteJosekiHandler)
+
 	err := e.Start(":8080")
 	if err != nil {
 		panic(err)

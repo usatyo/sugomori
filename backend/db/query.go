@@ -143,3 +143,21 @@ func GetJosekiList(videoId string) []model.Joseki {
 	}
 	return joseki
 }
+
+func DeleteRelation(video model.Video, joseki model.Joseki) {
+	query := `
+		MATCH (s:Stone {hash: $hash})-[r:Relate]->(v:Video {videoId: $videoId})
+		DELETE r
+	`
+	_, err := neo4j.ExecuteQuery(Ctx, Driver, query,
+		map[string]any{
+			"videoId": video.Id,
+			"hash":  joseki.Stones[len(joseki.Stones)-1].Hash,
+		},
+		neo4j.EagerResultTransformer,
+		neo4j.ExecuteQueryWithDatabase("neo4j"))
+
+	if err != nil {
+		panic(err)
+	}
+}

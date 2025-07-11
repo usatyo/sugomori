@@ -60,3 +60,10 @@ func GetJoseki(videoId string) []model.JosekiData {
 	}
 	return josekiData
 }
+
+func DeleteJoseki(josekiData model.JosekiData, videoData model.VideoData) {
+	joseki := josekiData.ToModel()
+	video := videoData.ToModel()
+	util.JosekiHash(&joseki)
+	db.DeleteRelation(video, joseki)
+}

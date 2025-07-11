@@ -63,7 +63,7 @@ func PostJosekiHandler(c echo.Context) error {
 		})
 	}
 	service.PostJoseki(request.Joseki, request.Video)
-	data := model.HelloResponse{
+	data := model.MessageResponse{
 		Message: "Joseki added",
 	}
 	return c.JSON(http.StatusOK, data)
@@ -73,4 +73,19 @@ func GetJosekiHandler(c echo.Context) error {
 	videoId := c.QueryParam("videoId")
 	data := service.GetJoseki(videoId)
 	return c.JSON(http.StatusOK, data)
+}
+
+func DeleteJosekiHandler(c echo.Context) error {
+	var request model.JosekiPostRequest
+	if err := c.Bind(&request); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest)
+	}
+	if err := c.Validate(&request); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest)
+	}
+	println("DeleteJosekiHandler called with request:", request.Video.Id)
+	service.DeleteJoseki(request.Joseki, request.Video)
+	return c.JSON(http.StatusOK, model.MessageResponse{
+		Message: "Joseki deleted",
+	})
 }
