@@ -30,6 +30,10 @@ down: ## コンテナ停止
 deploy: ## Google Cloud にデプロイ
 	@gcloud builds submit --region=asia-east1 --substitutions=_AR_REPO_NAME="sugomori-backend"
 
+.PHONY: token
+token: ## Google Cloud のトークンを取得
+	@gcloud auth print-identity-token
+
 .PHONY: help
 help: ## ヘルプ
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \

@@ -55,10 +55,10 @@ class _RegisterPageState extends State<RegisterPage> {
         child: Column(
           spacing: 10,
           children: [
-            Container(
-              alignment: Alignment.center,
-              child: Goban(joseki: joseki),
-            ),
+            // Container(
+            //   alignment: Alignment.center,
+            //   child: Goban(joseki: joseki),
+            // ),
             TextField(
               onChanged: onChangeUrl,
               decoration: InputDecoration(

@@ -13,11 +13,23 @@ class JosekiApiService {
   static final JosekiApiService instance = JosekiApiService._instantiate();
 
   final String _baseUrl = const String.fromEnvironment("JOSEKI_API_URL");
+  final String _bearerToken = const String.fromEnvironment(
+    "JOSEKI_API_BEARER_TOKEN",
+  );
+
+  Uri getUri(String path) {
+    if (_bearerToken.isEmpty) {
+      return Uri.http(_baseUrl, path);
+    } else {
+      return Uri.https(_baseUrl, path);
+    }
+  }
 
   Future<String> fetchHello() async {
-    Uri uri = Uri.http(_baseUrl, '/');
+    Uri uri = getUri('/');
     Map<String, String> headers = {
       HttpHeaders.contentTypeHeader: 'application/json',
+      HttpHeaders.authorizationHeader: 'Bearer $_bearerToken',
     };
 
     var response = await http.get(uri, headers: headers);
@@ -32,9 +44,10 @@ class JosekiApiService {
   }
 
   Future<void> postJoseki(Joseki joseki, String videoId) async {
-    Uri uri = Uri.http(_baseUrl, '/joseki');
+    Uri uri = getUri('/joseki');
     Map<String, String> headers = {
       HttpHeaders.contentTypeHeader: 'application/json',
+      HttpHeaders.authorizationHeader: 'Bearer $_bearerToken',
     };
 
     var response = await http.post(
@@ -52,17 +65,16 @@ class JosekiApiService {
   }
 
   Future<List<Video>> getVideos(Joseki joseki) async {
-    Uri uri = Uri.http(_baseUrl, '/video');
+    Uri uri = getUri('/video');
     Map<String, String> headers = {
       HttpHeaders.contentTypeHeader: 'application/json',
+      HttpHeaders.authorizationHeader: 'Bearer $_bearerToken',
     };
 
     var response = await http.post(
       uri,
       headers: headers,
-      body: json.encode(
-        StonesRequest(stones: joseki.stoneList).toJson(),
-      ),
+      body: json.encode(StonesRequest(stones: joseki.stoneList).toJson()),
     );
     if (response.statusCode == 200) {
       YoutubeApiService youtubeApiService = YoutubeApiService.instance;
