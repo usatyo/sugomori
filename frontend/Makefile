@@ -6,7 +6,7 @@ dev: ## ios シミュレータでデバッグを開始
 	@flutter run --dart-define-from-file=dart_defines/dev.env
 
 .PHONY: prod-dev
-dev: ## ios シミュレータでデバッグを開始（バックエンドは本番環境）
+prod-dev: ## ios シミュレータでデバッグを開始（バックエンドは本番環境）
 	@flutter run --dart-define-from-file=dart_defines/.env
 
 .PHONY: gen
