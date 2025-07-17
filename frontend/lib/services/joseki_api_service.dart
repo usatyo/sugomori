@@ -17,11 +17,11 @@ class JosekiApiService {
     "JOSEKI_API_BEARER_TOKEN",
   );
 
-  Uri getUri(String path) {
+  Uri getUri(String path, {Map<String, String>? queryParameters}) {
     if (_bearerToken.isEmpty) {
-      return Uri.http(_baseUrl, path);
+      return Uri.http(_baseUrl, path, queryParameters);
     } else {
-      return Uri.https(_baseUrl, path);
+      return Uri.https(_baseUrl, path, queryParameters);
     }
   }
 
@@ -59,6 +59,42 @@ class JosekiApiService {
     );
     if (response.statusCode == 200) {
       json.decode(response.body);
+    } else {
+      throw json.decode(response.body)['error']['message'];
+    }
+  }
+
+  Future<List<Joseki>> getJoseki(String videoId) async {
+    Map<String, String> queryParameters = {'videoId': videoId};
+    Uri uri = getUri('/joseki', queryParameters: queryParameters);
+    Map<String, String> headers = {
+      HttpHeaders.contentTypeHeader: 'application/json',
+      HttpHeaders.authorizationHeader: 'Bearer $_bearerToken',
+    };
+
+    var response = await http.get(uri, headers: headers);
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+
+      List<dynamic> josekiArray = data['data'];
+
+      List<Joseki> josekiList = [];
+      for (var json in josekiArray) {
+        List<dynamic> stones = json['stones'];
+        StoneList stoneList =
+            stones
+                .map(
+                  (stone) => Stone(
+                    StoneColor.values[stone['color']],
+                    stone['x'],
+                    stone['y'],
+                    0,
+                  ),
+                )
+                .toList();
+        josekiList.add(Joseki(stoneList));
+      }
+      return josekiList;
     } else {
       throw json.decode(response.body)['error']['message'];
     }

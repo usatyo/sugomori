@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/models/youtube.dart';
-import 'package:frontend/page/detail_page.dart';
+import 'package:frontend/pages/detail_page.dart';
 
 class VideoCard extends StatefulWidget {
   const VideoCard({super.key, required this.videoInfo});

@@ -2,6 +2,7 @@ import 'package:frontend/util/go_rule.dart';
 
 const int boardSize = 19;
 const int screenBoardSize = 14;
+
 enum StoneColor { black, white, empty }
 
 StoneColor reversedColor(StoneColor color) {
@@ -30,11 +31,7 @@ class Stone {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'color': color == StoneColor.black ? 0 : 1,
-      'x': x,
-      'y': y,
-    };
+    return {'color': color == StoneColor.black ? 0 : 1, 'x': x, 'y': y};
   }
 }
 
@@ -44,13 +41,11 @@ typedef StoneMatrix = List<StoneList>;
 class Joseki {
   StoneList stoneList = [];
 
-  Joseki(StoneList stones);
+  Joseki(StoneList stones) {
+    stoneList = stones;
+  }
 
-  bool pushStone({
-    required StoneColor color,
-    required int x,
-    required int y,
-  }) {
+  bool pushStone({required StoneColor color, required int x, required int y}) {
     Stone stone = Stone(color, x, y, stoneList.length);
     stoneList.add(stone);
     if (getProcessedBoard(stoneList).isNotEmpty) {

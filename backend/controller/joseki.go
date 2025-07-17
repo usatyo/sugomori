@@ -71,7 +71,17 @@ func PostJosekiHandler(c echo.Context) error {
 
 func GetJosekiHandler(c echo.Context) error {
 	videoId := c.QueryParam("videoId")
-	data := service.GetJoseki(videoId)
+	joseki := service.GetJoseki(videoId)
+	var data model.JosekiResponse
+	if len(joseki) == 0 {
+		data = model.JosekiResponse{
+			Data: make([]model.JosekiData, 0),
+		}
+	} else {
+		data = model.JosekiResponse{
+			Data: joseki,
+		}
+	}
 	return c.JSON(http.StatusOK, data)
 }
 

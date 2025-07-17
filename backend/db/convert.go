@@ -30,7 +30,7 @@ func convertToJoseki(res *neo4j.EagerResult) model.Joseki {
 	var joseki model.Joseki = model.Joseki{
 		Stones: []model.Stone{},
 	}
-	for _, item := range res.Records {
+	for _, item := range res.Records[1:] {
 		record, flag := item.Get("collection")
 		if !flag {
 			continue
