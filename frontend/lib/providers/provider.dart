@@ -7,6 +7,10 @@ class GobanStateNotifier extends StateNotifier<GobanState> {
   void updateGoban(Joseki joseki) {
     state = GobanState(joseki);
   }
+
+  void resetGoban() {
+    state = GobanState(Joseki([]));
+  }
 }
 
 final gobanStateNotifierProvider =

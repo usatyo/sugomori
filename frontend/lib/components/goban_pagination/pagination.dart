@@ -17,7 +17,6 @@ class Pagination extends ConsumerStatefulWidget {
 }
 
 class _PaginationState extends ConsumerState<Pagination> {
-  Joseki newJoseki = Joseki([]);
   int currentPage = 0;
   int totalPage = 0;
   bool isEditing = false;
@@ -47,17 +46,40 @@ class _PaginationState extends ConsumerState<Pagination> {
   }
 
   void deleteJoseki() async {
-    if (josekiList.isEmpty) return;
-    josekiApiService.deleteJoseki(widget.videoId, josekiList[currentPage]);
-    setState(() {
-      josekiList.removeAt(currentPage);
-      totalPage = josekiList.length;
-      if (currentPage >= totalPage) {
-        currentPage = max(totalPage - 1, 0);
+    if (isEditing) {
+      // todo:
+    } else {
+      if (josekiList.isEmpty) return;
+      josekiApiService.deleteJoseki(widget.videoId, josekiList[currentPage]);
+      setState(() {
+        josekiList.removeAt(currentPage);
+        totalPage = josekiList.length;
+        if (currentPage >= totalPage) {
+          currentPage = max(totalPage - 1, 0);
+        }
+      });
+      if (totalPage != 0) {
+        refreshGoban();
       }
-    });
-    if (totalPage != 0) {
+    }
+  }
+
+  void addJoseki() async {
+    if (isEditing) {
+      Joseki newJoseki = ref.read(gobanStateNotifierProvider).joseki;
+      await josekiApiService.postJoseki(newJoseki, widget.videoId);
+      setState(() {
+        isEditing = false;
+        josekiList.add(newJoseki);
+      });
       refreshGoban();
+    } else {
+      setState(() {
+        isEditing = true;
+        totalPage++;
+        currentPage = totalPage - 1;
+      });
+      ref.read(gobanStateNotifierProvider.notifier).resetGoban();
     }
   }
 
@@ -76,6 +98,8 @@ class _PaginationState extends ConsumerState<Pagination> {
                   children: [
                     IconButton(
                       onPressed: () {
+                        if (totalPage == 0) return;
+                        if (isEditing) return;
                         setState(() {
                           currentPage = (currentPage - 1) % totalPage;
                           refreshGoban();
@@ -92,6 +116,8 @@ class _PaginationState extends ConsumerState<Pagination> {
                     ),
                     IconButton(
                       onPressed: () {
+                        if (totalPage == 0) return;
+                        if (isEditing) return;
                         setState(() {
                           currentPage = (currentPage + 1) % totalPage;
                           refreshGoban();
@@ -109,10 +135,14 @@ class _PaginationState extends ConsumerState<Pagination> {
               color: Colors.red,
               fit: true,
             ),
-            Button(text: '新規', onPressed: () {}, fit: true),
+            Button(
+              text: isEditing ? '追加' : '新規',
+              onPressed: addJoseki,
+              fit: true,
+            ),
           ],
         ),
-        totalPage == 0 ? Goban() : Goban(isEditable: false,),
+        totalPage == 0 ? Text('手順が登録されていません') : Goban(isEditable: isEditing),
       ],
     );
   }
