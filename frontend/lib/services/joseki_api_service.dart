@@ -123,4 +123,24 @@ class JosekiApiService {
       throw json.decode(response.body)['error']['message'];
     }
   }
+
+  Future<void> deleteJoseki(String videoId, Joseki joseki) async {
+    Uri uri = getUri('/joseki');
+    Map<String, String> headers = {
+      HttpHeaders.contentTypeHeader: 'application/json',
+      HttpHeaders.authorizationHeader: 'Bearer $_bearerToken',
+    };
+    var response = await http.delete(
+      uri,
+      headers: headers,
+      body: json.encode(
+        JosekiVideoRequest(stones: joseki.stoneList, videoId: videoId).toJson(),
+      ),
+    );
+    if (response.statusCode == 200) {
+      json.decode(response.body);
+    } else {
+      throw json.decode(response.body)['error']['message'];
+    }
+  }
 }

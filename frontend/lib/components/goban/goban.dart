@@ -9,7 +9,8 @@ import 'package:frontend/providers/provider.dart';
 import 'package:frontend/util/go_rule.dart';
 
 class Goban extends ConsumerStatefulWidget {
-  const Goban({super.key});
+  const Goban({super.key, this.isEditable = true});
+  final bool isEditable;
 
   @override
   ConsumerState<Goban> createState() => _GobanState();
@@ -19,6 +20,49 @@ class _GobanState extends ConsumerState<Goban> {
   StoneColor nextColor = StoneColor.black;
   Joseki joseki = Joseki([]);
   StoneMatrix stoneMatrix = getProcessedBoard([]);
+
+  void onPressedCross(int x, int y) {
+    if (!widget.isEditable) return;
+    setState(() {
+      if (!joseki.pushStone(color: nextColor, x: x, y: y)) {
+        return;
+      }
+      nextColor = reversedColor(nextColor);
+      ref.read(gobanStateNotifierProvider.notifier).updateGoban(joseki);
+    });
+  }
+
+  void onPressedBack() {
+    setState(() {
+      joseki.popStone();
+      nextColor = reversedColor(nextColor);
+      ref.read(gobanStateNotifierProvider.notifier).updateGoban(joseki);
+    });
+  }
+
+  void onPressedBack5() {
+    setState(() {
+      joseki.popStones(5);
+      nextColor = reversedColor(nextColor);
+      ref.read(gobanStateNotifierProvider.notifier).updateGoban(joseki);
+    });
+  }
+
+  void onPressedPass() {
+    setState(() {
+      joseki.pushStone(color: nextColor, x: -1, y: -1);
+      nextColor = reversedColor(nextColor);
+      ref.read(gobanStateNotifierProvider.notifier).updateGoban(joseki);
+    });
+  }
+
+  void onPressedClear() {
+    setState(() {
+      joseki.clear();
+      nextColor = StoneColor.black;
+      ref.read(gobanStateNotifierProvider.notifier).updateGoban(joseki);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,22 +98,7 @@ class _GobanState extends ConsumerState<Goban> {
                         return SingleStone(
                           index: stone.index,
                           color: stone.color,
-                          onPressed:
-                              () => {
-                                setState(() {
-                                  if (!joseki.pushStone(
-                                    color: nextColor,
-                                    x: x,
-                                    y: y,
-                                  )) {
-                                    return;
-                                  }
-                                  nextColor = reversedColor(nextColor);
-                                  ref
-                                      .read(gobanStateNotifierProvider.notifier)
-                                      .updateGoban(joseki);
-                                }),
-                              },
+                          onPressed: () => onPressedCross(x, y),
                         );
                       },
                       gridDelegate:
@@ -92,54 +121,22 @@ class _GobanState extends ConsumerState<Goban> {
                 IconText(
                   hintText: AppLocalizations.of(context)!.goban_back,
                   icon: Icons.keyboard_arrow_up,
-                  onPressed: () {
-                    setState(() {
-                      joseki.popStone();
-                      nextColor = reversedColor(nextColor);
-                      ref
-                          .read(gobanStateNotifierProvider.notifier)
-                          .updateGoban(joseki);
-                    });
-                  },
+                  onPressed: widget.isEditable ? onPressedBack : null,
                 ),
                 IconText(
                   hintText: AppLocalizations.of(context)!.goban_back5,
                   icon: Icons.keyboard_double_arrow_up,
-                  onPressed: () {
-                    setState(() {
-                      joseki.popStones(5);
-                      nextColor = reversedColor(nextColor);
-                      ref
-                          .read(gobanStateNotifierProvider.notifier)
-                          .updateGoban(joseki);
-                    });
-                  },
+                  onPressed: widget.isEditable ? onPressedBack5 : null,
                 ),
                 IconText(
                   hintText: AppLocalizations.of(context)!.goban_pass,
                   icon: Icons.repeat,
-                  onPressed: () {
-                    setState(() {
-                      joseki.pushStone(color: nextColor, x: -1, y: -1);
-                      nextColor = reversedColor(nextColor);
-                      ref
-                          .read(gobanStateNotifierProvider.notifier)
-                          .updateGoban(joseki);
-                    });
-                  },
+                  onPressed: widget.isEditable ? onPressedPass : null,
                 ),
                 IconText(
                   hintText: AppLocalizations.of(context)!.goban_clear,
                   icon: Icons.delete,
-                  onPressed: () {
-                    setState(() {
-                      joseki.clear();
-                      nextColor = StoneColor.black;
-                      ref
-                          .read(gobanStateNotifierProvider.notifier)
-                          .updateGoban(joseki);
-                    });
-                  },
+                  onPressed: widget.isEditable ? onPressedClear : null,
                 ),
               ],
             ),

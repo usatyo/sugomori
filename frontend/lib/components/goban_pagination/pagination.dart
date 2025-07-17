@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/components/atoms/button.dart';
@@ -44,6 +46,21 @@ class _PaginationState extends ConsumerState<Pagination> {
         .updateGoban(newJosekiList[currentPage]);
   }
 
+  void deleteJoseki() async {
+    if (josekiList.isEmpty) return;
+    josekiApiService.deleteJoseki(widget.videoId, josekiList[currentPage]);
+    setState(() {
+      josekiList.removeAt(currentPage);
+      totalPage = josekiList.length;
+      if (currentPage >= totalPage) {
+        currentPage = max(totalPage - 1, 0);
+      }
+    });
+    if (totalPage != 0) {
+      refreshGoban();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -86,11 +103,16 @@ class _PaginationState extends ConsumerState<Pagination> {
                 ),
               ),
             ),
-            Button(text: '削除', onPressed: () {}, color: Colors.red, fit: true),
+            Button(
+              text: '削除',
+              onPressed: deleteJoseki,
+              color: Colors.red,
+              fit: true,
+            ),
             Button(text: '新規', onPressed: () {}, fit: true),
           ],
         ),
-        totalPage == 0 ? Goban() : Goban(),
+        totalPage == 0 ? Goban() : Goban(isEditable: false,),
       ],
     );
   }

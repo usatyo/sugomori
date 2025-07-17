@@ -33,7 +33,7 @@ class _SingleStoneState extends State<SingleStone> {
                       ? Colors.black
                       : Colors.white,
             ),
-            onPressed: () => widget.onPressed(),
+            onPressed: widget.onPressed,
             child: null,
           ),
           IgnorePointer(

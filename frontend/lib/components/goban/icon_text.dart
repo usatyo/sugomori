@@ -5,11 +5,11 @@ class IconText extends StatelessWidget {
     super.key,
     required this.hintText,
     required this.icon,
-    required this.onPressed,
+    this.onPressed,
   });
   final String hintText;
   final IconData icon;
-  final void Function() onPressed;
+  final void Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
