@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 import 'package:frontend/components/atoms/button.dart';
 import 'package:frontend/components/bottom_menu/bottom_menu.dart';
@@ -7,16 +8,17 @@ import 'package:frontend/components/search/video_card.dart';
 import 'package:frontend/l10n/app_localizations.dart';
 import 'package:frontend/models/joseki.dart';
 import 'package:frontend/models/youtube.dart';
+import 'package:frontend/providers/provider.dart';
 import 'package:frontend/services/joseki_api_service.dart';
 
-class SearchPage extends StatefulWidget {
+class SearchPage extends ConsumerStatefulWidget {
   const SearchPage({super.key});
 
   @override
-  State<SearchPage> createState() => _SearchPageState();
+  ConsumerState<SearchPage> createState() => _SearchPageState();
 }
 
-class _SearchPageState extends State<SearchPage> {
+class _SearchPageState extends ConsumerState<SearchPage> {
   List<Video> videos = [];
   int counter = 0;
   Joseki joseki = Joseki([]);
@@ -42,6 +44,9 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
+    final GobanState gobanState = ref.watch(gobanStateNotifierProvider);
+    joseki = gobanState.joseki;
+
     return Scaffold(
       appBar: AppBar(),
       bottomNavigationBar: BottomMenu(),
@@ -52,7 +57,7 @@ class _SearchPageState extends State<SearchPage> {
           children: [
             Container(
               alignment: Alignment.center,
-              child: Goban(joseki: joseki),
+              child: Goban(),
             ),
             Button(
               text: AppLocalizations.of(context)!.button_search,

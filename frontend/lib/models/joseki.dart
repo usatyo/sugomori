@@ -76,3 +76,13 @@ class Joseki {
     return stoneList.where((stone) => stone.isPassed()).toList();
   }
 }
+
+class GobanState {
+  Joseki joseki = Joseki([]);
+  StoneMatrix stoneMatrix = getProcessedBoard([]);
+
+  GobanState(Joseki newJoseki) {
+    joseki = newJoseki;
+    stoneMatrix = getProcessedBoard(joseki.stoneList);
+  }
+}

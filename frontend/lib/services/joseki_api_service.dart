@@ -81,17 +81,13 @@ class JosekiApiService {
       List<Joseki> josekiList = [];
       for (var json in josekiArray) {
         List<dynamic> stones = json['stones'];
-        StoneList stoneList =
-            stones
-                .map(
-                  (stone) => Stone(
-                    StoneColor.values[stone['color']],
-                    stone['x'],
-                    stone['y'],
-                    0,
-                  ),
-                )
-                .toList();
+        StoneList stoneList = [];
+        for (int i = 0; i < stones.length; i++) {
+          dynamic stone = stones[i];
+          stoneList.add(
+            Stone(StoneColor.values[stone['color']], stone['x'], stone['y'], i),
+          );
+        }
         josekiList.add(Joseki(stoneList));
       }
       return josekiList;

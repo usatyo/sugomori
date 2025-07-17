@@ -1,31 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/components/goban/goban_painter.dart';
 import 'package:frontend/components/goban/icon_text.dart';
 import 'package:frontend/components/goban/single_stone.dart';
 import 'package:frontend/l10n/app_localizations.dart';
 import 'package:frontend/models/joseki.dart';
+import 'package:frontend/providers/provider.dart';
 import 'package:frontend/util/go_rule.dart';
 
-class Goban extends StatefulWidget {
-  const Goban({super.key, required this.joseki});
-  final Joseki joseki;
+class Goban extends ConsumerStatefulWidget {
+  const Goban({super.key});
 
   @override
-  State<Goban> createState() => _GobanState();
+  ConsumerState<Goban> createState() => _GobanState();
 }
 
-class _GobanState extends State<Goban> {
-  StoneMatrix stoneMatrix = getProcessedBoard([]);
+class _GobanState extends ConsumerState<Goban> {
   StoneColor nextColor = StoneColor.black;
-
-  void refreshStoneMatrix() {
-    setState(() {
-      stoneMatrix = getProcessedBoard(widget.joseki.stoneList);
-    });
-  }
+  Joseki joseki = Joseki([]);
+  StoneMatrix stoneMatrix = getProcessedBoard([]);
 
   @override
   Widget build(BuildContext context) {
+    final GobanState gobanState = ref.watch(gobanStateNotifierProvider);
+    setState(() {
+      if (gobanState.joseki.stoneList.isNotEmpty) {
+        nextColor = reversedColor(gobanState.joseki.stoneList.last.color);
+      }
+      joseki = gobanState.joseki;
+      stoneMatrix = gobanState.stoneMatrix;
+    });
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -53,7 +57,7 @@ class _GobanState extends State<Goban> {
                           onPressed:
                               () => {
                                 setState(() {
-                                  if (!widget.joseki.pushStone(
+                                  if (!joseki.pushStone(
                                     color: nextColor,
                                     x: x,
                                     y: y,
@@ -61,16 +65,19 @@ class _GobanState extends State<Goban> {
                                     return;
                                   }
                                   nextColor = reversedColor(nextColor);
-                                  refreshStoneMatrix();
+                                  ref
+                                      .read(gobanStateNotifierProvider.notifier)
+                                      .updateGoban(joseki);
                                 }),
                               },
                         );
                       },
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: screenBoardSize,
-                        mainAxisSpacing: 2,
-                        crossAxisSpacing: 2,
-                      ),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: screenBoardSize,
+                            mainAxisSpacing: 2,
+                            crossAxisSpacing: 2,
+                          ),
                     ),
                   ],
                 ),
@@ -87,9 +94,11 @@ class _GobanState extends State<Goban> {
                   icon: Icons.keyboard_arrow_up,
                   onPressed: () {
                     setState(() {
-                      widget.joseki.popStone();
+                      joseki.popStone();
                       nextColor = reversedColor(nextColor);
-                      refreshStoneMatrix();
+                      ref
+                          .read(gobanStateNotifierProvider.notifier)
+                          .updateGoban(joseki);
                     });
                   },
                 ),
@@ -98,9 +107,11 @@ class _GobanState extends State<Goban> {
                   icon: Icons.keyboard_double_arrow_up,
                   onPressed: () {
                     setState(() {
-                      widget.joseki.popStones(5);
+                      joseki.popStones(5);
                       nextColor = reversedColor(nextColor);
-                      refreshStoneMatrix();
+                      ref
+                          .read(gobanStateNotifierProvider.notifier)
+                          .updateGoban(joseki);
                     });
                   },
                 ),
@@ -109,9 +120,11 @@ class _GobanState extends State<Goban> {
                   icon: Icons.repeat,
                   onPressed: () {
                     setState(() {
-                      widget.joseki.pushStone(color: nextColor, x: -1, y: -1);
+                      joseki.pushStone(color: nextColor, x: -1, y: -1);
                       nextColor = reversedColor(nextColor);
-                      refreshStoneMatrix();
+                      ref
+                          .read(gobanStateNotifierProvider.notifier)
+                          .updateGoban(joseki);
                     });
                   },
                 ),
@@ -120,9 +133,11 @@ class _GobanState extends State<Goban> {
                   icon: Icons.delete,
                   onPressed: () {
                     setState(() {
-                      widget.joseki.clear();
+                      joseki.clear();
                       nextColor = StoneColor.black;
-                      refreshStoneMatrix();
+                      ref
+                          .read(gobanStateNotifierProvider.notifier)
+                          .updateGoban(joseki);
                     });
                   },
                 ),

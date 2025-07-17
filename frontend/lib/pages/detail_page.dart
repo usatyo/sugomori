@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
-import 'package:frontend/components/atoms/button.dart';
 import 'package:frontend/components/bottom_menu/bottom_menu.dart';
 import 'package:frontend/components/goban_pagination/pagination.dart';
 import 'package:frontend/models/joseki.dart';
@@ -20,7 +19,6 @@ class _DetailPageState extends State<DetailPage> {
   late final YoutubePlayerController _controller;
   final JosekiApiService josekiApiService = JosekiApiService.instance;
   List<Joseki> josekiList = [];
-  final GlobalKey _key = GlobalKey<State<Pagination>>();
 
   @override
   void initState() {
@@ -29,16 +27,6 @@ class _DetailPageState extends State<DetailPage> {
       initialVideoId: widget.videoInfo.id,
       flags: YoutubePlayerFlags(autoPlay: true, showLiveFullscreenButton: true),
     );
-  }
-
-  void refreshJoseki() async {
-    List<Joseki> newJosekiList = await josekiApiService.getJoseki(
-      widget.videoInfo.id,
-    );
-    setState(() {
-      josekiList = [...newJosekiList];
-    });
-    _key.currentState?.setState(() {});
   }
 
   @override
@@ -95,8 +83,8 @@ class _DetailPageState extends State<DetailPage> {
                           ),
                         ],
                       ),
-                      // Button(text: "refresh", onPressed: refreshJoseki),
-                      Pagination(),
+                      Divider(thickness: 0.5,),
+                      Pagination(videoId: widget.videoInfo.id),
                     ],
                   ),
                 ),
