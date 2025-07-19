@@ -11,7 +11,7 @@ class YoutubeApiService {
 
   final String _baseUrl = 'www.googleapis.com';
 
-  Future<List<Video>> fetchVideos({required List<String> videoIds}) async {
+  Future<List<Video>> getVideosById({required List<String> videoIds}) async {
     Map<String, String> parameters = {
       'part': 'snippet',
       'id': videoIds.join(','),
@@ -36,6 +36,32 @@ class YoutubeApiService {
       return videos;
     } else {
       throw json.decode(response.body)['error']['message'];
+    }
+  }
+
+  Future<List<Video>> getVideosByWord(String word) async {
+    Map<String, String> parameters = {
+      'part': 'snippet',
+      'q': word,
+      'type': 'video',
+      'maxResults': '8',
+      'key': const String.fromEnvironment("YOUTUBE_API_KEY"),
+    };
+    Uri uri = Uri.https(_baseUrl, '/youtube/v3/search', parameters);
+    Map<String, String> headers = {
+      HttpHeaders.contentTypeHeader: 'application/json',
+    };
+    var response = await http.get(uri, headers: headers);
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      List<dynamic> videosArray = data['items'];
+      List<String> videoIds = [];
+      for (var json in videosArray) {
+        videoIds.add(json["id"]["videoId"].toString());
+      }
+      return await getVideosById(videoIds: videoIds);
+    } else {
+      throw json.decode(response.body)['error']['message']; 
     }
   }
 }

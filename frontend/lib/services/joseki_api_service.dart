@@ -25,7 +25,7 @@ class JosekiApiService {
     }
   }
 
-  Future<String> fetchHello() async {
+  Future<String> getHello() async {
     Uri uri = getUri('/');
     Map<String, String> headers = {
       HttpHeaders.contentTypeHeader: 'application/json',
@@ -118,7 +118,7 @@ class JosekiApiService {
       for (var json in videosArray) {
         videoIds.add(json["id"].toString());
       }
-      return await youtubeApiService.fetchVideos(videoIds: videoIds);
+      return await youtubeApiService.getVideosById(videoIds: videoIds);
     } else {
       throw json.decode(response.body)['error']['message'];
     }

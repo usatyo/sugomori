@@ -26,7 +26,7 @@ class _SearchPageState extends ConsumerState<SearchPage> {
   bool isLoading = false;
   String errorMessage = "";
 
-  void fetchVideos() async {
+  void getVideos() async {
     setState(() {
       isLoading = true;
     });
@@ -55,13 +55,10 @@ class _SearchPageState extends ConsumerState<SearchPage> {
         child: Column(
           spacing: 10,
           children: [
-            Container(
-              alignment: Alignment.center,
-              child: Goban(),
-            ),
+            Container(alignment: Alignment.center, child: Goban()),
             Button(
               text: AppLocalizations.of(context)!.button_search,
-              onPressed: isLoading ? null : fetchVideos,
+              onPressed: isLoading ? null : getVideos,
             ),
             if (isLoading)
               const Expanded(child: Center(child: CircularProgressIndicator())),

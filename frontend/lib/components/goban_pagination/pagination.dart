@@ -29,25 +29,37 @@ class _PaginationState extends ConsumerState<Pagination> {
     super.initState();
     Future(() async {
       newJosekiList = await josekiApiService.getJoseki(widget.videoId);
-      if (newJosekiList.isNotEmpty) {
-        refreshGoban();
-      }
+      // if (newJosekiList.isNotEmpty) {
+      //   refreshGoban();
+      // }
       setState(() {
         totalPage = newJosekiList.length;
         josekiList = newJosekiList;
+        refreshGoban();
       });
     });
   }
 
   void refreshGoban() {
-    ref
-        .read(gobanStateNotifierProvider.notifier)
-        .updateGoban(newJosekiList[currentPage]);
+    if (josekiList.length <= currentPage) {
+      ref.read(gobanStateNotifierProvider.notifier).resetGoban();
+    } else {
+      ref
+          .read(gobanStateNotifierProvider.notifier)
+          .updateGoban(josekiList[currentPage]);
+    }
   }
 
   void deleteJoseki() async {
     if (isEditing) {
-      // todo:
+      setState(() {
+        isEditing = false;
+        totalPage--;
+        if (currentPage >= totalPage) {
+          currentPage = max(totalPage - 1, 0);
+        }
+      });
+      refreshGoban();
     } else {
       if (josekiList.isEmpty) return;
       josekiApiService.deleteJoseki(widget.videoId, josekiList[currentPage]);
