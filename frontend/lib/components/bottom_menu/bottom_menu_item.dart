@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:frontend/providers/provider.dart';
 
-class BottomMenuItem extends StatelessWidget {
+class BottomMenuItem extends ConsumerWidget {
   const BottomMenuItem({
     super.key,
     required this.label,
@@ -14,10 +16,11 @@ class BottomMenuItem extends StatelessWidget {
   final bool selected;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
       onTap: () {
         if (ModalRoute.of(context)?.settings.name != route) {
+          ref.read(gobanStateNotifierProvider.notifier).resetGoban();
           Navigator.pushNamed(context, route);
         }
       },
