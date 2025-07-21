@@ -22,10 +22,29 @@ class Button extends StatelessWidget {
         fixedSize: fit ? null : Size(double.maxFinite, 44),
       ),
       onPressed: onPressed,
-      child: Text(
-        text,
-        style: TextStyle(color: Colors.white, fontSize: 16),
-        maxLines: 1,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Opacity(
+            opacity: onPressed == null ? 0 : 1,
+            child: Text(
+              text,
+              style: TextStyle(color: Colors.white, fontSize: 16),
+              maxLines: 1,
+            ),
+          ),
+          if (onPressed == null)
+            Center(
+              child: SizedBox(
+                height: 20,
+                width: 20,
+                child: CircularProgressIndicator(
+                  color: color ?? Theme.of(context).primaryColor,
+                  strokeWidth: 3,
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }

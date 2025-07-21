@@ -61,27 +61,30 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             Button(
               text: AppLocalizations.of(context)!.button_search,
-              onPressed: onButtonPressed,
+              onPressed: isLoading ? null : onButtonPressed,
             ),
-            if (isLoading)
-              const Expanded(child: Center(child: CircularProgressIndicator())),
-            if (!isLoading)
-              Expanded(
-                child: ScrollShadow(
-                  color: Theme.of(context).cardColor,
-                  size: 20,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children:
-                          resultVideos.isEmpty
-                              ? [Text(AppLocalizations.of(context)!.message_video_not_found)]
-                              : resultVideos
-                                  .map((video) => VideoCard(videoInfo: video))
-                                  .toList(),
-                    ),
+            Expanded(
+              child: ScrollShadow(
+                color: Theme.of(context).cardColor,
+                size: 20,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children:
+                        resultVideos.isEmpty
+                            ? [
+                              Text(
+                                AppLocalizations.of(
+                                  context,
+                                )!.message_video_not_found,
+                              ),
+                            ]
+                            : resultVideos
+                                .map((video) => VideoCard(videoInfo: video))
+                                .toList(),
                   ),
                 ),
               ),
+            ),
           ],
         ),
       ),

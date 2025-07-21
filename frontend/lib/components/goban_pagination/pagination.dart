@@ -21,6 +21,8 @@ class _PaginationState extends ConsumerState<Pagination> {
   int currentPage = 0;
   int totalPage = 0;
   bool isEditing = false;
+  bool isAddLoading = false;
+  bool isDeleteLoading = false;
   List<Joseki> josekiList = [];
   List<Joseki> newJosekiList = [];
   final JosekiApiService josekiApiService = JosekiApiService.instance;
@@ -30,9 +32,6 @@ class _PaginationState extends ConsumerState<Pagination> {
     super.initState();
     Future(() async {
       newJosekiList = await josekiApiService.getJoseki(widget.videoId);
-      // if (newJosekiList.isNotEmpty) {
-      //   refreshGoban();
-      // }
       setState(() {
         totalPage = newJosekiList.length;
         josekiList = newJosekiList;
@@ -63,13 +62,20 @@ class _PaginationState extends ConsumerState<Pagination> {
       refreshGoban();
     } else {
       if (josekiList.isEmpty) return;
-      josekiApiService.deleteJoseki(widget.videoId, josekiList[currentPage]);
+      setState(() {
+        isDeleteLoading = true;
+      });
+      await josekiApiService.deleteJoseki(
+        widget.videoId,
+        josekiList[currentPage],
+      );
       setState(() {
         josekiList.removeAt(currentPage);
         totalPage = josekiList.length;
         if (currentPage >= totalPage) {
           currentPage = max(totalPage - 1, 0);
         }
+        isDeleteLoading = false;
       });
       if (totalPage != 0) {
         refreshGoban();
@@ -79,11 +85,15 @@ class _PaginationState extends ConsumerState<Pagination> {
 
   void addJoseki() async {
     if (isEditing) {
+      setState(() {
+        isAddLoading = true;
+      });
       Joseki newJoseki = ref.read(gobanStateNotifierProvider).joseki;
       await josekiApiService.postJoseki(newJoseki, widget.videoId);
       setState(() {
         isEditing = false;
         josekiList.add(newJoseki);
+        isAddLoading = false;
       });
       refreshGoban();
     } else {
@@ -144,7 +154,7 @@ class _PaginationState extends ConsumerState<Pagination> {
             ),
             Button(
               text: AppLocalizations.of(context)!.button_delete,
-              onPressed: deleteJoseki,
+              onPressed: isDeleteLoading ? null : deleteJoseki,
               color: Colors.red,
               fit: true,
             ),
@@ -153,7 +163,7 @@ class _PaginationState extends ConsumerState<Pagination> {
                   isEditing
                       ? AppLocalizations.of(context)!.button_add
                       : AppLocalizations.of(context)!.button_new,
-              onPressed: addJoseki,
+              onPressed: isAddLoading ? null : addJoseki,
               fit: true,
             ),
           ],

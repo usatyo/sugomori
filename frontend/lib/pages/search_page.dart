@@ -60,25 +60,22 @@ class _SearchPageState extends ConsumerState<SearchPage> {
               text: AppLocalizations.of(context)!.button_search,
               onPressed: isLoading ? null : getVideos,
             ),
-            if (isLoading)
-              const Expanded(child: Center(child: CircularProgressIndicator())),
-            if (!isLoading)
-              Expanded(
-                child: ScrollShadow(
-                  color: Theme.of(context).cardColor,
-                  size: 20,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children:
-                          videos.isEmpty
-                              ? [Text(errorMessage)]
-                              : videos
-                                  .map((video) => VideoCard(videoInfo: video))
-                                  .toList(),
-                    ),
+            Expanded(
+              child: ScrollShadow(
+                color: Theme.of(context).cardColor,
+                size: 20,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children:
+                        videos.isEmpty
+                            ? [Text(errorMessage)]
+                            : videos
+                                .map((video) => VideoCard(videoInfo: video))
+                                .toList(),
                   ),
                 ),
               ),
+            ),
           ],
         ),
       ),
