@@ -63,7 +63,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'sugomori',
       theme: theme.light(),
-      initialRoute: "/start",
+      initialRoute: "/search",
       routes: {
         '/start': (context) => const StartPage(),
         '/search': (context) => const SearchPage(),

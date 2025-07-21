@@ -20,6 +20,7 @@ class _RegisterPageState extends State<RegisterPage> {
   String keyword = "";
   List<Video> resultVideos = [];
   Joseki joseki = Joseki([]);
+  bool isLoading = false;
 
   void onChangeText(String text) {
     setState(() {
@@ -28,9 +29,13 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void onButtonPressed() async {
+    setState(() {
+      isLoading = true;
+    });
     List<Video> videos = await youtubeApiService.getVideosByWord(keyword);
     setState(() {
       resultVideos = videos;
+      isLoading = false;
     });
   }
 
@@ -58,22 +63,25 @@ class _RegisterPageState extends State<RegisterPage> {
               text: AppLocalizations.of(context)!.button_search,
               onPressed: onButtonPressed,
             ),
-            Expanded(
-              child: ScrollShadow(
-                color: Theme.of(context).cardColor,
-                size: 20,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children:
-                        resultVideos.isEmpty
-                            ? [Text("")]
-                            : resultVideos
-                                .map((video) => VideoCard(videoInfo: video))
-                                .toList(),
+            if (isLoading)
+              const Expanded(child: Center(child: CircularProgressIndicator())),
+            if (!isLoading)
+              Expanded(
+                child: ScrollShadow(
+                  color: Theme.of(context).cardColor,
+                  size: 20,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children:
+                          resultVideos.isEmpty
+                              ? [Text("")]
+                              : resultVideos
+                                  .map((video) => VideoCard(videoInfo: video))
+                                  .toList(),
+                    ),
                   ),
                 ),
               ),
-            ),
           ],
         ),
       ),

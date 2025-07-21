@@ -206,6 +206,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cannot connect to the network'**
   String get error_netowork;
+
+  /// No description provided for @error_max_stone.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot place over 100 stones'**
+  String get error_max_stone;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

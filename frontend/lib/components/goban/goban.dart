@@ -23,6 +23,12 @@ class _GobanState extends ConsumerState<Goban> {
 
   void onPressedCross(int x, int y) {
     if (!widget.isEditable) return;
+    if (joseki.stoneList.length >= 99) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(AppLocalizations.of(context)!.error_max_stone)),
+      );
+      return;
+    }
     setState(() {
       if (!joseki.pushStone(color: nextColor, x: x, y: y)) {
         return;
@@ -49,6 +55,12 @@ class _GobanState extends ConsumerState<Goban> {
   }
 
   void onPressedPass() {
+    if (joseki.stoneList.length >= 99) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(AppLocalizations.of(context)!.error_max_stone)),
+      );
+      return;
+    }
     setState(() {
       joseki.pushStone(color: nextColor, x: -1, y: -1);
       nextColor = reversedColor(nextColor);

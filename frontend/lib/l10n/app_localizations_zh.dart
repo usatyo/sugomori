@@ -61,4 +61,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get error_netowork => 'ネットワークに接続できません';
+
+  @override
+  String get error_max_stone => '配置できる碁石の最大数は100個です';
 }

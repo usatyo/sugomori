@@ -61,4 +61,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get error_netowork => 'Cannot connect to the network';
+
+  @override
+  String get error_max_stone => 'Cannot place over 100 stones';
 }
