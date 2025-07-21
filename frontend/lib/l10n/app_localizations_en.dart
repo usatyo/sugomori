@@ -24,10 +24,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get button_search => 'Search';
 
   @override
-  String get button_register => 'Register';
+  String get button_start => 'Start';
 
   @override
-  String get button_start => 'Start';
+  String get button_delete => 'Delete';
+
+  @override
+  String get label_keyword => 'keyword';
+
+  @override
+  String get button_new => 'New';
+
+  @override
+  String get button_add => 'Add';
 
   @override
   String get goban_back => 'Back';
@@ -46,4 +55,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get message_video_not_found => 'No videos found';
+
+  @override
+  String get message_joseki_not_found => 'No procedures registered';
+
+  @override
+  String get error_netowork => 'Cannot connect to the network';
 }

@@ -5,12 +5,17 @@
   "menu_setting": "Setting",
   "title_setting": "Setting",
   "button_search": "Search",
-  "button_register": "Register",
   "button_start": "Start",
+  "button_delete": "Delete",
+  "label_keyword": "keyword",
+  "button_new": "New",
+  "button_add": "Add",
   "goban_back": "Back",
   "goban_back5": "5 Back",
   "goban_pass": "Pass",
   "goban_clear": "Clear",
   "setting_language": "Language",
-  "message_video_not_found": "No videos found"
+  "message_video_not_found": "No videos found",
+  "message_joseki_not_found": "No procedures registered",
+  "error_netowork": "Cannot connect to the network"
 }

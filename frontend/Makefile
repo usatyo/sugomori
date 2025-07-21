@@ -9,6 +9,10 @@ dev: ## ios シミュレータでデバッグを開始
 prod-dev: ## ios シミュレータでデバッグを開始（バックエンドは本番環境）
 	@flutter run --dart-define-from-file=dart_defines/.env
 
+.PHONY: ios-build
+ios-build: ## ios シミュレータでデバッグを開始（バックエンドは本番環境）
+	@flutter build ios --dart-define-from-file=dart_defines/.env
+
 .PHONY: gen
 gen: ## arb ファイルから localization 関連ファイルを自動生成
 	@flutter gen-l10n

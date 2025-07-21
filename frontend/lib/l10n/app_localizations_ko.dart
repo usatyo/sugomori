@@ -9,25 +9,34 @@ class AppLocalizationsKo extends AppLocalizations {
   AppLocalizationsKo([String locale = 'ko']) : super(locale);
 
   @override
-  String get menu_search => '검색';
+  String get menu_search => '手順検索';
 
   @override
-  String get menu_register => '등록';
+  String get menu_register => '手順登録';
 
   @override
-  String get menu_setting => '설정';
+  String get menu_setting => '設定';
 
   @override
-  String get title_setting => '설정';
+  String get title_setting => '設定';
 
   @override
-  String get button_search => '검색';
+  String get button_search => '検索';
 
   @override
-  String get button_register => '등록';
+  String get button_start => '始める';
 
   @override
-  String get button_start => '시작하기';
+  String get button_delete => '削除';
+
+  @override
+  String get label_keyword => '検索キーワード';
+
+  @override
+  String get button_new => '新規';
+
+  @override
+  String get button_add => '追加';
 
   @override
   String get goban_back => '1手戻る';
@@ -46,4 +55,10 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get message_video_not_found => '動画が見つかりませんでした';
+
+  @override
+  String get message_joseki_not_found => '手順が登録されていません';
+
+  @override
+  String get error_netowork => 'ネットワークに接続できません';
 }

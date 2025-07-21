@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/components/atoms/button.dart';
 import 'package:frontend/components/goban/goban.dart';
+import 'package:frontend/l10n/app_localizations.dart';
 import 'package:frontend/models/joseki.dart';
 import 'package:frontend/providers/provider.dart';
 import 'package:frontend/services/joseki_api_service.dart';
@@ -142,19 +143,24 @@ class _PaginationState extends ConsumerState<Pagination> {
               ),
             ),
             Button(
-              text: '削除',
+              text: AppLocalizations.of(context)!.button_delete,
               onPressed: deleteJoseki,
               color: Colors.red,
               fit: true,
             ),
             Button(
-              text: isEditing ? '追加' : '新規',
+              text:
+                  isEditing
+                      ? AppLocalizations.of(context)!.button_add
+                      : AppLocalizations.of(context)!.button_new,
               onPressed: addJoseki,
               fit: true,
             ),
           ],
         ),
-        totalPage == 0 ? Text('手順が登録されていません') : Goban(isEditable: isEditing),
+        totalPage == 0
+            ? Text(AppLocalizations.of(context)!.message_joseki_not_found)
+            : Goban(isEditable: isEditing),
       ],
     );
   }

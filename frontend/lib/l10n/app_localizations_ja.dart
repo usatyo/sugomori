@@ -9,10 +9,10 @@ class AppLocalizationsJa extends AppLocalizations {
   AppLocalizationsJa([String locale = 'ja']) : super(locale);
 
   @override
-  String get menu_search => '定石検索';
+  String get menu_search => '手順検索';
 
   @override
-  String get menu_register => '定石登録';
+  String get menu_register => '手順登録';
 
   @override
   String get menu_setting => '設定';
@@ -24,10 +24,19 @@ class AppLocalizationsJa extends AppLocalizations {
   String get button_search => '検索';
 
   @override
-  String get button_register => '登録';
+  String get button_start => '始める';
 
   @override
-  String get button_start => '始める';
+  String get button_delete => '削除';
+
+  @override
+  String get label_keyword => '検索キーワード';
+
+  @override
+  String get button_new => '新規';
+
+  @override
+  String get button_add => '追加';
 
   @override
   String get goban_back => '1手戻る';
@@ -46,4 +55,10 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get message_video_not_found => '動画が見つかりませんでした';
+
+  @override
+  String get message_joseki_not_found => '手順が登録されていません';
+
+  @override
+  String get error_netowork => 'ネットワークに接続できません';
 }

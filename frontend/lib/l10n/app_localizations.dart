@@ -129,17 +129,35 @@ abstract class AppLocalizations {
   /// **'Search'**
   String get button_search;
 
-  /// No description provided for @button_register.
-  ///
-  /// In en, this message translates to:
-  /// **'Register'**
-  String get button_register;
-
   /// No description provided for @button_start.
   ///
   /// In en, this message translates to:
   /// **'Start'**
   String get button_start;
+
+  /// No description provided for @button_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get button_delete;
+
+  /// No description provided for @label_keyword.
+  ///
+  /// In en, this message translates to:
+  /// **'keyword'**
+  String get label_keyword;
+
+  /// No description provided for @button_new.
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get button_new;
+
+  /// No description provided for @button_add.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get button_add;
 
   /// No description provided for @goban_back.
   ///
@@ -176,6 +194,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No videos found'**
   String get message_video_not_found;
+
+  /// No description provided for @message_joseki_not_found.
+  ///
+  /// In en, this message translates to:
+  /// **'No procedures registered'**
+  String get message_joseki_not_found;
+
+  /// No description provided for @error_netowork.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot connect to the network'**
+  String get error_netowork;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

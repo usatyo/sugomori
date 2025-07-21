@@ -47,7 +47,7 @@ class _RegisterPageState extends State<RegisterPage> {
             TextField(
               onChanged: onChangeText,
               decoration: InputDecoration(
-                labelText: "検索キーワード",
+                labelText: AppLocalizations.of(context)!.label_keyword,
                 contentPadding: EdgeInsets.fromLTRB(16, 0, 16, 0),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -55,7 +55,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
             Button(
-              text: AppLocalizations.of(context)!.button_register,
+              text: AppLocalizations.of(context)!.button_search,
               onPressed: onButtonPressed,
             ),
             Expanded(

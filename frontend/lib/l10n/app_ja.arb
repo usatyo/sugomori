@@ -1,16 +1,21 @@
 {
   "@@locale":"ja",
-  "menu_search": "定石検索",
-  "menu_register": "新規登録",
+  "menu_search": "手順検索",
+  "menu_register": "手順登録",
   "menu_setting": "設定",
   "title_setting": "設定",
   "button_search": "検索",
-  "button_register": "登録",
   "button_start": "始める",
+  "button_delete": "削除",
+  "button_new": "新規",
+  "button_add": "追加",
+  "label_keyword": "検索キーワード",
   "goban_back": "1手戻る",
   "goban_back5": "5手戻る",
   "goban_pass": "手抜き",
   "goban_clear": "クリア",
   "setting_language": "言語",
-  "message_video_not_found": "動画が見つかりませんでした"
+  "message_video_not_found": "動画が見つかりませんでした",
+  "message_joseki_not_found": "手順が登録されていません",
+  "error_netowork": "ネットワークに接続できません"
 }
