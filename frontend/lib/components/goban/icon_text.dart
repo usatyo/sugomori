@@ -13,11 +13,14 @@ class IconText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        IconButton.filled(onPressed: onPressed, icon: Icon(icon, size: 20)),
-        Text(hintText, style: TextStyle(fontSize: 10)),
-      ],
+    return FittedBox(
+      fit: BoxFit.fill,
+      child: Column(
+        children: [
+          IconButton.filled(onPressed: onPressed, icon: Icon(icon, size: 20)),
+          Text(hintText, style: TextStyle(fontSize: 10)),
+        ],
+      ),
     );
   }
 }

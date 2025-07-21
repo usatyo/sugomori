@@ -19,18 +19,59 @@ class _DetailPageState extends State<DetailPage> {
   late final YoutubePlayerController _controller;
   final JosekiApiService josekiApiService = JosekiApiService.instance;
   List<Joseki> josekiList = [];
+  bool isFullScreen = false;
 
   @override
   void initState() {
     super.initState();
     _controller = YoutubePlayerController(
       initialVideoId: widget.videoInfo.id,
-      flags: YoutubePlayerFlags(autoPlay: true, showLiveFullscreenButton: true),
+      flags: YoutubePlayerFlags(
+        autoPlay: true,
+        showLiveFullscreenButton: false,
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    return YoutubePlayerBuilder(
+      player: YoutubePlayer(
+        controller: _controller,
+        showVideoProgressIndicator: true,
+      ),
+      builder: isFullScreen ? _fullScreenBuilder : _normalBuilder,
+      onEnterFullScreen: () {
+        setState(() {
+          isFullScreen = true;
+        });
+      },
+      onExitFullScreen: () {
+        setState(() {
+          isFullScreen = false;
+        });
+      },
+    );
+  }
+
+  Widget _fullScreenBuilder(BuildContext context, Widget player) {
+    return Scaffold(
+      body: Column(
+        children: [
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.all(0),
+              alignment: Alignment.center,
+              child: player,
+            ),
+          ),
+          BottomMenu(),
+        ],
+      ),
+    );
+  }
+
+  Widget _normalBuilder(BuildContext context, Widget player) {
     return Scaffold(
       appBar: AppBar(),
       body: Column(
@@ -38,10 +79,7 @@ class _DetailPageState extends State<DetailPage> {
           Container(
             padding: EdgeInsets.all(0),
             alignment: Alignment.center,
-            child: YoutubePlayer(
-              controller: _controller,
-              showVideoProgressIndicator: true,
-            ),
+            child: player,
           ),
           Expanded(
             child: Container(
@@ -83,7 +121,7 @@ class _DetailPageState extends State<DetailPage> {
                           ),
                         ],
                       ),
-                      Divider(thickness: 0.5,),
+                      Divider(thickness: 0.5),
                       Pagination(videoId: widget.videoInfo.id),
                     ],
                   ),

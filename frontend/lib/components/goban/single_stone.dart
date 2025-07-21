@@ -19,26 +19,24 @@ class SingleStone extends StatefulWidget {
 class _SingleStoneState extends State<SingleStone> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 30,
-      width: 30,
-      child: Stack(
-        children: [
-          FilledButton(
-            style: FilledButton.styleFrom(
-              backgroundColor:
-                  widget.color == StoneColor.empty
-                      ? Colors.transparent
-                      : widget.color == StoneColor.black
-                      ? Colors.black
-                      : Colors.white,
-            ),
-            onPressed: widget.onPressed,
-            child: null,
+    return Stack(
+      children: [
+        FilledButton(
+          style: FilledButton.styleFrom(
+            backgroundColor:
+                widget.color == StoneColor.empty
+                    ? Colors.transparent
+                    : widget.color == StoneColor.black
+                    ? Colors.black
+                    : Colors.white,
           ),
-          IgnorePointer(
-            ignoring: true,
-            child: Center(
+          onPressed: widget.onPressed,
+          child: null,
+        ),
+        IgnorePointer(
+          ignoring: true,
+          child: Center(
+            child: FittedBox(
               child: Text(
                 "${widget.index == -1 ? "" : widget.index + 1}",
                 textAlign: TextAlign.center,
@@ -51,8 +49,8 @@ class _SingleStoneState extends State<SingleStone> {
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

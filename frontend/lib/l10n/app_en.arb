@@ -18,5 +18,5 @@
   "message_video_not_found": "No videos found",
   "message_joseki_not_found": "No procedures registered",
   "error_netowork": "Cannot connect to the network",
-  "error_max_stone": "Cannot place over 100 stones"
+  "error_max_stone": "Cannot place over 99 stones"
 }

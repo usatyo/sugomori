@@ -21,14 +21,19 @@ class _GobanState extends ConsumerState<Goban> {
   Joseki joseki = Joseki([]);
   StoneMatrix stoneMatrix = getProcessedBoard([]);
 
-  void onPressedCross(int x, int y) {
-    if (!widget.isEditable) return;
+  bool isOverMaxStones() {
     if (joseki.stoneList.length >= 99) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(AppLocalizations.of(context)!.error_max_stone)),
       );
-      return;
+      return true;
     }
+    return false;
+  }
+
+  void onPressedCross(int x, int y) {
+    if (!widget.isEditable) return;
+    if (isOverMaxStones()) return;
     setState(() {
       if (!joseki.pushStone(color: nextColor, x: x, y: y)) {
         return;
@@ -55,12 +60,7 @@ class _GobanState extends ConsumerState<Goban> {
   }
 
   void onPressedPass() {
-    if (joseki.stoneList.length >= 99) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(AppLocalizations.of(context)!.error_max_stone)),
-      );
-      return;
-    }
+    if (isOverMaxStones()) return;
     setState(() {
       joseki.pushStone(color: nextColor, x: -1, y: -1);
       nextColor = reversedColor(nextColor);
@@ -79,6 +79,7 @@ class _GobanState extends ConsumerState<Goban> {
   @override
   Widget build(BuildContext context) {
     final GobanState gobanState = ref.watch(gobanStateNotifierProvider);
+    final double sideBarWidth = MediaQuery.of(context).size.width * 0.15;
     setState(() {
       if (gobanState.joseki.stoneList.isNotEmpty) {
         nextColor = reversedColor(gobanState.joseki.stoneList.last.color);
@@ -116,8 +117,8 @@ class _GobanState extends ConsumerState<Goban> {
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: screenBoardSize,
-                            mainAxisSpacing: 2,
-                            crossAxisSpacing: 2,
+                            mainAxisSpacing: 1,
+                            crossAxisSpacing: 1,
                           ),
                     ),
                   ],
@@ -126,7 +127,7 @@ class _GobanState extends ConsumerState<Goban> {
             ),
           ),
           SizedBox(
-            width: 40,
+            width: sideBarWidth,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
