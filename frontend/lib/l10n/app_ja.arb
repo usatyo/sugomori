@@ -16,7 +16,7 @@
   "goban_clear": "クリア",
   "setting_language": "言語",
   "message_video_not_found": "動画が見つかりませんでした",
-  "message_joseki_not_found": "手順が登録されていません",
+  "message_joseki_not_found": "手順がまだ登録されていません",
   "error_netowork": "ネットワークに接続できません",
   "error_max_stone": "配置できる碁石の最大数は99個です"
 }

@@ -198,7 +198,7 @@ abstract class AppLocalizations {
   /// No description provided for @message_joseki_not_found.
   ///
   /// In en, this message translates to:
-  /// **'No procedures registered'**
+  /// **'No procedures registered yet'**
   String get message_joseki_not_found;
 
   /// No description provided for @error_netowork.
@@ -210,7 +210,7 @@ abstract class AppLocalizations {
   /// No description provided for @error_max_stone.
   ///
   /// In en, this message translates to:
-  /// **'Cannot place over 100 stones'**
+  /// **'Cannot place over 99 stones'**
   String get error_max_stone;
 }
 

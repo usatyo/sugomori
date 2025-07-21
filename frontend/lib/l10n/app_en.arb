@@ -16,7 +16,7 @@
   "goban_clear": "Clear",
   "setting_language": "Language",
   "message_video_not_found": "No videos found",
-  "message_joseki_not_found": "No procedures registered",
+  "message_joseki_not_found": "No procedures registered yet",
   "error_netowork": "Cannot connect to the network",
   "error_max_stone": "Cannot place over 99 stones"
 }

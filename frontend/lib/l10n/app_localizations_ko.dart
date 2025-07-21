@@ -9,59 +9,59 @@ class AppLocalizationsKo extends AppLocalizations {
   AppLocalizationsKo([String locale = 'ko']) : super(locale);
 
   @override
-  String get menu_search => '手順検索';
+  String get menu_search => '절차검색';
 
   @override
-  String get menu_register => '手順登録';
+  String get menu_register => '절차등록';
 
   @override
-  String get menu_setting => '設定';
+  String get menu_setting => '설정';
 
   @override
-  String get title_setting => '設定';
+  String get title_setting => '설정';
 
   @override
-  String get button_search => '検索';
+  String get button_search => '검색';
 
   @override
-  String get button_start => '始める';
+  String get button_start => '시작하다';
 
   @override
-  String get button_delete => '削除';
+  String get button_delete => '삭제';
 
   @override
-  String get label_keyword => '検索キーワード';
+  String get label_keyword => '검색 키워드';
 
   @override
-  String get button_new => '新規';
+  String get button_new => '신규';
 
   @override
-  String get button_add => '追加';
+  String get button_add => '추가';
 
   @override
-  String get goban_back => '1手戻る';
+  String get goban_back => '1 돌아가기';
 
   @override
-  String get goban_back5 => '5手戻る';
+  String get goban_back5 => '5 돌아가기';
 
   @override
-  String get goban_pass => '手抜き';
+  String get goban_pass => '건너뛰기';
 
   @override
-  String get goban_clear => 'クリア';
+  String get goban_clear => '지우기';
 
   @override
-  String get setting_language => '言語';
+  String get setting_language => '언어';
 
   @override
-  String get message_video_not_found => '動画が見つかりませんでした';
+  String get message_video_not_found => '동영상을 찾을 수 없습니다';
 
   @override
-  String get message_joseki_not_found => '手順が登録されていません';
+  String get message_joseki_not_found => '절차가 아직 등록되지 않았습니다';
 
   @override
-  String get error_netowork => 'ネットワークに接続できません';
+  String get error_netowork => '네트워크에 연결할 수 없습니다';
 
   @override
-  String get error_max_stone => '配置できる碁石の最大数は100個です';
+  String get error_max_stone => '배치할 수 있는 바둑돌의 최대 개수는 99개입니다';
 }

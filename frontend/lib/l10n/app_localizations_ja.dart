@@ -57,11 +57,11 @@ class AppLocalizationsJa extends AppLocalizations {
   String get message_video_not_found => '動画が見つかりませんでした';
 
   @override
-  String get message_joseki_not_found => '手順が登録されていません';
+  String get message_joseki_not_found => '手順がまだ登録されていません';
 
   @override
   String get error_netowork => 'ネットワークに接続できません';
 
   @override
-  String get error_max_stone => '配置できる碁石の最大数は100個です';
+  String get error_max_stone => '配置できる碁石の最大数は99個です';
 }

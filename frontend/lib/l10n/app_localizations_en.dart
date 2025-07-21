@@ -57,11 +57,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get message_video_not_found => 'No videos found';
 
   @override
-  String get message_joseki_not_found => 'No procedures registered';
+  String get message_joseki_not_found => 'No procedures registered yet';
 
   @override
   String get error_netowork => 'Cannot connect to the network';
 
   @override
-  String get error_max_stone => 'Cannot place over 100 stones';
+  String get error_max_stone => 'Cannot place over 99 stones';
 }
