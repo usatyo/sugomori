@@ -74,7 +74,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: Column(
                       children:
                           resultVideos.isEmpty
-                              ? [Text("")]
+                              ? [Text(AppLocalizations.of(context)!.message_video_not_found)]
                               : resultVideos
                                   .map((video) => VideoCard(videoInfo: video))
                                   .toList(),
