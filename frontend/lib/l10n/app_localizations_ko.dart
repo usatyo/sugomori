@@ -9,10 +9,10 @@ class AppLocalizationsKo extends AppLocalizations {
   AppLocalizationsKo([String locale = 'ko']) : super(locale);
 
   @override
-  String get menu_search => '절차검색';
+  String get menu_search => '차례검색';
 
   @override
-  String get menu_register => '절차등록';
+  String get menu_register => '차례등록';
 
   @override
   String get menu_setting => '설정';
@@ -39,10 +39,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get button_add => '추가';
 
   @override
-  String get goban_back => '1 돌아가기';
+  String get goban_back => '1수 돌아가기';
 
   @override
-  String get goban_back5 => '5 돌아가기';
+  String get goban_back5 => '5수 돌아가기';
 
   @override
   String get goban_pass => '건너뛰기';
