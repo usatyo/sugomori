@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 import 'package:frontend/components/atoms/button.dart';
-import 'package:frontend/components/bottom_menu/bottom_menu.dart';
 import 'package:frontend/components/search/video_card.dart';
 import 'package:frontend/l10n/app_localizations.dart';
 import 'package:frontend/models/joseki.dart';
@@ -48,48 +47,44 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      bottomNavigationBar: BottomMenu(),
-      body: Container(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          spacing: 10,
-          children: [
-            TextField(
-              onChanged: onChangeText,
-              decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.label_keyword,
-                contentPadding: EdgeInsets.fromLTRB(16, 0, 16, 0),
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+    return Container(
+      padding: EdgeInsets.all(10),
+      child: Column(
+        spacing: 10,
+        children: [
+          TextField(
+            onChanged: onChangeText,
+            decoration: InputDecoration(
+              labelText: AppLocalizations.of(context)!.label_keyword,
+              contentPadding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+              filled: true,
+              fillColor: Colors.white,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+          ),
+          Button(
+            text: AppLocalizations.of(context)!.button_search,
+            onPressed: isLoading ? null : onButtonPressed,
+          ),
+          Expanded(
+            child: ScrollShadow(
+              color: Theme.of(context).cardColor,
+              size: 20,
+              child: SingleChildScrollView(
+                child: Column(
+                  children:
+                      resultVideos.isEmpty
+                          ? [Text(errorMessage)]
+                          : resultVideos
+                              .map((video) => VideoCard(videoInfo: video))
+                              .toList(),
                 ),
               ),
             ),
-            Button(
-              text: AppLocalizations.of(context)!.button_search,
-              onPressed: isLoading ? null : onButtonPressed,
-            ),
-            Expanded(
-              child: ScrollShadow(
-                color: Theme.of(context).cardColor,
-                size: 20,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children:
-                        resultVideos.isEmpty
-                            ? [Text(errorMessage)]
-                            : resultVideos
-                                .map((video) => VideoCard(videoInfo: video))
-                                .toList(),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -5,7 +5,7 @@ import 'package:frontend/components/goban/icon_text.dart';
 import 'package:frontend/components/goban/single_stone.dart';
 import 'package:frontend/l10n/app_localizations.dart';
 import 'package:frontend/models/joseki.dart';
-import 'package:frontend/providers/provider.dart';
+import 'package:frontend/providers/goban_state_provider.dart';
 import 'package:frontend/util/go_rule.dart';
 
 class Goban extends ConsumerStatefulWidget {

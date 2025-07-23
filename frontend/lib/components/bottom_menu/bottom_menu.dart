@@ -1,49 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/components/bottom_menu/bottom_menu_item.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/l10n/app_localizations.dart';
+import 'package:frontend/providers/page_index_provider.dart';
 
-class BottomMenu extends StatefulWidget {
+class BottomMenu extends ConsumerWidget {
   const BottomMenu({super.key});
 
   @override
-  State<BottomMenu> createState() => MenuBarState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final int currentIndex = ref.watch(pageIndexNotifierProvider);
 
-class MenuBarState extends State<BottomMenu> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 80,
-      width: double.maxFinite,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          BottomMenuItem(
-            label: AppLocalizations.of(context)!.menu_search,
-            icon: Icons.find_in_page,
-            route: "/search",
-            selected:
-                ModalRoute.of(context)!.settings.name == "/search" ||
-                ModalRoute.of(context)!.settings.name == "/detail",
-          ),
-          BottomMenuItem(
-            label: AppLocalizations.of(context)!.menu_register,
-            icon: Icons.note_add,
-            route: "/register",
-            selected: ModalRoute.of(context)!.settings.name == "/register",
-          ),
-          BottomMenuItem(
-            label: AppLocalizations.of(context)!.menu_setting,
-            icon: Icons.settings,
-            route: "/setting",
-            selected: ModalRoute.of(context)!.settings.name == "/setting",
-          ),
-        ],
-      ),
+    return BottomNavigationBar(
+      currentIndex: currentIndex,
+      items: [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.find_in_page, size: 40),
+          label: AppLocalizations.of(context)!.menu_search,
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.note_add, size: 40),
+          label: AppLocalizations.of(context)!.menu_register,
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.settings, size: 40),
+          label: AppLocalizations.of(context)!.menu_setting,
+        ),
+      ],
+      onTap:
+          (index) => {
+            ref.read(pageIndexNotifierProvider.notifier).update(index),
+          },
     );
   }
 }

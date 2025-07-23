@@ -6,7 +6,7 @@ import 'package:frontend/components/atoms/button.dart';
 import 'package:frontend/components/goban/goban.dart';
 import 'package:frontend/l10n/app_localizations.dart';
 import 'package:frontend/models/joseki.dart';
-import 'package:frontend/providers/provider.dart';
+import 'package:frontend/providers/goban_state_provider.dart';
 import 'package:frontend/services/joseki_api_service.dart';
 
 class Pagination extends ConsumerStatefulWidget {

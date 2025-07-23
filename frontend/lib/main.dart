@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/l10n/app_localizations.dart';
-import 'package:frontend/pages/register_page.dart';
-import 'package:frontend/pages/search_page.dart';
-import 'package:frontend/pages/setting_page.dart';
-import 'package:frontend/pages/start_page.dart';
+import 'package:frontend/page_navigator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'theme.dart';
@@ -63,14 +60,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'sugomori',
       theme: theme.light(),
-      initialRoute: "/search",
-      routes: {
-        '/start': (context) => const StartPage(),
-        '/search': (context) => const SearchPage(),
-        '/register': (context) => const RegisterPage(),
-        '/setting': (context) => const SettingPage(),
-      },
-      home: const SearchPage(),
+      home: const PageNavigator(),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: const [
         Locale('en'),
