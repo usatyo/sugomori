@@ -22,13 +22,14 @@ class _VideoCardState extends State<VideoCard> {
           child: Row(
             children: [
               Container(
-                width: 150,
-                height: 150 * 9 / 16,
+                width: 90 * 16 / 9,
+                height: 90,
                 color: Colors.grey[300],
               ),
               // Image.network(widget.videoInfo!.thumbnailUrl, width: 150),
               Expanded(
                 child: Container(
+                  height: 90,
                   padding: EdgeInsets.all(10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,9 +72,10 @@ class _VideoCardState extends State<VideoCard> {
           },
           child: Row(
             children: [
-              Image.network(widget.videoInfo!.thumbnailUrl, width: 150),
+              Image.network(widget.videoInfo!.thumbnailUrl, height: 90),
               Expanded(
                 child: Container(
+                  height: 90,
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(color: Colors.white),
                   child: Column(
