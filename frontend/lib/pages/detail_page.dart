@@ -26,10 +26,7 @@ class _DetailPageState extends State<DetailPage> {
     super.initState();
     _controller = YoutubePlayerController(
       initialVideoId: widget.videoInfo.id,
-      flags: YoutubePlayerFlags(
-        autoPlay: true,
-        showLiveFullscreenButton: false,
-      ),
+      flags: YoutubePlayerFlags(loop: true),
     );
   }
 

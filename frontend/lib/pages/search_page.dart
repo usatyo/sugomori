@@ -44,7 +44,7 @@ class _SearchPageState extends ConsumerState<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    final GobanState gobanState = ref.watch(gobanStateNotifierProvider);
+    final GobanState gobanState = ref.watch(addGobanStateNotifierProvider);
     joseki = gobanState.joseki;
 
     return Container(
@@ -52,7 +52,10 @@ class _SearchPageState extends ConsumerState<SearchPage> {
       child: Column(
         spacing: 10,
         children: [
-          Container(alignment: Alignment.center, child: Goban()),
+          Container(
+            alignment: Alignment.center,
+            child: Goban(provider: addGobanStateNotifierProvider),
+          ),
           Button(
             text: AppLocalizations.of(context)!.button_search,
             onPressed: isLoading ? null : getVideos,

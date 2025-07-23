@@ -42,10 +42,10 @@ class _PaginationState extends ConsumerState<Pagination> {
 
   void refreshGoban() {
     if (josekiList.length <= currentPage) {
-      ref.read(gobanStateNotifierProvider.notifier).resetGoban();
+      ref.read(searchGobanStateNotifierProvider.notifier).resetGoban();
     } else {
       ref
-          .read(gobanStateNotifierProvider.notifier)
+          .read(searchGobanStateNotifierProvider.notifier)
           .updateGoban(josekiList[currentPage]);
     }
   }
@@ -88,7 +88,7 @@ class _PaginationState extends ConsumerState<Pagination> {
       setState(() {
         isAddLoading = true;
       });
-      Joseki newJoseki = ref.read(gobanStateNotifierProvider).joseki;
+      Joseki newJoseki = ref.read(searchGobanStateNotifierProvider).joseki;
       await josekiApiService.postJoseki(newJoseki, widget.videoId);
       setState(() {
         isEditing = false;
@@ -102,7 +102,7 @@ class _PaginationState extends ConsumerState<Pagination> {
         totalPage++;
         currentPage = totalPage - 1;
       });
-      ref.read(gobanStateNotifierProvider.notifier).resetGoban();
+      ref.read(searchGobanStateNotifierProvider.notifier).resetGoban();
     }
   }
 
@@ -170,7 +170,7 @@ class _PaginationState extends ConsumerState<Pagination> {
         ),
         totalPage == 0
             ? Text(AppLocalizations.of(context)!.message_joseki_not_found)
-            : Goban(isEditable: isEditing),
+            : Goban(isEditable: isEditing, provider: searchGobanStateNotifierProvider),
       ],
     );
   }

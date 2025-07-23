@@ -9,8 +9,9 @@ import 'package:frontend/providers/goban_state_provider.dart';
 import 'package:frontend/util/go_rule.dart';
 
 class Goban extends ConsumerStatefulWidget {
-  const Goban({super.key, this.isEditable = true});
+  const Goban({super.key, this.isEditable = true, required this.provider});
   final bool isEditable;
+  final StateNotifierProvider<GobanStateNotifier, GobanState> provider;
 
   @override
   ConsumerState<Goban> createState() => _GobanState();
@@ -39,7 +40,7 @@ class _GobanState extends ConsumerState<Goban> {
         return;
       }
       nextColor = reversedColor(nextColor);
-      ref.read(gobanStateNotifierProvider.notifier).updateGoban(joseki);
+      ref.read(widget.provider.notifier).updateGoban(joseki);
     });
   }
 
@@ -47,7 +48,7 @@ class _GobanState extends ConsumerState<Goban> {
     setState(() {
       joseki.popStone();
       nextColor = reversedColor(nextColor);
-      ref.read(gobanStateNotifierProvider.notifier).updateGoban(joseki);
+      ref.read(widget.provider.notifier).updateGoban(joseki);
     });
   }
 
@@ -55,7 +56,7 @@ class _GobanState extends ConsumerState<Goban> {
     setState(() {
       joseki.popStones(5);
       nextColor = reversedColor(nextColor);
-      ref.read(gobanStateNotifierProvider.notifier).updateGoban(joseki);
+      ref.read(widget.provider.notifier).updateGoban(joseki);
     });
   }
 
@@ -64,7 +65,7 @@ class _GobanState extends ConsumerState<Goban> {
     setState(() {
       joseki.pushStone(color: nextColor, x: -1, y: -1);
       nextColor = reversedColor(nextColor);
-      ref.read(gobanStateNotifierProvider.notifier).updateGoban(joseki);
+      ref.read(widget.provider.notifier).updateGoban(joseki);
     });
   }
 
@@ -72,13 +73,13 @@ class _GobanState extends ConsumerState<Goban> {
     setState(() {
       joseki.clear();
       nextColor = StoneColor.black;
-      ref.read(gobanStateNotifierProvider.notifier).updateGoban(joseki);
+      ref.read(widget.provider.notifier).updateGoban(joseki);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final GobanState gobanState = ref.watch(gobanStateNotifierProvider);
+    final GobanState gobanState = ref.watch(widget.provider);
     final double sideBarWidth = MediaQuery.of(context).size.width * 0.15;
     setState(() {
       if (gobanState.joseki.stoneList.isNotEmpty) {

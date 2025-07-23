@@ -13,7 +13,12 @@ class GobanStateNotifier extends StateNotifier<GobanState> {
   }
 }
 
-final gobanStateNotifierProvider =
+final searchGobanStateNotifierProvider =
+    StateNotifierProvider<GobanStateNotifier, GobanState>(
+      (ref) => GobanStateNotifier(),
+    );
+
+final addGobanStateNotifierProvider =
     StateNotifierProvider<GobanStateNotifier, GobanState>(
       (ref) => GobanStateNotifier(),
     );
