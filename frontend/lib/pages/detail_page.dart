@@ -70,62 +70,66 @@ class _DetailPageState extends State<DetailPage> {
   }
 
   Widget _normalBuilder(BuildContext context, Widget player) {
-    return Column(
-      children: [
-        Container(
-          padding: EdgeInsets.all(0),
-          alignment: Alignment.center,
-          child: player,
-        ),
-        Expanded(
-          child: Container(
-            padding: EdgeInsets.all(10),
-            child: ScrollShadow(
-              color: Theme.of(context).cardColor,
-              size: 20,
-              child: SingleChildScrollView(
-                child: Column(
-                  spacing: 10,
-                  children: [
-                    Text(
-                      widget.videoInfo.title,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+    return Scaffold(
+      appBar: AppBar(),
+      body: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.all(0),
+            alignment: Alignment.center,
+            child: player,
+          ),
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.all(10),
+              child: ScrollShadow(
+                color: Theme.of(context).cardColor,
+                size: 20,
+                child: SingleChildScrollView(
+                  child: Column(
+                    spacing: 10,
+                    children: [
+                      Text(
+                        widget.videoInfo.title,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    Row(
-                      spacing: 10,
-                      children: [
-                        SizedBox(
-                          width: 40,
-                          height: 40,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              color: Colors.grey,
+                      Row(
+                        spacing: 10,
+                        children: [
+                          SizedBox(
+                            width: 40,
+                            height: 40,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                color: Colors.grey,
+                              ),
                             ),
                           ),
-                        ),
-                        Text(
-                          widget.videoInfo.channelTitle,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(fontSize: 16, color: Colors.grey),
-                        ),
-                      ],
-                    ),
-                    Divider(thickness: 0.5),
-                    Pagination(videoId: widget.videoInfo.id),
-                  ],
+                          Text(
+                            widget.videoInfo.channelTitle,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(fontSize: 16, color: Colors.grey),
+                          ),
+                        ],
+                      ),
+                      Divider(thickness: 0.5),
+                      Pagination(videoId: widget.videoInfo.id),
+                      SizedBox(height: 50),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

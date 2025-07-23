@@ -29,6 +29,10 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void onButtonPressed() async {
+    final currentScope = FocusScope.of(context);
+    if (!currentScope.hasPrimaryFocus && currentScope.hasFocus) {
+      currentScope.unfocus();
+    }
     setState(() {
       isLoading = true;
       errorMessage = "";
