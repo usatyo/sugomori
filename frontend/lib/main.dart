@@ -70,6 +70,7 @@ class _MyAppState extends State<MyApp> {
         '/register': (context) => const RegisterPage(),
         '/setting': (context) => const SettingPage(),
       },
+      home: const SearchPage(),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: const [
         Locale('en'),

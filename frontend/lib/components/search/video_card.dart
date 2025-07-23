@@ -75,6 +75,7 @@ class _VideoCardState extends State<VideoCard> {
               Expanded(
                 child: Container(
                   padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(color: Colors.white),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

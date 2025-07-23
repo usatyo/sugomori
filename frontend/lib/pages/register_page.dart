@@ -21,6 +21,7 @@ class _RegisterPageState extends State<RegisterPage> {
   List<Video> resultVideos = [];
   Joseki joseki = Joseki([]);
   bool isLoading = false;
+  String errorMessage = "";
 
   void onChangeText(String text) {
     setState(() {
@@ -31,9 +32,15 @@ class _RegisterPageState extends State<RegisterPage> {
   void onButtonPressed() async {
     setState(() {
       isLoading = true;
+      errorMessage = "";
     });
     List<Video> videos = await youtubeApiService.getVideosByWord(keyword);
     setState(() {
+      if (videos.isEmpty) {
+        errorMessage = AppLocalizations.of(context)!.message_video_not_found;
+      } else {
+        errorMessage = "";
+      }
       resultVideos = videos;
       isLoading = false;
     });
@@ -54,6 +61,8 @@ class _RegisterPageState extends State<RegisterPage> {
               decoration: InputDecoration(
                 labelText: AppLocalizations.of(context)!.label_keyword,
                 contentPadding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                filled: true,
+                fillColor: Colors.white,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -71,13 +80,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: Column(
                     children:
                         resultVideos.isEmpty
-                            ? [
-                              Text(
-                                AppLocalizations.of(
-                                  context,
-                                )!.message_video_not_found,
-                              ),
-                            ]
+                            ? [Text(errorMessage)]
                             : resultVideos
                                 .map((video) => VideoCard(videoInfo: video))
                                 .toList(),

@@ -29,6 +29,7 @@ class _SearchPageState extends ConsumerState<SearchPage> {
   void getVideos() async {
     setState(() {
       isLoading = true;
+      errorMessage = "";
     });
     List<Video> newVideos = await josekiApiService.getVideos(joseki);
     setState(() {
