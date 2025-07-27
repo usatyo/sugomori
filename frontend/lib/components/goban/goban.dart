@@ -61,11 +61,8 @@ class _GobanState extends ConsumerState<Goban> {
   }
 
   void onPressedPass() {
-    if (isOverMaxStones()) return;
     setState(() {
-      joseki.pushStone(color: nextColor, x: -1, y: -1);
       nextColor = reversedColor(nextColor);
-      ref.read(widget.provider.notifier).updateGoban(joseki);
     });
   }
 
@@ -82,9 +79,6 @@ class _GobanState extends ConsumerState<Goban> {
     final GobanState gobanState = ref.watch(widget.provider);
     final double sideBarWidth = MediaQuery.of(context).size.width * 0.15;
     setState(() {
-      if (gobanState.joseki.stoneList.isNotEmpty) {
-        nextColor = reversedColor(gobanState.joseki.stoneList.last.color);
-      }
       joseki = gobanState.joseki;
       stoneMatrix = gobanState.stoneMatrix;
     });

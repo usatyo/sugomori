@@ -16,9 +16,6 @@ StoneMatrix getProcessedBoard(StoneList stoneList) {
 
   for (int i = 0; i < stoneList.length; i++) {
     Stone stone = stoneList[i];
-    if (stone.isPassed()) {
-      continue;
-    }
     if (isOverlapStone(stone, stoneMatrix)) {
       return [];
     }

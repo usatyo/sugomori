@@ -18,17 +18,13 @@ StoneColor reversedColor(StoneColor color) {
 // pass:
 class Stone {
   Stone(this.color, this.x, this.y, this.index) {
-    assert(-1 <= x && x < boardSize);
-    assert(-1 <= y && y < boardSize);
+    assert(0 <= x && x < boardSize);
+    assert(0 <= y && y < boardSize);
   }
   final StoneColor color;
   final int x;
   final int y;
   final int index;
-
-  bool isPassed() {
-    return x == -1 && y == -1;
-  }
 
   Map<String, dynamic> toJson() {
     return {'color': color == StoneColor.black ? 0 : 1, 'x': x, 'y': y};
@@ -70,10 +66,6 @@ class Joseki {
     for (int i = 0; i < count; i++) {
       popStone();
     }
-  }
-
-  List<Stone> getPassedStones() {
-    return stoneList.where((stone) => stone.isPassed()).toList();
   }
 }
 
