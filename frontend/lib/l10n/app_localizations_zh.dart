@@ -9,10 +9,10 @@ class AppLocalizationsZh extends AppLocalizations {
   AppLocalizationsZh([String locale = 'zh']) : super(locale);
 
   @override
-  String get menu_search => '手续搜索';
+  String get menu_search => '查询操作步骤';
 
   @override
-  String get menu_register => '手续登记';
+  String get menu_register => '注册';
 
   @override
   String get menu_setting => '设置';
@@ -27,25 +27,25 @@ class AppLocalizationsZh extends AppLocalizations {
   String get button_start => '开始';
 
   @override
-  String get button_delete => '除去';
+  String get button_delete => '删除';
 
   @override
   String get label_keyword => '搜索关键词';
 
   @override
-  String get button_new => '新';
+  String get button_new => '新建';
 
   @override
   String get button_add => '添加';
 
   @override
-  String get goban_back => '1次回到';
+  String get goban_back => '返回一步';
 
   @override
-  String get goban_back5 => '5次回到';
+  String get goban_back5 => '返回五步';
 
   @override
-  String get goban_pass => '跳读';
+  String get goban_pass => '脱先';
 
   @override
   String get goban_clear => '清除';
@@ -54,7 +54,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get setting_language => '语言';
 
   @override
-  String get message_video_not_found => '未找到视频';
+  String get message_video_not_found => '未找到相关视频';
 
   @override
   String get message_joseki_not_found => '手续尚未注册';
