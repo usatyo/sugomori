@@ -92,7 +92,7 @@ class _VideoCardState extends State<VideoCard> {
                       ),
                       Text(
                         style: TextStyle(fontSize: 14, color: Colors.grey),
-                        widget.videoInfo!.channelTitle,
+                        widget.videoInfo!.channel.title,
                         overflow: TextOverflow.clip,
                         maxLines: 1,
                       ),

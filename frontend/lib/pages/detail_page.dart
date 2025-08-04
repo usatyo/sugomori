@@ -85,6 +85,7 @@ class _DetailPageState extends State<DetailPage> {
                 child: SingleChildScrollView(
                   child: Column(
                     spacing: 10,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         widget.videoInfo.title,
@@ -101,15 +102,16 @@ class _DetailPageState extends State<DetailPage> {
                           SizedBox(
                             width: 40,
                             height: 40,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                color: Colors.grey,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Image.network(
+                                widget.videoInfo.channel.thumbnailUrl,
+                                fit: BoxFit.cover,
                               ),
                             ),
                           ),
                           Text(
-                            widget.videoInfo.channelTitle,
+                            widget.videoInfo.channel.title,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(fontSize: 16, color: Colors.grey),

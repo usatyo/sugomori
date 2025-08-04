@@ -29,11 +29,54 @@ class YoutubeApiService {
 
       List<dynamic> videosJson = data['items'];
 
+      List<PartVideo> partVideos = [];
+      List<String> channelIds = [];
       List<Video> videos = [];
       for (var json in videosJson) {
-        videos.add(Video.fromMap(json));
+        partVideos.add(PartVideo.fromMap(json));
+        channelIds.add(json['snippet']['channelId']);
+      }
+      List<Channel> channels = await _getChannelsById(channelIds: channelIds);
+      for (int i = 0; i < partVideos.length; i++) {
+        int channelIndex = channels.indexWhere(
+          (channel) => channel.id == channelIds[i],
+        );
+        Channel channel = channels[channelIndex];
+        videos.add(Video.fromMap(partVideos[i], channel));
       }
       return videos;
+    } else {
+      throw json.decode(response.body)['error']['message'];
+    }
+  }
+
+  Future<List<Channel>> _getChannelsById({
+    required List<String> channelIds,
+  }) async {
+    if (channelIds.isEmpty) {
+      return [];
+    }
+    Map<String, String> parameters = {
+      'part': 'snippet',
+      'id': channelIds.join(','),
+      'maxResults': '8',
+      'key': const String.fromEnvironment("YOUTUBE_API_KEY"),
+    };
+    Uri uri = Uri.https(_baseUrl, '/youtube/v3/channels', parameters);
+    Map<String, String> headers = {
+      HttpHeaders.contentTypeHeader: 'application/json',
+    };
+
+    var response = await http.get(uri, headers: headers);
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      List<dynamic> channelsJson = data['items'];
+
+      List<Channel> channels = [];
+      for (var json in channelsJson) {
+        channels.add(Channel.fromMap(json));
+      }
+      return channels;
     } else {
       throw json.decode(response.body)['error']['message'];
     }
@@ -61,7 +104,7 @@ class YoutubeApiService {
       }
       return await getVideosById(videoIds: videoIds);
     } else {
-      throw json.decode(response.body)['error']['message']; 
+      throw json.decode(response.body)['error']['message'];
     }
   }
 }
