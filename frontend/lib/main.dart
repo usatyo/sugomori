@@ -10,6 +10,7 @@ import 'theme.dart';
 import 'util.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const ProviderScope(child: MyApp()));
 }
@@ -93,4 +94,3 @@ extension BuildContextExtension on BuildContext {
         : MediaQuery.sizeOf(this).height > tabletWidth;
   }
 }
-
