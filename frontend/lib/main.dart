@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/l10n/app_localizations.dart';
 import 'package:frontend/page_navigator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,6 +10,7 @@ import 'theme.dart';
 import 'util.dart';
 
 void main() {
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -57,18 +60,37 @@ class _MyAppState extends State<MyApp> {
     );
 
     MaterialTheme theme = MaterialTheme(textTheme);
-    return MaterialApp(
-      title: 'sugomori',
-      theme: theme.light(),
-      home: const PageNavigator(),
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: const [
-        Locale('en'),
-        Locale('ja'),
-        Locale('ko'),
-        Locale('zh'),
-      ],
-      locale: locale,
+
+    return ScreenUtilInit(
+      // iPhone 16 Pro Size
+      designSize: const Size(402, 874),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder:
+          (_, _) => MaterialApp(
+            title: 'sugomori',
+            theme: theme.light(),
+            home: const PageNavigator(),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: const [
+              Locale('en'),
+              Locale('ja'),
+              Locale('ko'),
+              Locale('zh'),
+            ],
+            locale: locale,
+          ),
     );
   }
 }
+
+extension BuildContextExtension on BuildContext {
+  bool isTablet() {
+    const tabletWidth = 600;
+    //  縦の場合は横幅で、横の場合は高さでタブレットか判定する
+    return MediaQuery.orientationOf(this) == Orientation.portrait
+        ? MediaQuery.sizeOf(this).width > tabletWidth
+        : MediaQuery.sizeOf(this).height > tabletWidth;
+  }
+}
+
