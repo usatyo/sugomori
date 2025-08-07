@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/main.dart';
 import 'package:frontend/models/joseki.dart';
 
 class SingleStone extends StatefulWidget {
@@ -19,6 +20,8 @@ class SingleStone extends StatefulWidget {
 class _SingleStoneState extends State<SingleStone> {
   @override
   Widget build(BuildContext context) {
+    final double fontSize = context.isTablet() ? 18 : 14;
+
     return Stack(
       children: [
         FilledButton(
@@ -41,6 +44,7 @@ class _SingleStoneState extends State<SingleStone> {
                 "${widget.index == -1 ? "" : widget.index + 1}",
                 textAlign: TextAlign.center,
                 style: TextStyle(
+                  fontSize: fontSize,
                   color:
                       widget.color == StoneColor.black
                           ? Colors.white
