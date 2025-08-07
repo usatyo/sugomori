@@ -12,7 +12,7 @@ class PartVideo {
   factory PartVideo.fromMap(Map<String, dynamic> videoData) {
     return PartVideo(
       id: videoData['id'],
-      title: videoData['snippet']['title'],
+      title: videoData['snippet']['localized']['title'],
       thumbnailUrl: videoData['snippet']['thumbnails']['medium']['url'],
     );
   }

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:frontend/models/youtube.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class YoutubeApiService {
   YoutubeApiService._instantiate();
@@ -12,10 +13,13 @@ class YoutubeApiService {
   final String _baseUrl = 'www.googleapis.com';
 
   Future<List<Video>> getVideosById({required List<String> videoIds}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? savedLanguageCode = prefs.getString('languageCode');
     Map<String, String> parameters = {
       'part': 'snippet',
       'id': videoIds.join(','),
       'maxResults': '8',
+      'hl': savedLanguageCode ?? 'ja',
       'key': const String.fromEnvironment("YOUTUBE_API_KEY"),
     };
     Uri uri = Uri.https(_baseUrl, '/youtube/v3/videos', parameters);
