@@ -24,19 +24,32 @@ class _PaginationState extends ConsumerState<Pagination> {
   bool isAddLoading = false;
   bool isDeleteLoading = false;
   List<Joseki> josekiList = [];
-  List<Joseki> newJosekiList = [];
   final JosekiApiService josekiApiService = JosekiApiService.instance;
 
   @override
   void initState() {
     super.initState();
-    Future(() async {
-      newJosekiList = await josekiApiService.getJoseki(widget.videoId);
-      setState(() {
-        totalPage = newJosekiList.length;
-        josekiList = newJosekiList;
-        refreshGoban();
-      });
+    loadNewJoseki();
+  }
+
+  @override
+  void didUpdateWidget(covariant Pagination oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    loadNewJoseki();
+  }
+
+  void loadNewJoseki() async {
+    List<Joseki> newJosekiList = await josekiApiService.getJoseki(
+      widget.videoId,
+    );
+    setState(() {
+      currentPage = 0;
+      totalPage = newJosekiList.length;
+      isEditing = false;
+      isAddLoading = false;
+      isDeleteLoading = false;
+      josekiList = newJosekiList;
+      refreshGoban();
     });
   }
 
@@ -170,7 +183,10 @@ class _PaginationState extends ConsumerState<Pagination> {
         ),
         totalPage == 0
             ? Text(AppLocalizations.of(context)!.message_joseki_not_found)
-            : Goban(isEditable: isEditing, provider: searchGobanStateNotifierProvider),
+            : Goban(
+              isEditable: isEditing,
+              provider: searchGobanStateNotifierProvider,
+            ),
       ],
     );
   }

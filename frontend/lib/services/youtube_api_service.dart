@@ -54,6 +54,15 @@ class YoutubeApiService {
     }
   }
 
+  Future<Video> getVideoById({required String videoId}) async {
+    List<Video> videos = await getVideosById(videoIds: [videoId]);
+    if (videos.isNotEmpty) {
+      return videos[0];
+    } else {
+      throw 'Video not found';
+    }
+  }
+
   Future<List<Channel>> _getChannelsById({
     required List<String> channelIds,
   }) async {

@@ -3,14 +3,13 @@ import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 import 'package:frontend/components/bottom_menu/bottom_menu.dart';
 import 'package:frontend/components/goban_pagination/pagination.dart';
 import 'package:frontend/main.dart';
-import 'package:frontend/models/joseki.dart';
 import 'package:frontend/models/youtube.dart';
-import 'package:frontend/services/joseki_api_service.dart';
+import 'package:frontend/services/youtube_api_service.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class DetailPage extends StatefulWidget {
-  final Video videoInfo;
-  const DetailPage({super.key, required this.videoInfo});
+  final Video initialVideoInfo;
+  const DetailPage({super.key, required this.initialVideoInfo});
 
   @override
   State<DetailPage> createState() => _DetailPageState();
@@ -18,30 +17,44 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> {
   late final YoutubePlayerController _controller;
-  final JosekiApiService josekiApiService = JosekiApiService.instance;
-  List<Joseki> josekiList = [];
-  bool isFullScreen = false;
+  final YoutubeApiService youtubeApiService = YoutubeApiService.instance;
+  late Video videoInfo;
 
   @override
   void initState() {
     super.initState();
+    setState(() {
+      videoInfo = widget.initialVideoInfo;
+    });
     _controller = YoutubePlayerController.fromVideoId(
-      videoId: widget.videoInfo.id,
+      videoId: widget.initialVideoInfo.id,
       autoPlay: true,
-      params: const YoutubePlayerParams(showFullscreenButton: false),
+      params: const YoutubePlayerParams(
+        showFullscreenButton: false,
+        strictRelatedVideos: true,
+      ),
     );
+    _controller.listen((data) {
+      final String videoId = data.metaData.videoId;
+      if (videoId.isNotEmpty && videoId != videoInfo.id) {
+        (() async {
+          Video video = await youtubeApiService.getVideoById(videoId: videoId);
+          setState(() {
+            videoInfo = video;
+          });
+        })();
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final double tabletPadding = context.isTablet() ? 100 : 0;
     return Scaffold(
       appBar: AppBar(),
       bottomNavigationBar: BottomMenu(),
       body: Padding(
-        padding:
-            context.isTablet()
-                ? EdgeInsets.symmetric(horizontal: 100)
-                : EdgeInsets.all(0),
+        padding: EdgeInsets.symmetric(horizontal: tabletPadding),
         child: Column(
           children: [
             Container(
@@ -64,7 +77,7 @@ class _DetailPageState extends State<DetailPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.videoInfo.title,
+                          videoInfo.title,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -81,13 +94,13 @@ class _DetailPageState extends State<DetailPage> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20),
                                 child: Image.network(
-                                  widget.videoInfo.channel.thumbnailUrl,
+                                  videoInfo.channel.thumbnailUrl,
                                   fit: BoxFit.cover,
                                 ),
                               ),
                             ),
                             Text(
-                              widget.videoInfo.channel.title,
+                              videoInfo.channel.title,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -98,7 +111,7 @@ class _DetailPageState extends State<DetailPage> {
                           ],
                         ),
                         Divider(thickness: 0.5),
-                        Pagination(videoId: widget.videoInfo.id),
+                        Pagination(videoId: videoInfo.id),
                         SizedBox(height: 50),
                       ],
                     ),
