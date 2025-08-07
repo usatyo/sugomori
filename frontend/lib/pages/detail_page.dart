@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
+import 'package:frontend/components/bottom_menu/bottom_menu.dart';
 import 'package:frontend/components/goban_pagination/pagination.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/models/joseki.dart';
@@ -35,6 +36,7 @@ class _DetailPageState extends State<DetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
+      bottomNavigationBar: BottomMenu(),
       body: Padding(
         padding:
             context.isTablet()

@@ -33,10 +33,12 @@ class BottomMenu extends ConsumerWidget {
           label: AppLocalizations.of(context)!.menu_setting,
         ),
       ],
-      onTap:
-          (index) => {
-            ref.read(pageIndexNotifierProvider.notifier).update(index),
-          },
+      onTap: (index) {
+        if (Navigator.canPop(context)) {
+          Navigator.pop(context);
+        }
+        ref.read(pageIndexNotifierProvider.notifier).update(index);
+      },
     );
   }
 }
