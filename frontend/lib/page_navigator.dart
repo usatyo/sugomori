@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/components/bottom_menu/bottom_menu.dart';
+import 'package:frontend/main.dart';
 import 'package:frontend/pages/register_page.dart';
 import 'package:frontend/pages/search_page.dart';
 import 'package:frontend/pages/setting_page.dart';
@@ -13,9 +14,15 @@ class PageNavigator extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(),
-      body: IndexedStack(
-        index: ref.watch(pageIndexNotifierProvider),
-        children: [SearchPage(), RegisterPage(), SettingPage()],
+      body: Padding(
+        padding:
+            context.isTablet()
+                ? EdgeInsets.symmetric(horizontal: 100)
+                : EdgeInsets.all(0),
+        child: IndexedStack(
+          index: ref.watch(pageIndexNotifierProvider),
+          children: [SearchPage(), RegisterPage(), SettingPage()],
+        ),
       ),
       bottomNavigationBar: BottomMenu(),
     );

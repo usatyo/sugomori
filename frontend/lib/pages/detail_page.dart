@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
-import 'package:frontend/components/bottom_menu/bottom_menu.dart';
 import 'package:frontend/components/goban_pagination/pagination.dart';
+import 'package:frontend/main.dart';
 import 'package:frontend/models/joseki.dart';
 import 'package:frontend/models/youtube.dart';
 import 'package:frontend/services/joseki_api_service.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class DetailPage extends StatefulWidget {
   final Video videoInfo;
@@ -24,110 +24,88 @@ class _DetailPageState extends State<DetailPage> {
   @override
   void initState() {
     super.initState();
-    _controller = YoutubePlayerController(
-      initialVideoId: widget.videoInfo.id,
-      flags: YoutubePlayerFlags(loop: true),
+    _controller = YoutubePlayerController.fromVideoId(
+      videoId: widget.videoInfo.id,
+      autoPlay: true,
+      params: const YoutubePlayerParams(showFullscreenButton: false),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return YoutubePlayerBuilder(
-      player: YoutubePlayer(
-        controller: _controller,
-        showVideoProgressIndicator: true,
-      ),
-      builder: isFullScreen ? _fullScreenBuilder : _normalBuilder,
-      onEnterFullScreen: () {
-        setState(() {
-          isFullScreen = true;
-        });
-      },
-      onExitFullScreen: () {
-        setState(() {
-          isFullScreen = false;
-        });
-      },
-    );
-  }
-
-  Widget _fullScreenBuilder(BuildContext context, Widget player) {
-    return Column(
-      children: [
-        Expanded(
-          child: Container(
-            padding: EdgeInsets.all(0),
-            alignment: Alignment.center,
-            child: player,
-          ),
-        ),
-        BottomMenu(),
-      ],
-    );
-  }
-
-  Widget _normalBuilder(BuildContext context, Widget player) {
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.all(0),
-            alignment: Alignment.center,
-            child: player,
-          ),
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.all(10),
-              child: ScrollShadow(
-                color: Theme.of(context).cardColor,
-                size: 20,
-                child: SingleChildScrollView(
-                  child: Column(
-                    spacing: 10,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        widget.videoInfo.title,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+      body: Padding(
+        padding:
+            context.isTablet()
+                ? EdgeInsets.symmetric(horizontal: 100)
+                : EdgeInsets.all(0),
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.all(0),
+              alignment: Alignment.center,
+              child: YoutubePlayer(
+                controller: _controller,
+                aspectRatio: 16 / 9,
+              ),
+            ),
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.all(10),
+                child: ScrollShadow(
+                  color: Theme.of(context).cardColor,
+                  size: 20,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      spacing: 10,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.videoInfo.title,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      Row(
-                        spacing: 10,
-                        children: [
-                          SizedBox(
-                            width: 40,
-                            height: 40,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: Image.network(
-                                widget.videoInfo.channel.thumbnailUrl,
-                                fit: BoxFit.cover,
+                        Row(
+                          spacing: 10,
+                          children: [
+                            SizedBox(
+                              width: 40,
+                              height: 40,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: Image.network(
+                                  widget.videoInfo.channel.thumbnailUrl,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
-                          ),
-                          Text(
-                            widget.videoInfo.channel.title,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(fontSize: 16, color: Colors.grey),
-                          ),
-                        ],
-                      ),
-                      Divider(thickness: 0.5),
-                      Pagination(videoId: widget.videoInfo.id),
-                      SizedBox(height: 50),
-                    ],
+                            Text(
+                              widget.videoInfo.channel.title,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Divider(thickness: 0.5),
+                        Pagination(videoId: widget.videoInfo.id),
+                        SizedBox(height: 50),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
