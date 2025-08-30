@@ -4,6 +4,7 @@ import 'package:frontend/components/goban/goban_painter.dart';
 import 'package:frontend/components/goban/icon_text.dart';
 import 'package:frontend/components/goban/single_stone.dart';
 import 'package:frontend/l10n/app_localizations.dart';
+import 'package:frontend/main.dart';
 import 'package:frontend/models/joseki.dart';
 import 'package:frontend/providers/goban_state_provider.dart';
 import 'package:frontend/util/go_rule.dart';
@@ -24,9 +25,7 @@ class _GobanState extends ConsumerState<Goban> {
 
   bool isOverMaxStones() {
     if (joseki.stoneList.length >= 99) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(AppLocalizations.of(context)!.error_max_stone)),
-      );
+      context.showSnackBar(AppLocalizations.of(context)!.error_max_stone);
       return true;
     }
     return false;
