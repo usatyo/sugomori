@@ -10,6 +10,7 @@
   "label_keyword": "keyword",
   "button_new": "New",
   "button_add": "Add",
+  "button_retry": "Retry",
   "goban_back": "Back",
   "goban_back5": "5 Back",
   "goban_pass": "Pass",
@@ -17,6 +18,6 @@
   "setting_language": "Language",
   "message_video_not_found": "No videos found",
   "message_joseki_not_found": "No procedures registered yet",
-  "error_netowork": "Cannot connect to the network",
+  "error_netowork": "Please connect to the internet",
   "error_max_stone": "Cannot place over 99 stones"
 }

@@ -9,6 +9,7 @@
   "button_delete": "삭제",
   "button_new": "신규",
   "button_add": "추가",
+  "button_retry": "리트라이",
   "label_keyword": "검색 키워드",
   "goban_back": "1수 돌아가기",
   "goban_back5": "5수 돌아가기",
@@ -17,6 +18,6 @@
   "setting_language": "언어",
   "message_video_not_found": "동영상을 찾을 수 없습니다",
   "message_joseki_not_found": "절차가 아직 등록되지 않았습니다",
-  "error_netowork": "네트워크에 연결할 수 없습니다",
+  "error_netowork": "인터넷에 연결해주세요",
   "error_max_stone": "배치할 수 있는 바둑돌의 최대 개수는 99개입니다"
 }

@@ -39,6 +39,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get button_add => '追加';
 
   @override
+  String get button_retry => 'リトライ';
+
+  @override
   String get goban_back => '1手戻る';
 
   @override
@@ -60,7 +63,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get message_joseki_not_found => '手順がまだ登録されていません';
 
   @override
-  String get error_netowork => 'ネットワークに接続できません';
+  String get error_netowork => 'インターネットに接続してください';
 
   @override
   String get error_max_stone => '配置できる碁石の最大数は99個です';

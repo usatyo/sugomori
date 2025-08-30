@@ -159,6 +159,12 @@ abstract class AppLocalizations {
   /// **'Add'**
   String get button_add;
 
+  /// No description provided for @button_retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get button_retry;
+
   /// No description provided for @goban_back.
   ///
   /// In en, this message translates to:
@@ -204,7 +210,7 @@ abstract class AppLocalizations {
   /// No description provided for @error_netowork.
   ///
   /// In en, this message translates to:
-  /// **'Cannot connect to the network'**
+  /// **'Please connect to the internet'**
   String get error_netowork;
 
   /// No description provided for @error_max_stone.

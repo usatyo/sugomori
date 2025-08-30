@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/components/atoms/button.dart';
+import 'package:frontend/l10n/app_localizations.dart';
 import 'package:frontend/main.dart';
 
 class OfflinePage extends StatelessWidget {
@@ -23,10 +24,12 @@ class OfflinePage extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text("you are offline."),
-              SizedBox(height: 16),
+              Icon(Icons.wifi_off, size: 100, color: Colors.grey),
+              SizedBox(height: 20),
+              Text(AppLocalizations.of(context)!.error_netowork),
+              SizedBox(height: 30),
               Button(
-                text: "Retry",
+                text: AppLocalizations.of(context)!.button_retry,
                 onPressed: () async {
                   await onTapButton(context);
                 },

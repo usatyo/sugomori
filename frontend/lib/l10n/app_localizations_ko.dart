@@ -39,6 +39,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get button_add => '추가';
 
   @override
+  String get button_retry => '리트라이';
+
+  @override
   String get goban_back => '1수 돌아가기';
 
   @override
@@ -60,7 +63,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get message_joseki_not_found => '절차가 아직 등록되지 않았습니다';
 
   @override
-  String get error_netowork => '네트워크에 연결할 수 없습니다';
+  String get error_netowork => '인터넷에 연결해주세요';
 
   @override
   String get error_max_stone => '배치할 수 있는 바둑돌의 최대 개수는 99개입니다';

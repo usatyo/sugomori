@@ -39,6 +39,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get button_add => 'Add';
 
   @override
+  String get button_retry => 'Retry';
+
+  @override
   String get goban_back => 'Back';
 
   @override
@@ -60,7 +63,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get message_joseki_not_found => 'No procedures registered yet';
 
   @override
-  String get error_netowork => 'Cannot connect to the network';
+  String get error_netowork => 'Please connect to the internet';
 
   @override
   String get error_max_stone => 'Cannot place over 99 stones';

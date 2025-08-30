@@ -39,6 +39,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get button_add => '添加';
 
   @override
+  String get button_retry => '重试';
+
+  @override
   String get goban_back => '返回一步';
 
   @override
@@ -60,7 +63,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get message_joseki_not_found => '手续尚未注册';
 
   @override
-  String get error_netowork => '无法连接网络';
+  String get error_netowork => '请连接到互联网';
 
   @override
   String get error_max_stone => '最多可放置 99 块石头';
