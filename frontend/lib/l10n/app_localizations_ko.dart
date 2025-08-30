@@ -57,6 +57,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get setting_language => '언어';
 
   @override
+  String get setting_license => '라이센스';
+
+  @override
   String get message_video_not_found => '동영상을 찾을 수 없습니다';
 
   @override

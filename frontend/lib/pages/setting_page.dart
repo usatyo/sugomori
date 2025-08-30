@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/components/setting/general_setting.dart';
+import 'package:frontend/components/setting/license_setting.dart';
 import 'package:frontend/l10n/app_localizations.dart';
 
 class SettingPage extends StatelessWidget {
@@ -22,6 +23,11 @@ class SettingPage extends StatelessWidget {
           padding: EdgeInsets.all(10),
           alignment: Alignment.center,
           child: GeneralSetting(),
+        ),
+        Container(
+          padding: EdgeInsets.all(10),
+          alignment: Alignment.center,
+          child: LicenseSetting(),
         ),
         Expanded(child: Container()),
       ],

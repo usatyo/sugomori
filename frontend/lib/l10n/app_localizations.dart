@@ -195,6 +195,12 @@ abstract class AppLocalizations {
   /// **'Language'**
   String get setting_language;
 
+  /// No description provided for @setting_license.
+  ///
+  /// In en, this message translates to:
+  /// **'License'**
+  String get setting_license;
+
   /// No description provided for @message_video_not_found.
   ///
   /// In en, this message translates to:

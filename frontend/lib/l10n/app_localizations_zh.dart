@@ -57,6 +57,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get setting_language => '语言';
 
   @override
+  String get setting_license => '许可证';
+
+  @override
   String get message_video_not_found => '未找到相关视频';
 
   @override
