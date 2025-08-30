@@ -60,6 +60,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get setting_license => 'ライセンス';
 
   @override
+  String get setting_contact => 'お問い合わせ';
+
+  @override
   String get message_video_not_found => '動画が見つかりませんでした';
 
   @override

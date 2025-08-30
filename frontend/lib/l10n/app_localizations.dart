@@ -201,6 +201,12 @@ abstract class AppLocalizations {
   /// **'License'**
   String get setting_license;
 
+  /// No description provided for @setting_contact.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Us'**
+  String get setting_contact;
+
   /// No description provided for @message_video_not_found.
   ///
   /// In en, this message translates to:

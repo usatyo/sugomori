@@ -60,6 +60,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setting_license => 'License';
 
   @override
+  String get setting_contact => 'Contact Us';
+
+  @override
   String get message_video_not_found => 'No videos found';
 
   @override
