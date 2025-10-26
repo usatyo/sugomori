@@ -60,6 +60,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get setting_license => '许可证';
 
   @override
+  String get setting_youtube_terms => 'YouTube 服务条款';
+
+  @override
   String get setting_contact => '联系我们';
 
   @override

@@ -60,6 +60,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get setting_license => 'ライセンス';
 
   @override
+  String get setting_youtube_terms => 'YouTube 利用規約';
+
+  @override
   String get setting_contact => 'お問い合わせ';
 
   @override

@@ -60,6 +60,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get setting_license => '라이센스';
 
   @override
+  String get setting_youtube_terms => 'YouTube 이용 약관';
+
+  @override
   String get setting_contact => '문의하기';
 
   @override

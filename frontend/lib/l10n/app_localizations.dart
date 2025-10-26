@@ -201,6 +201,12 @@ abstract class AppLocalizations {
   /// **'License'**
   String get setting_license;
 
+  /// No description provided for @setting_youtube_terms.
+  ///
+  /// In en, this message translates to:
+  /// **'YouTube Terms of Service'**
+  String get setting_youtube_terms;
+
   /// No description provided for @setting_contact.
   ///
   /// In en, this message translates to:
