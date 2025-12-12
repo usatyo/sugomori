@@ -1,0 +1,35 @@
+import { useEffect, type FC } from "react"
+import SingleStone from "./SingleStone"
+import { useGoban } from "./useGoban"
+
+type Props = {}
+
+const Goban: FC<Props> = () => {
+  const { canvasRef, drawGoban, stoneMatrix, onClickStone } = useGoban()
+  useEffect(() => {
+    drawGoban()
+  }, [])
+
+  return (
+    <div className="relative h-[900px] aspect-square">
+      <canvas
+        width={3600}
+        height={3600}
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full bg-amber-300"
+      ></canvas>
+      <div className="absolute inset-0 w-full h-full grid grid-cols-19 grid-rows-19 p-[1%] z-10">
+        {stoneMatrix.flat().map((stone, idx) => (
+          <SingleStone
+            key={idx}
+            index={stone.index}
+            color={stone.color}
+            onClick={() => onClickStone(stone.x, stone.y)}
+          />
+        ))}
+      </div>
+    </div>
+  )
+}
+
+export default Goban

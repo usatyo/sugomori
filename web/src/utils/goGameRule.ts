@@ -1,13 +1,11 @@
-import { boardSize, Stone } from "../models/model"
+import { boardSize, generateEmptyMatrix, Stone } from "../models/model"
 import { BoardUnionFind } from "./boardUnionFind"
 import { gobanHash } from "./gobanHash"
 
 export const getProcessedBoard = (
   stoneList: Array<Stone>
 ): Array<Array<Stone>> => {
-  let stoneMatrix: Array<Array<Stone>> = new Array(boardSize).map((i: number) =>
-    new Array(boardSize).map((j: number) => new Stone("empty", i, j, -1))
-  )
+  let stoneMatrix: Array<Array<Stone>> = generateEmptyMatrix()
   let hash = 0
   const visited: Set<number> = new Set()
   let selfCapturedStones: Array<Stone>, otherCapturedStones: Array<Stone>
@@ -112,16 +110,13 @@ const generateArray = (
   stoneMatrix: Array<Array<Stone>>,
   capturedStones: Array<Stone>
 ) => {
-  const newStoneMatrix: Array<Array<Stone>> = new Array(boardSize)
-    .fill(null)
-    .map((i: number) =>
-      new Array(boardSize)
-        .fill(null)
-        .map(
-          (j: number) =>
-            new Stone(stoneMatrix[i][j].color, i, j, stoneMatrix[i][j].index)
-        )
-    )
+  const newStoneMatrix: Array<Array<Stone>> = stoneMatrix.map(
+    (stoneList, i) => {
+      return stoneList.map((stone, j) => {
+        return new Stone(stone.color, i, j, stone.index)
+      })
+    }
+  )
 
   // remove captured stones
   for (let i = 0; i < capturedStones.length; i++) {

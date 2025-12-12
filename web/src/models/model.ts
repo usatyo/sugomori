@@ -79,3 +79,15 @@ export class GobanState {
     this.stoneMatrix = getProcessedBoard(this.joseki.stoneList);
   }
 }
+
+export const generateEmptyMatrix = (): Array<Array<Stone>> => {
+  const board: Array<Array<Stone>> = []
+  for (let i = 0; i < boardSize; i++) {
+    const row: Array<Stone> = []
+    for (let j = 0; j < boardSize; j++) {
+      row.push({ color: "empty", x: i, y: j, index: -1 })
+    }
+    board.push(row)
+  }
+  return board
+}
