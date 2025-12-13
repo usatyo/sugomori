@@ -1,11 +1,11 @@
-import { useRef, useState } from "react"
+import { useContext, useRef, useState } from "react"
 import {
   generateEmptyMatrix,
-  Joseki,
   reversedColor,
   type Stone,
   type StoneColor,
-} from "../../models/model"
+} from "../../models/joseki"
+import { JosekiContext } from "../../provider/JosekiProvider"
 import { getProcessedBoard } from "../../utils/goGameRule"
 
 export const useGoban = () => {
@@ -59,15 +59,20 @@ export const useGoban = () => {
     })
   }
 
-  const [joseki, _] = useState<Joseki>(new Joseki([]))
+  const isOverMaxStones = (): boolean => {
+    return joseki.stoneList.length >= 99
+  }
+
+  const { joseki, setJoseki } = useContext(JosekiContext)
   const [stoneMatrix, setStoneMatrix] = useState<Array<Array<Stone>>>(
     generateEmptyMatrix()
   )
   const [nextColor, setNextColor] = useState<StoneColor>("black")
+  const [isEditable, setIsEditable] = useState<boolean>(true)
 
   const onClickStone = (x: number, y: number) => {
-    // if (!widget.isEditable) return;
-    // if (isOverMaxStones()) return;
+    if (!isEditable) return
+    if (isOverMaxStones()) return
 
     if (!joseki.pushStone(nextColor, x, y)) {
       return
@@ -76,5 +81,12 @@ export const useGoban = () => {
     setNextColor(reversedColor(nextColor))
   }
 
-  return { canvasRef, drawGoban, stoneMatrix, onClickStone }
+  return {
+    canvasRef,
+    drawGoban,
+    stoneMatrix,
+    onClickStone,
+    setJoseki,
+    setIsEditable,
+  }
 }

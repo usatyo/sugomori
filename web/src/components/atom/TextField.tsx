@@ -1,9 +1,12 @@
-import type { FC } from "react"
+import { type FC } from "react"
 
-type Props = {}
+type Props = {
+  value: string
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+}
 
-const TextField: FC<Props> = () => {
-  return <input type="text" />
+const TextField: FC<Props> = ({ value, onChange }) => {
+  return <input type="text" value={value} onChange={onChange} className="" />
 }
 
 export default TextField

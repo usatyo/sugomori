@@ -1,5 +1,5 @@
 import { expect, test } from "vitest"
-import { generateEmptyMatrix, type Stone } from "../models/model"
+import { generateEmptyMatrix, type Stone } from "../models/joseki"
 import { getCapturedStones } from "./goGameRule"
 
 test("self captured (single stone)", () => {

@@ -1,5 +1,5 @@
 import { expect, test } from "vitest"
-import { boardSize, Stone } from "../models/model"
+import { boardSize, Stone } from "../models/joseki"
 import { gobanHash } from "./gobanHash"
 
 test("same joseki", () => {

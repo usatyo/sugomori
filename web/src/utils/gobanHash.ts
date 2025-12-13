@@ -1,4 +1,4 @@
-import { boardSize, type Stone } from "../models/model"
+import { boardSize, type Stone } from "../models/joseki"
 
 class Random {
   x: number

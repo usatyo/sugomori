@@ -1,4 +1,4 @@
-import { boardSize, generateEmptyMatrix, Stone } from "../models/model"
+import { boardSize, generateEmptyMatrix, Stone } from "../models/joseki"
 import { BoardUnionFind } from "./boardUnionFind"
 import { gobanHash } from "./gobanHash"
 
