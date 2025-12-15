@@ -22,7 +22,7 @@ const Goban: FC<Props> = () => {
         {stoneMatrix.flat().map((stone, idx) => (
           <SingleStone
             key={idx}
-            index={stone.index}
+            index={stone.index + 1}
             color={stone.color}
             onClick={() => onClickStone(stone.x, stone.y)}
           />

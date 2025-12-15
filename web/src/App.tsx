@@ -1,36 +1,35 @@
-import { useState } from "react"
-import FlatButton from "./components/atom/FlatButton"
-import TextField from "./components/atom/TextField"
+import { useContext, useState } from "react"
 import Goban from "./components/Goban"
 import VideoCard from "./components/VideoCard"
 import useJosekiApi from "./hooks/useJosekiApi"
-import JosekiProvider from "./provider/JosekiProvider"
+import { JosekiContext } from "./provider/JosekiProvider"
+import { Button } from "./components/ui/button"
+import { Input } from "./components/ui/input"
 
 function App() {
   const [givenLink, setGivenLink] = useState<string>("")
-  const { getHello } = useJosekiApi()
+  const [videoIds, setVideoIds] = useState<Array<string>>([])
+  const { getVideos } = useJosekiApi()
+  const { joseki } = useContext(JosekiContext)
+
+  const handleSearch = async () => {
+    const videos = await getVideos(joseki)
+    setVideoIds(videos)
+  }
 
   return (
-    <JosekiProvider>
-      <div className="flex">
-        <div className="flex flex-col">
-          <TextField
-            value={givenLink}
-            onChange={(e) => setGivenLink(e.target.value)}
-          />
-          <Goban />
-          <FlatButton variant="filled" onClick={getHello}>
-            検索する
-          </FlatButton>
-        </div>
-        <div>
-          <VideoCard videoId="kZrLTFegqwQ" />
-          <VideoCard videoId="kZrLTFegqwQ" />
-          <VideoCard videoId="kZrLTFegqwQ" />
-          <VideoCard videoId="kZrLTFegqwQ" />
-        </div>
+    <div className="flex">
+      <div className="flex flex-col">
+        <Input value={givenLink} onChange={(e) => setGivenLink(e.target.value)} />
+        <Goban />
+        <Button onClick={handleSearch}>検索する</Button>
       </div>
-    </JosekiProvider>
+      <div>
+        {videoIds.map((videoId) => (
+          <VideoCard key={videoId} videoId={videoId} />
+        ))}
+      </div>
+    </div>
   )
 }
 
