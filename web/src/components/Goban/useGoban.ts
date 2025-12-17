@@ -1,9 +1,8 @@
-import { useContext, useRef, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import {
   generateEmptyMatrix,
   reversedColor,
   type Stone,
-  type StoneColor,
 } from "../../models/joseki"
 import { JosekiContext } from "../../provider/JosekiProvider"
 import { getProcessedBoard } from "../../utils/goGameRule"
@@ -63,11 +62,11 @@ export const useGoban = () => {
     return joseki.stoneList.length >= 99
   }
 
-  const { joseki, setJoseki } = useContext(JosekiContext)
+  const { joseki, setJoseki, nextColor, setNextColor } =
+    useContext(JosekiContext)
   const [stoneMatrix, setStoneMatrix] = useState<Array<Array<Stone>>>(
     generateEmptyMatrix()
   )
-  const [nextColor, setNextColor] = useState<StoneColor>("black")
   const [isEditable, setIsEditable] = useState<boolean>(true)
 
   const onClickStone = (x: number, y: number) => {
@@ -80,6 +79,11 @@ export const useGoban = () => {
     setStoneMatrix(getProcessedBoard(joseki.stoneList))
     setNextColor(reversedColor(nextColor))
   }
+
+  // context が変更された際に再レンダリングを行う
+  useEffect(() => {
+    setStoneMatrix(getProcessedBoard(joseki.stoneList))
+  }, [joseki])
 
   return {
     canvasRef,

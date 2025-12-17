@@ -11,7 +11,7 @@ const Goban: FC<Props> = () => {
   }, [])
 
   return (
-    <div className="relative h-[900px] aspect-square">
+    <div className="relative w-full self-stretch aspect-square">
       <canvas
         width={3600}
         height={3600}
