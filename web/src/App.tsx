@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react"
+import { useEffect, useRef, useState, type ReactNode } from "react"
 import SearchByGoban from "./components/SearchByGoban"
 import SearchByUrl from "./components/SearchByUrl"
 import { Card, CardContent } from "./components/ui/card"
@@ -10,12 +10,21 @@ import JosekiProvider from "./provider/JosekiProvider"
 
 function App() {
   const [videoIds, setVideoIds] = useState<Array<string>>([])
+  const cardRef = useRef<HTMLDivElement>(null)
+  const [width, setWidth] = useState<number>(0)
+
+  useEffect(() => {
+    if (cardRef.current) {
+      // padding + height の分を引く
+      setWidth(cardRef.current.offsetHeight - 156)
+    }
+  }, [])
 
   return (
     <div className="flex justify-around items-center gap-4 p-4 h-screen">
       <JosekiProvider>
-        <Tabs defaultValue="goban" className="grow self-stretch">
-          <Card className="h-full">
+        <Tabs defaultValue="goban" className="w-fit self-stretch">
+          <Card className="h-full" ref={cardRef} style={{ width: width }}>
             <CardContent className="h-full flex flex-col gap-4">
               <TabsList className="w-full">
                 <TabsTrigger value="goban">碁盤で検索</TabsTrigger>

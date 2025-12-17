@@ -22,13 +22,16 @@ const SearchByUrl: FC<Props> = ({ setVideoIds }) => {
 
   return (
     <>
-      <Label htmlFor="youtube_link_input">YouTube URL</Label>
-      <Input
-        id="youtube_link_input"
-        value={givenLink}
-        onChange={(e) => setGivenLink(e.target.value)}
-        placeholder="https://youtube.com/watch?v=..."
-      />
+      <div>
+        <Label htmlFor="youtube_link_input">YouTube URL</Label>
+        <Input
+          id="youtube_link_input"
+          value={givenLink}
+          onChange={(e) => setGivenLink(e.target.value)}
+          placeholder="https://youtube.com/watch?v=..."
+          className="mt-2 w-full"
+        />
+      </div>
       <Button onClick={handleSearch} className="w-full">
         検索する
       </Button>

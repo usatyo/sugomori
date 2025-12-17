@@ -21,16 +21,19 @@ const VideoItem: React.FC<Props> = ({ videoId }) => {
 
   return (
     <Sheet>
-      <SheetTrigger className="w-full flex cursor-pointer hover:bg-gray-50">
-        <div className="flex p-4">
+      <SheetTrigger className="w-full cursor-pointer hover:bg-gray-50">
+        <div className="flex gap-4 py-4">
           <img
             src={thumbnailUrl}
             alt={title}
-            className="w-50 aspect-video object-contain"
+            className="w-50"
           />
-          <div>
-            <h3>{title}</h3>
-            <p>{authorName}</p>
+          <div className="flex flex-col gap-2">
+            <h3 className="text-left text-md font-bold">{title}</h3>
+            <p className="text-left text-gray-400">{authorName}</p>
+
+            {/* TODO: タグを追加 */}
+
           </div>
         </div>
       </SheetTrigger>
