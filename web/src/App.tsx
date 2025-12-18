@@ -1,15 +1,13 @@
-import { useEffect, useRef, useState, type ReactNode } from "react"
+import { useEffect, useRef, useState } from "react"
 import SearchByGoban from "./components/SearchByGoban"
 import SearchByUrl from "./components/SearchByUrl"
 import { Card, CardContent } from "./components/ui/card"
-import { ScrollArea } from "./components/ui/scroll-area"
-import { Separator } from "./components/ui/separator"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/tabs"
-import VideoItem from "./components/VideoItem"
+import VideoList from "./components/VideoList"
 import JosekiProvider from "./provider/JosekiProvider"
 
 function App() {
-  const [videoIds, setVideoIds] = useState<Array<string>>([])
+  const [videoIds, setVideoIds] = useState<Array<string> | null>([])
   const cardRef = useRef<HTMLDivElement>(null)
   const [width, setWidth] = useState<number>(0)
 
@@ -40,16 +38,9 @@ function App() {
           </Card>
         </Tabs>
       </JosekiProvider>
-      <Card className="self-stretch">
-        <CardContent>
-          <ScrollArea>
-            {videoIds
-              .map((videoId) => <VideoItem key={videoId} videoId={videoId} />)
-              .reduce<ReactNode[]>((prev, curr) => {
-                return [...prev, curr, <Separator />]
-              }, [])
-              .slice(0, -1)}
-          </ScrollArea>
+      <Card className="grow self-stretch p-0">
+        <CardContent className="p-0 h-full">
+          <VideoList videoIds={videoIds} />
         </CardContent>
       </Card>
     </div>

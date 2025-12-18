@@ -6,7 +6,7 @@ import OperationArea from "../Goban/OperatinArea"
 import { Button } from "../ui/button"
 
 type Props = {
-  setVideoIds: Dispatch<SetStateAction<string[]>>
+  setVideoIds: Dispatch<SetStateAction<string[] | null>>
 }
 
 const SearchByGoban: FC<Props> = ({ setVideoIds }) => {
@@ -14,9 +14,11 @@ const SearchByGoban: FC<Props> = ({ setVideoIds }) => {
   const { joseki } = useContext(JosekiContext)
 
   const handleSearch = async () => {
+    setVideoIds(null)
     const videos = await getVideos(joseki)
     setVideoIds(videos)
   }
+
   return (
     <>
       <Goban />

@@ -1,6 +1,6 @@
 import { useEffect, type FC } from "react"
 import SingleStone from "./SingleStone"
-import { useGoban } from "./useGoban"
+import useGoban from "./useGoban"
 
 type Props = {}
 

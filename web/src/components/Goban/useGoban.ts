@@ -7,7 +7,7 @@ import {
 import { JosekiContext } from "../../provider/JosekiProvider"
 import { getProcessedBoard } from "../../utils/goGameRule"
 
-export const useGoban = () => {
+const useGoban = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const drawGoban = () => {
     const canvas = canvasRef.current
@@ -62,12 +62,11 @@ export const useGoban = () => {
     return joseki.stoneList.length >= 99
   }
 
-  const { joseki, setJoseki, nextColor, setNextColor } =
+  const { joseki, setJoseki, nextColor, setNextColor, isEditable } =
     useContext(JosekiContext)
   const [stoneMatrix, setStoneMatrix] = useState<Array<Array<Stone>>>(
     generateEmptyMatrix()
   )
-  const [isEditable, setIsEditable] = useState<boolean>(true)
 
   const onClickStone = (x: number, y: number) => {
     if (!isEditable) return
@@ -91,6 +90,7 @@ export const useGoban = () => {
     stoneMatrix,
     onClickStone,
     setJoseki,
-    setIsEditable,
   }
 }
+
+export default useGoban

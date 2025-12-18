@@ -4,7 +4,7 @@ import { Input } from "../ui/input"
 import { Label } from "../ui/label"
 
 type Props = {
-  setVideoIds: Dispatch<SetStateAction<string[]>>
+  setVideoIds: Dispatch<SetStateAction<string[] | null>>
 }
 
 const SearchByUrl: FC<Props> = ({ setVideoIds }) => {
@@ -12,9 +12,10 @@ const SearchByUrl: FC<Props> = ({ setVideoIds }) => {
 
   const handleSearch = async () => {
     try {
+      setVideoIds(null)
       const url = new URL(givenLink)
       const videoId = url.searchParams.get("v")
-      setVideoIds([videoId ?? ""])
+      setVideoIds(videoId !== null ? [videoId] : [])
     } catch (e) {
       // TODO: エラーハンドリング
     }

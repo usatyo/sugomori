@@ -6,20 +6,25 @@ export const JosekiContext = createContext<{
   setJoseki: React.Dispatch<React.SetStateAction<Joseki>>
   nextColor: StoneColor
   setNextColor: React.Dispatch<React.SetStateAction<StoneColor>>
+  isEditable: boolean
+  setIsEditable: React.Dispatch<React.SetStateAction<boolean>>
 }>({
   joseki: new Joseki([]),
   setJoseki: () => {},
   nextColor: "black",
   setNextColor: () => {},
+  isEditable: true,
+  setIsEditable: () => {}
 })
 
 const JosekiProvider: FC<PropsWithChildren> = ({ children }) => {
   const [joseki, setJoseki] = useState<Joseki>(new Joseki([]))
   const [nextColor, setNextColor] = useState<StoneColor>("black")
+  const [isEditable, setIsEditable] = useState<boolean>(true)
 
   return (
     <JosekiContext.Provider
-      value={{ joseki, setJoseki, nextColor, setNextColor }}
+      value={{ joseki, setJoseki, nextColor, setNextColor, isEditable, setIsEditable }}
     >
       {children}
     </JosekiContext.Provider>

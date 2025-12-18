@@ -1,4 +1,4 @@
-import type { Joseki } from "../models/joseki"
+import { Joseki, Stone } from "../models/joseki"
 import { StonesRequest } from "../models/josekiApi"
 
 const useJosekiApi = () => {
@@ -19,13 +19,50 @@ const useJosekiApi = () => {
     }
   }
 
-  const postJoseki = async (
-    joseki: Joseki,
-    videoId: string
-  ): Promise<void> => {}
+  const postJoseki = async (videoId: string, joseki: Joseki): Promise<void> => {
+    const response = await fetch(`${baseUrl}/joseki`, {
+      method: "POST",
+      headers: { ...headers },
+      body: JSON.stringify({
+        video: { id: videoId },
+        joseki: {
+          stones: joseki.stoneList.map((stone) => ({
+            color: stone.color === "black" ? 0 : 1,
+            x: stone.x,
+            y: stone.y,
+          })),
+        },
+      }),
+    })
+    if (!response.ok) {
+      throw new Error("Network response was not ok")
+    }
+  }
 
   const getJoseki = async (videoId: string): Promise<Array<Joseki>> => {
-    return []
+    const query = new URLSearchParams({ videoId: videoId }).toString()
+    const response = await fetch(`${baseUrl}/joseki?${query}`, {
+      method: "GET",
+      headers: { ...headers },
+    })
+    if (!response.ok) {
+      throw new Error("Network response was not ok")
+    }
+    const json = await response.json()
+    const josekiList: Array<Joseki> = json.data.map((item: any) => {
+      const stones = item.stones
+      const stoneList = stones.map(
+        (stone: any, index: number) =>
+          new Stone(
+            stone.color === 0 ? "black" : "white",
+            stone.x,
+            stone.y,
+            index
+          )
+      )
+      return new Joseki(stoneList)
+    })
+    return josekiList
   }
 
   const getVideos = async (joseki: Joseki): Promise<Array<string>> => {
@@ -45,7 +82,25 @@ const useJosekiApi = () => {
   const deleteJoseki = async (
     videoId: string,
     joseki: Joseki
-  ): Promise<void> => {}
+  ): Promise<void> => {
+    const response = await fetch(`${baseUrl}/joseki`, {
+      method: "DELETE",
+      headers: { ...headers },
+      body: JSON.stringify({
+        video: { id: videoId },
+        joseki: {
+          stones: joseki.stoneList.map((stone) => ({
+            color: stone.color === "black" ? 0 : 1,
+            x: stone.x,
+            y: stone.y,
+          })),
+        },
+      }),
+    })
+    if (!response.ok) {
+      throw new Error("Network response was not ok")
+    }
+  }
 
   return { getHello, postJoseki, getJoseki, getVideos, deleteJoseki }
 }
