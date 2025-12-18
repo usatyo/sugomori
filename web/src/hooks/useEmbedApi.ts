@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { toast } from "sonner"
 
 const embedBaseUrl = "https://www.youtube.com/oembed"
 const youtubeBaseUrl = "https://www.youtube.com/watch"
@@ -14,7 +15,7 @@ const useEmbedApi = () => {
     setEmbedUrl(new URL(embedBaseUrl))
     const regexp = /^[a-zA-Z0-9_-]{11}$/
     if (!regexp.test(videoId)) {
-      throw new Error("Invalid video ID")
+      toast.error("無効な動画リンクです")
     }
     const youtubeUrlObject = new URL(youtubeBaseUrl)
     youtubeUrlObject.searchParams.append("v", videoId)
@@ -26,7 +27,8 @@ const useEmbedApi = () => {
   const fetchData = async () => {
     const response = await fetch(embedUrl.toString())
     if (!response.ok) {
-      throw new Error("Network response was not ok")
+      toast.error("動画情報の取得に失敗しました")
+      return
     }
     const json = await response.json()
     setTitle(json.title)

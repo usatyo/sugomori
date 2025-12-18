@@ -1,3 +1,4 @@
+import { toast } from "sonner"
 import { Joseki, Stone } from "../models/joseki"
 import { StonesRequest } from "../models/josekiApi"
 
@@ -15,7 +16,7 @@ const useJosekiApi = () => {
       headers: { ...headers },
     })
     if (!response.ok) {
-      throw new Error("Network response was not ok")
+      toast.error("APIサーバーへの接続に失敗しました")
     }
   }
 
@@ -35,7 +36,7 @@ const useJosekiApi = () => {
       }),
     })
     if (!response.ok) {
-      throw new Error("Network response was not ok")
+      toast.error("定石の追加に失敗しました")
     }
   }
 
@@ -46,7 +47,8 @@ const useJosekiApi = () => {
       headers: { ...headers },
     })
     if (!response.ok) {
-      throw new Error("Network response was not ok")
+      toast.error("定石の取得に失敗しました")
+      return []
     }
     const json = await response.json()
     const josekiList: Array<Joseki> = json.data.map((item: any) => {
@@ -72,7 +74,8 @@ const useJosekiApi = () => {
       body: JSON.stringify(new StonesRequest(joseki.stoneList).toJson()),
     })
     if (!response.ok) {
-      throw new Error("Network response was not ok")
+      toast.error("動画の取得に失敗しました")
+      return []
     }
     const json = await response.json()
     const videoIds: Array<string> = json.data.map((item: any) => item.id)
@@ -98,7 +101,7 @@ const useJosekiApi = () => {
       }),
     })
     if (!response.ok) {
-      throw new Error("Network response was not ok")
+      toast.error("定石の削除に失敗しました")
     }
   }
 
