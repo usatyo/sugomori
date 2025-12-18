@@ -6,6 +6,7 @@ import {
 } from "../../models/joseki"
 import { JosekiContext } from "../../provider/JosekiProvider"
 import { getProcessedBoard } from "../../utils/goGameRule"
+import { toast } from "sonner"
 
 const useGoban = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -59,7 +60,7 @@ const useGoban = () => {
   }
 
   const isOverMaxStones = (): boolean => {
-    return joseki.stoneList.length >= 99
+    return joseki.stoneList.length >= 30
   }
 
   const { joseki, setJoseki, nextColor, setNextColor, isEditable } =
@@ -70,7 +71,10 @@ const useGoban = () => {
 
   const onClickStone = (x: number, y: number) => {
     if (!isEditable) return
-    if (isOverMaxStones()) return
+    if (isOverMaxStones()) {
+      toast.error("最大で30手まで石を配置できます")
+      return
+    }
 
     if (!joseki.pushStone(nextColor, x, y)) {
       return

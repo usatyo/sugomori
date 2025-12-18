@@ -8,6 +8,7 @@ import {
   PaginationLink,
 } from "@/components/ui/pagination"
 import type { FC } from "react"
+import { toast } from "sonner"
 import useGobanPagination from "./useGobanPagination"
 
 type Props = {
@@ -71,6 +72,7 @@ const GobanPagination: FC<Props> = ({ videoId }) => {
           >
             定石を新規追加
           </Button>
+          <Button onClick={() => toast.success("これはテスト用のトーストです")}>toast</Button>
         </div>
       </div>
     )

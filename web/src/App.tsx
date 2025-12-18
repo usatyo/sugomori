@@ -5,6 +5,7 @@ import { Card, CardContent } from "./components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/tabs"
 import VideoList from "./components/VideoList"
 import JosekiProvider from "./provider/JosekiProvider"
+import { Toaster } from "sonner"
 
 function App() {
   const [videoIds, setVideoIds] = useState<Array<string> | null>([])
@@ -20,6 +21,7 @@ function App() {
 
   return (
     <div className="flex justify-around items-center gap-4 p-4 h-screen">
+      <Toaster position="top-right" expand richColors />
       <JosekiProvider>
         <Tabs defaultValue="goban" className="w-fit self-stretch">
           <Card className="h-full" ref={cardRef} style={{ width: width }}>
