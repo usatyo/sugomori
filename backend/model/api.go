@@ -43,5 +43,5 @@ type JosekiData struct {
 }
 
 type VideoData struct {
-	Id string `json:"id" validate:"required"`
+	Id string `json:"id" validate:"required,len=11"`
 }

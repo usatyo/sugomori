@@ -17,6 +17,14 @@ func Routing() {
 	}))
 	e.Use(middleware.Recover())
 
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+
+		// TODO: 本番環境用に変更する
+		AllowOrigins: []string{"http://localhost:5173"},
+		AllowMethods: []string{echo.GET, echo.POST, echo.DELETE},
+		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept, echo.HeaderAuthorization},
+	}))
+
 	e.Validator = &val.CustomValidator{Validator: validator.New()}
 
 	e.GET("/", controller.HealthCheckHandler)
