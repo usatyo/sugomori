@@ -16,6 +16,9 @@ func GetNormalizedJoseki(joseki model.Joseki) model.Joseki {
 	var minJoseki model.Joseki = joseki
 	for _, option := range options {
 		minJoseki = min(minJoseki, option)
+		minJoseki = min(minJoseki, getRotatedJoseki(option))
+		minJoseki = min(minJoseki, getRotatedJoseki(getRotatedJoseki(option)))
+		minJoseki = min(minJoseki, getRotatedJoseki(getRotatedJoseki(getRotatedJoseki(option))))
 	}
 	return minJoseki
 }
@@ -26,6 +29,21 @@ func getSymmetricJoseki(joseki model.Joseki) model.Joseki {
 		stones = append(stones, model.Stone{
 			Color: stone.Color,
 			X:     stone.Y,
+			Y:     stone.X,
+			Hash:  0,
+		})
+	}
+	return model.Joseki{
+		Stones: stones,
+	}
+}
+
+func getRotatedJoseki(joseki model.Joseki) model.Joseki {
+	var stones []model.Stone
+	for _, stone := range joseki.Stones {
+		stones = append(stones, model.Stone{
+			Color: stone.Color,
+			X:     model.BoardSize - stone.Y - 1,
 			Y:     stone.X,
 			Hash:  0,
 		})
