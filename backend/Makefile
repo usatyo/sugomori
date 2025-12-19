@@ -28,7 +28,7 @@ down: ## コンテナ停止
 
 .PHONY: deploy
 deploy: ## Google Cloud にデプロイ
-	@gcloud builds submit --region=asia-east1 --substitutions=_AR_REPO_NAME="sugomori-backend" --max-instances=3
+	@gcloud builds submit --region=asia-east1 --substitutions=_AR_REPO_NAME="sugomori-backend"
 
 .PHONY: token
 token: ## Google Cloud のトークンを取得
