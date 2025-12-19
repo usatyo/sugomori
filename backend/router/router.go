@@ -20,7 +20,7 @@ func Routing() {
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 
 		// TODO: 本番環境用に変更する
-		AllowOrigins: []string{"http://localhost:5173"},
+		AllowOrigins: []string{"https://sugomori.netlify.app"},
 		AllowMethods: []string{echo.GET, echo.POST, echo.DELETE},
 		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept, echo.HeaderAuthorization},
 	}))
