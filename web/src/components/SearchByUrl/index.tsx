@@ -2,6 +2,7 @@ import { useState, type Dispatch, type FC, type SetStateAction } from "react"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
+import { toast } from "sonner"
 
 type Props = {
   setVideoIds: Dispatch<SetStateAction<string[] | null>>
@@ -17,7 +18,8 @@ const SearchByUrl: FC<Props> = ({ setVideoIds }) => {
       const videoId = url.searchParams.get("v")
       setVideoIds(videoId !== null ? [videoId] : [])
     } catch (e) {
-      // TODO: エラーハンドリング
+      toast.error("無効なURLです")
+      setVideoIds([])
     }
   }
 

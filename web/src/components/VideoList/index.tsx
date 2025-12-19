@@ -24,7 +24,7 @@ const VideoList: FC<Props> = ({ videoIds }) => {
     return <p className="text-center py-8">動画が見つかりませんでした。</p>
   } else {
     return (
-      <ScrollArea className="h-full overflow-scroll">
+      <ScrollArea className="h-full overflow-scroll rounded-[14px]">
         {videoIds
           .map((videoId) => <VideoListItem key={videoId} videoId={videoId} />)
           .reduce<ReactNode[]>((prev, curr) => {

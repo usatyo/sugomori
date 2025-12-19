@@ -7,7 +7,7 @@ const useGobanPagination = (videoId: string) => {
   const { getJoseki, postJoseki, deleteJoseki } = useJosekiApi()
   const [josekiList, setJosekiList] = useState<Array<Joseki>>([])
   const [currentIndex, setCurrentIndex] = useState<number>(0)
-  const { joseki, isEditable, setJoseki, setIsEditable } =
+  const { joseki, isEditable, setJoseki, setIsEditable, setNextColor } =
     useContext(JosekiContext)
 
   const updateJosekiList = async () => {
@@ -21,14 +21,22 @@ const useGobanPagination = (videoId: string) => {
     setIsEditable(false)
   }
 
+  const onCancelAdding = () => {
+    setIsEditable(false)
+    setCurrentIndex(0)
+    setJoseki(josekiList.length > 0 ? josekiList[0] : new Joseki([]))
+  }
+
   const onDeleteJoseki = async () => {
     await deleteJoseki(videoId, joseki)
     await updateJosekiList()
+    setCurrentIndex(0)
   }
 
   const onStartAdding = () => {
     setIsEditable(true)
     setJoseki(new Joseki([]))
+    setNextColor("black")
   }
 
   useEffect(() => {
@@ -53,6 +61,7 @@ const useGobanPagination = (videoId: string) => {
     isEditable,
     setCurrentIndex,
     onAddJoseki,
+    onCancelAdding,
     onDeleteJoseki,
     setIsEditable,
     onStartAdding,

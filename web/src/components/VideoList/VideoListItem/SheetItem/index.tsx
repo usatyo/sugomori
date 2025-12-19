@@ -2,6 +2,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import JosekiProvider from "@/provider/JosekiProvider"
 import type { FC } from "react"
 import GobanPagination from "./GobanPagination"
+import { Separator } from "@/components/ui/separator"
 
 type Props = {
   videoId: string
@@ -23,6 +24,7 @@ const SheetItem: FC<Props> = ({ videoId, title, authorName }) => {
         <p className="text-left text-md text-gray-400 line-clamp-1 text-ellipsis mt-2">
           {authorName}
         </p>
+        <Separator className="my-2" />
         <JosekiProvider>
           <GobanPagination videoId={videoId} />
         </JosekiProvider>

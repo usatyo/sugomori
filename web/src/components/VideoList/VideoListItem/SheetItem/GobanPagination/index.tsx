@@ -21,21 +21,21 @@ const GobanPagination: FC<Props> = ({ videoId }) => {
     isEditable,
     setCurrentIndex,
     onAddJoseki,
+    onCancelAdding,
     onDeleteJoseki,
-    setIsEditable,
     onStartAdding,
   } = useGobanPagination(videoId)
 
   if (isEditable) {
     return (
-      <div className="flex flex-col gap-4 mt-6">
+      <div className="flex flex-col gap-4 mt-4">
         <Goban />
         <OperationArea />
         <div className="flex gap-4">
           <Button className="grow" onClick={onAddJoseki}>
             確定
           </Button>
-          <Button className="grow" onClick={() => setIsEditable(false)}>
+          <Button className="grow" onClick={onCancelAdding}>
             キャンセル
           </Button>
         </div>
@@ -43,7 +43,8 @@ const GobanPagination: FC<Props> = ({ videoId }) => {
     )
   } else {
     return (
-      <div className="flex flex-col gap-4 mt-6">
+      <div className="flex flex-col gap-4 mt-4">
+        <h3 className="font-bold text-lg">この動画に関連する定石手順</h3>
         <Goban />
         <OperationArea />
         <div className="flex gap-4">
