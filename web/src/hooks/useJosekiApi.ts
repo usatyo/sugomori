@@ -4,10 +4,10 @@ import { StonesRequest } from "../models/josekiApi"
 
 const useJosekiApi = () => {
   const baseUrl = import.meta.env.VITE_JOSEKI_API_URL
-  const bearerToken = import.meta.env.VITE_JOSEKI_API_BEARER_TOKEN
+  // const bearerToken = import.meta.env.VITE_JOSEKI_API_BEARER_TOKEN
   const headers = {
     "Content-Type": "application/json",
-    Authorization: `Bearer ${bearerToken}`,
+    // Authorization: `Bearer ${bearerToken}`,
   }
 
   const getHello = async () => {

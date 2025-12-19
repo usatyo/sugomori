@@ -16,7 +16,7 @@ type Props = {}
 const GuidanceDialog: FC<Props> = () => {
   return (
     <Dialog>
-      <DialogTrigger>
+      <DialogTrigger className="cursor-pointer">
         <CircleQuestionMarkIcon color="white" size={28} />
       </DialogTrigger>
       <DialogContent>
