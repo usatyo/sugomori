@@ -13,8 +13,8 @@ const Goban: FC<Props> = () => {
   return (
     <div className="relative w-full self-stretch aspect-square">
       <canvas
-        width={3600}
-        height={3600}
+        width={1000}
+        height={1000}
         ref={canvasRef}
         className="absolute inset-0 w-full h-full bg-amber-400"
       ></canvas>
