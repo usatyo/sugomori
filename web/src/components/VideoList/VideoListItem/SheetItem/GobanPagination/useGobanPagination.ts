@@ -1,6 +1,7 @@
 import useJosekiApi from "@/hooks/useJosekiApi"
 import { Joseki } from "@/models/joseki"
 import { JosekiContext } from "@/provider/JosekiProvider"
+import { LoadingContext } from "@/provider/LoadingProvider"
 import { useContext, useEffect, useState } from "react"
 
 const useGobanPagination = (videoId: string) => {
@@ -9,6 +10,7 @@ const useGobanPagination = (videoId: string) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0)
   const { joseki, isEditable, setJoseki, setIsEditable, setNextColor } =
     useContext(JosekiContext)
+  const { setLoading } = useContext(LoadingContext)
 
   const updateJosekiList = async () => {
     const updatedJosekiList = await getJoseki(videoId)
@@ -16,9 +18,11 @@ const useGobanPagination = (videoId: string) => {
   }
 
   const onAddJoseki = async () => {
+    setLoading(true)
     await postJoseki(videoId, joseki)
     await updateJosekiList()
     setIsEditable(false)
+    setLoading(false)
   }
 
   const onCancelAdding = () => {
@@ -28,9 +32,11 @@ const useGobanPagination = (videoId: string) => {
   }
 
   const onDeleteJoseki = async () => {
+    setLoading(true)
     await deleteJoseki(videoId, joseki)
     await updateJosekiList()
     setCurrentIndex(0)
+    setLoading(false)
   }
 
   const onStartAdding = () => {
