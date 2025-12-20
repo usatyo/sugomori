@@ -62,7 +62,11 @@ const GobanPagination: FC<Props> = ({ videoId }) => {
               ))}
             </PaginationContent>
           </Pagination>
-          <Button onClick={onDeleteJoseki} className="grow">
+          <Button
+            onClick={onDeleteJoseki}
+            className="grow"
+            disabled={josekiList.length === 0}
+          >
             この定石を削除
           </Button>
           <Button
