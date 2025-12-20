@@ -37,6 +37,8 @@ const useJosekiApi = () => {
     })
     if (!response.ok) {
       toast.error("定石の追加に失敗しました")
+    } else {
+      toast.success("定石を追加しました")
     }
   }
 
@@ -102,6 +104,8 @@ const useJosekiApi = () => {
     })
     if (!response.ok) {
       toast.error("定石の削除に失敗しました")
+    } else {
+      toast.success("定石を削除しました")
     }
   }
 
