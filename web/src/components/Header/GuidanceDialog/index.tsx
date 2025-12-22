@@ -19,7 +19,7 @@ const GuidanceDialog: FC<Props> = () => {
       <DialogTrigger className="cursor-pointer">
         <CircleQuestionMarkIcon color="white" size={28} />
       </DialogTrigger>
-      <DialogContent className="max-w-7/8! w-[700px]">
+      <DialogContent className="max-w-7/8! w-[700px] font-noto-sans-jp">
         <DialogHeader>
           <DialogTitle className="text-lg font-bold">
             sugomori の使い方
