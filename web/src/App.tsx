@@ -23,7 +23,7 @@ function App() {
 
   return (
     <LoadingProvider>
-      <div className="h-screen w-screen flex flex-col">
+      <div className="h-screen w-screen flex flex-col font-noto-sans-jp">
         <Toaster position="bottom-left" expand richColors />
         <Header />
         <div className="flex justify-around items-center gap-4 p-4 h-[calc(100%-64px)]">
