@@ -43,9 +43,6 @@ const SearchByUrl: FC<Props> = ({ setVideoIds }) => {
           className="mt-2 w-full"
         />
       </div>
-      <p>
-        複数の動画を検索したい場合は、1つずつ検索して結果を統合してください。
-      </p>
       <Button onClick={handleSearch} className="w-full" disabled={loading}>
         検索する
       </Button>

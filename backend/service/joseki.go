@@ -16,7 +16,7 @@ func GetVideos(josekiData model.JosekiData) []model.VideoData {
 	if len(joseki.Stones) > 0 {
 		targetHash = joseki.Stones[len(joseki.Stones)-1].Hash
 	}
-	videos := db.GetVideosFromHash(targetHash, 8, 5)
+	videos := db.GetVideosFromHash(targetHash, 30, 15)
 	var videoDatas []model.VideoData
 	for _, video := range videos {
 		videoDatas = append(videoDatas, video.ToData())

@@ -62,6 +62,11 @@ func PostJosekiHandler(c echo.Context) error {
 			Message: "At least 1 stones are required",
 		})
 	}
+	if len(request.Joseki.Stones) > 30 {
+		return c.JSON(http.StatusBadRequest, model.ErrorResponse{
+			Message: "More than 30 stones are not allowed",
+		})
+	}
 	service.PostJoseki(request.Joseki, request.Video)
 	data := model.MessageResponse{
 		Message: "Joseki added",
