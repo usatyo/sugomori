@@ -44,6 +44,8 @@ const OperationArea: FC<Props> = () => {
           <ChevronLeftIcon />
           1手戻る
         </Button>
+      </ButtonGroup>
+      <ButtonGroup>
         <Button
           variant="outline"
           onClick={pass}

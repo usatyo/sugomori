@@ -38,7 +38,7 @@ const VideoListItem: React.FC<Props> = ({ videoId }) => {
           </div>
         </div>
       </SheetTrigger>
-      <SheetContent className="max-w-none! w-1/2 rounded-l-md">
+      <SheetContent className="max-w-none! w-[700px] rounded-l-md">
         <SheetItem videoId={videoId} title={title} authorName={authorName} />
       </SheetContent>
     </Sheet>
