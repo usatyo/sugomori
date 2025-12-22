@@ -1,3 +1,6 @@
+# 現在のブランチを取得
+BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
+
 # makeを打った時のコマンド
 .DEFAULT_GOAL := help
 
@@ -26,9 +29,15 @@ start: ## コンテナを構築 & コンテナに入る
 down: ## コンテナ停止
 	@docker compose down
 
+ifeq ($(BRANCH), main)
 .PHONY: deploy
 deploy: ## Google Cloud にデプロイ
 	@gcloud builds submit --region=asia-east1 --substitutions=_AR_REPO_NAME="sugomori-backend"
+else
+.PHONY: deploy
+deploy: ## Google Cloud にデプロイ
+	@echo "Deploy is only available on the main branch."
+endif
 
 .PHONY: token
 token: ## Google Cloud のトークンを取得

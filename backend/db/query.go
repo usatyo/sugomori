@@ -11,7 +11,7 @@ func GetVideosFromHash(hash int64, hop int, limit int) []model.Video {
 		WITH s
 		SET s.count = s.count + 1
 		WITH s
-		CALL apoc.neighbors.byhop(s, "Move|Relate", $hop)
+		CALL apoc.neighbors.byhop(s, "Move>|Relate>", $hop)
 		YIELD nodes
 		RETURN nodes
 	`

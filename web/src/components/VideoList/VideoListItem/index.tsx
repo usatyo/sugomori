@@ -1,4 +1,5 @@
-import { useEffect } from "react"
+import { LoadingContext } from "@/provider/LoadingProvider"
+import { useContext, useEffect } from "react"
 import useEmbedApi from "../../../hooks/useEmbedApi"
 import { Sheet, SheetContent, SheetTrigger } from "../../ui/sheet"
 import SheetItem from "./SheetItem"
@@ -10,13 +11,16 @@ type Props = {
 const VideoListItem: React.FC<Props> = ({ videoId }) => {
   const { setParams, fetchData, title, authorName, thumbnailUrl } =
     useEmbedApi()
+  const { setLoading } = useContext(LoadingContext)
 
   useEffect(() => {
+    setLoading(true)
     setParams(videoId)
     const asyncData = async () => {
       await fetchData()
     }
     asyncData()
+    setLoading(false)
   }, [videoId])
 
   return (
@@ -34,12 +38,8 @@ const VideoListItem: React.FC<Props> = ({ videoId }) => {
           </div>
         </div>
       </SheetTrigger>
-      <SheetContent className="max-w-none! w-1/2 rounded-l-md">
-        <SheetItem
-          videoId={videoId}
-          title={title}
-          authorName={authorName}
-        />
+      <SheetContent className="max-w-none! w-[700px] rounded-l-md">
+        <SheetItem videoId={videoId} title={title} authorName={authorName} />
       </SheetContent>
     </Sheet>
   )

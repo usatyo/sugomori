@@ -7,7 +7,8 @@ import {
   PaginationItem,
   PaginationLink,
 } from "@/components/ui/pagination"
-import type { FC } from "react"
+import { LoadingContext } from "@/provider/LoadingProvider"
+import { useContext, type FC } from "react"
 import useGobanPagination from "./useGobanPagination"
 
 type Props = {
@@ -25,17 +26,24 @@ const GobanPagination: FC<Props> = ({ videoId }) => {
     onDeleteJoseki,
     onStartAdding,
   } = useGobanPagination(videoId)
+  const { loading } = useContext(LoadingContext)
 
   if (isEditable) {
     return (
       <div className="flex flex-col gap-4 mt-4">
+        <h3 className="font-bold text-lg">この動画に関連する定石手順</h3>
         <Goban />
         <OperationArea />
         <div className="flex gap-4">
-          <Button className="grow" onClick={onAddJoseki}>
+          <Button onClick={onAddJoseki} className="grow" disabled={loading}>
             確定
           </Button>
-          <Button className="grow" onClick={onCancelAdding}>
+          <Button
+            variant="outline"
+            onClick={onCancelAdding}
+            className="grow"
+            disabled={loading}
+          >
             キャンセル
           </Button>
         </div>
@@ -62,13 +70,18 @@ const GobanPagination: FC<Props> = ({ videoId }) => {
               ))}
             </PaginationContent>
           </Pagination>
-          <Button onClick={onDeleteJoseki} className="grow">
+          <Button
+            variant="destructive"
+            onClick={onDeleteJoseki}
+            className="grow"
+            disabled={josekiList.length === 0 || loading}
+          >
             この定石を削除
           </Button>
           <Button
             onClick={onStartAdding}
             className="grow"
-            disabled={josekiList.length === 10}
+            disabled={josekiList.length === 10 || loading}
           >
             定石を新規追加
           </Button>

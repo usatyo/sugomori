@@ -21,7 +21,7 @@ const useGoban = () => {
     const cellSize = (size - padding * 2) / 19
     ctx.strokeStyle = "#000000"
     ctx.fillStyle = "#000000"
-    ctx.lineWidth = 3
+    ctx.lineWidth = 0.7
 
     // Draw grid lines
     for (let i = 0; i < 19; i++) {
@@ -50,7 +50,7 @@ const useGoban = () => {
         ctx.arc(
           padding + cellSize / 2 + x * cellSize,
           padding + cellSize / 2 + y * cellSize,
-          20,
+          5,
           0,
           2 * Math.PI
         )

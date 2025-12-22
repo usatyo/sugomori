@@ -1,8 +1,15 @@
-import { useState, type Dispatch, type FC, type SetStateAction } from "react"
+import { LoadingContext } from "@/provider/LoadingProvider"
+import {
+  useContext,
+  useState,
+  type Dispatch,
+  type FC,
+  type SetStateAction,
+} from "react"
+import { toast } from "sonner"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
-import { toast } from "sonner"
 
 type Props = {
   setVideoIds: Dispatch<SetStateAction<string[] | null>>
@@ -10,6 +17,7 @@ type Props = {
 
 const SearchByUrl: FC<Props> = ({ setVideoIds }) => {
   const [givenLink, setGivenLink] = useState<string>("")
+  const { loading } = useContext(LoadingContext)
 
   const handleSearch = async () => {
     try {
@@ -35,7 +43,7 @@ const SearchByUrl: FC<Props> = ({ setVideoIds }) => {
           className="mt-2 w-full"
         />
       </div>
-      <Button onClick={handleSearch} className="w-full">
+      <Button onClick={handleSearch} className="w-full" disabled={loading}>
         検索する
       </Button>
     </>
