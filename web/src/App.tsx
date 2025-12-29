@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import { Toaster } from "sonner"
 import Header from "./components/Header"
 import SearchByGoban from "./components/SearchByGoban"
@@ -12,14 +12,6 @@ import LoadingProvider from "./provider/LoadingProvider"
 function App() {
   const [videoIds, setVideoIds] = useState<Array<string> | null>([])
   const cardRef = useRef<HTMLDivElement>(null)
-  const [width, setWidth] = useState<number>(0)
-
-  useEffect(() => {
-    if (cardRef.current) {
-      // padding + height の分を引く
-      setWidth(cardRef.current.offsetHeight - 156)
-    }
-  }, [])
 
   return (
     <LoadingProvider>
@@ -29,7 +21,7 @@ function App() {
         <div className="flex justify-around items-center gap-4 p-4 h-[calc(100%-64px)]">
           <JosekiProvider>
             <Tabs defaultValue="goban" className="w-fit self-stretch">
-              <Card className="h-full" ref={cardRef} style={{ width: width }}>
+              <Card className="h-full" ref={cardRef}>
                 <CardContent className="h-full flex flex-col gap-4">
                   <TabsList className="w-full">
                     <TabsTrigger value="goban">碁盤で検索</TabsTrigger>
