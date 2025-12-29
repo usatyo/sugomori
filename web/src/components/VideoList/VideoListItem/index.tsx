@@ -17,13 +17,18 @@ const VideoListItem: React.FC<Props> = ({ videoId }) => {
 
   useEffect(() => {
     setLoading(true)
-    setParams(videoId)
-    const asyncData = async () => {
-      await fetchData()
+    if (setParams(videoId)) {
+      const asyncData = async () => {
+        await fetchData()
+      }
+      asyncData()
     }
-    asyncData()
     setLoading(false)
   }, [videoId])
+
+  if (title === "" && authorName === "" && thumbnailUrl === "") {
+    return null
+  }
 
   return (
     <Sheet>
