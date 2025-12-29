@@ -11,17 +11,19 @@ const useEmbedApi = () => {
   const [authorName, setAuthorName] = useState<string>("")
   const [thumbnailUrl, setThumbnailUrl] = useState<string>("")
 
-  const setParams = (videoId: string) => {
+  const setParams = (videoId: string): boolean => {
     setEmbedUrl(new URL(embedBaseUrl))
     const regexp = /^[a-zA-Z0-9_-]{11}$/
     if (!regexp.test(videoId)) {
       toast.error("無効な動画リンクです")
+      return false
     }
     const youtubeUrlObject = new URL(youtubeBaseUrl)
     youtubeUrlObject.searchParams.append("v", videoId)
     setYoutubeUrl(youtubeUrlObject.toString())
     embedUrl.searchParams.append("format", "json")
     embedUrl.searchParams.append("url", youtubeUrlObject.toString())
+    return true
   }
 
   const fetchData = async () => {
