@@ -20,7 +20,7 @@ function App() {
         <Header />
         <div className="flex justify-around items-center gap-4 p-4 h-[calc(100%-64px)]">
           <JosekiProvider>
-            <Tabs defaultValue="goban" className="w-fit self-stretch">
+            <Tabs defaultValue="goban" className="self-stretch">
               <Card className="h-full" ref={cardRef}>
                 <CardContent className="h-full flex flex-col gap-4">
                   <TabsList className="w-full">

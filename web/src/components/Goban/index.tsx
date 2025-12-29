@@ -6,17 +6,17 @@ type Props = {}
 
 const Goban: FC<Props> = () => {
   const { canvasRef, drawGoban, stoneMatrix, onClickStone } = useGoban()
-  const [height, setHeight] = useState<number>(0)
+  const [size, setSize] = useState<number | undefined>(undefined)
   const ref = useRef<HTMLDivElement>(null)
   useEffect(() => {
-    drawGoban()
     if (ref.current) {
-      setHeight(ref.current.offsetHeight)
+      setSize(Math.max(ref.current.offsetHeight, ref.current.offsetWidth))
     }
+    drawGoban()
   }, [])
 
   return (
-    <div className="grow" ref={ref} style={{ width: height }}>
+    <div className="self-stretch grow" ref={ref} style={{ height: size, width: size }}>
       <div className="relative w-full aspect-square">
         <canvas
           width={1000}
