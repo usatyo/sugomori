@@ -12,10 +12,10 @@ import (
 func GetVideoHandler(c echo.Context) error {
 	var request model.VideoGetRequest
 	if err := c.Bind(&request); err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest)
+		return echo.NewHTTPError(http.StatusInternalServerError)
 	}
 	if err := c.Validate(&request); err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest)
+		return echo.NewHTTPError(http.StatusInternalServerError)
 	}
 	videos := service.GetVideos(request)
 	var data model.VideoResponse
@@ -34,13 +34,13 @@ func GetVideoHandler(c echo.Context) error {
 func GetRankingHandler(c echo.Context) error {
 	limit, err := strconv.Atoi(c.QueryParam("limit"))
 	if err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest)
+		return echo.NewHTTPError(http.StatusInternalServerError)
 	}
 	if limit <= 0 {
-		return echo.NewHTTPError(http.StatusBadRequest, "value 'limit' must be greater than 0")
+		return echo.NewHTTPError(http.StatusInternalServerError, "value 'limit' must be greater than 0")
 	}
 	if limit >= 100 {
-		return echo.NewHTTPError(http.StatusBadRequest, "value 'limit' must be less than 100")
+		return echo.NewHTTPError(http.StatusInternalServerError, "value 'limit' must be less than 100")
 	}
 	res := service.GetRanking(limit)
 	data := model.RankingResponse{
@@ -52,19 +52,24 @@ func GetRankingHandler(c echo.Context) error {
 func PostJosekiHandler(c echo.Context) error {
 	var request model.JosekiPostRequest
 	if err := c.Bind(&request); err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest)
+		return echo.NewHTTPError(http.StatusInternalServerError)
 	}
 	if err := c.Validate(&request); err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest)
+		return echo.NewHTTPError(http.StatusInternalServerError)
 	}
 	if len(request.Joseki.Stones) == 0 {
-		return c.JSON(http.StatusBadRequest, model.ErrorResponse{
+		return c.JSON(http.StatusInternalServerError, model.ErrorResponse{
 			Message: "At least 1 stones are required",
 		})
 	}
 	if len(request.Joseki.Stones) > 30 {
-		return c.JSON(http.StatusBadRequest, model.ErrorResponse{
+		return c.JSON(http.StatusInternalServerError, model.ErrorResponse{
 			Message: "More than 30 stones are not allowed",
+		})
+	}
+	if len(service.GetJoseki(request.Video.Id)) >= 5 {
+		return c.JSON(http.StatusInternalServerError, model.ErrorResponse{
+			Message: "More than 5 videos are not allowed",
 		})
 	}
 	service.PostJoseki(request.Joseki, request.Video)
@@ -93,10 +98,10 @@ func GetJosekiHandler(c echo.Context) error {
 func DeleteJosekiHandler(c echo.Context) error {
 	var request model.JosekiPostRequest
 	if err := c.Bind(&request); err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest)
+		return echo.NewHTTPError(http.StatusInternalServerError)
 	}
 	if err := c.Validate(&request); err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest)
+		return echo.NewHTTPError(http.StatusInternalServerError)
 	}
 	println("DeleteJosekiHandler called with request:", request.Video.Id)
 	service.DeleteJoseki(request.Joseki, request.Video)

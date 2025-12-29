@@ -6,6 +6,10 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
+  --breakpoint-lg: 1025px;
+}
+
+@theme {
   --font-montserrat: "Montserrat", sans-serif;
   --font-noto-sans-jp: "Noto Sans JP", sans-serif;
 }
