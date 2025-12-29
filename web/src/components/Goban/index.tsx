@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState, type FC } from "react"
+import { CardSizeContext } from "@/provider/CardSizeProvider"
+import { useContext, useEffect, useRef, type FC } from "react"
 import SingleStone from "./SingleStone"
 import useGoban from "./useGoban"
 
@@ -6,7 +7,7 @@ type Props = {}
 
 const Goban: FC<Props> = () => {
   const { canvasRef, drawGoban, stoneMatrix, onClickStone } = useGoban()
-  const [size, setSize] = useState<number | undefined>(undefined)
+  const { size, setSize } = useContext(CardSizeContext)
   const ref = useRef<HTMLDivElement>(null)
   useEffect(() => {
     if (ref.current) {
@@ -16,8 +17,12 @@ const Goban: FC<Props> = () => {
   }, [])
 
   return (
-    <div className="self-stretch grow" ref={ref} style={{ height: size, width: size }}>
-      <div className="relative w-full aspect-square">
+    <div
+      className="self-stretch grow"
+      ref={ref}
+      style={{ height: size, width: size }}
+    >
+      <div className="relative w-full aspect-square touch-pinch-zoom">
         <canvas
           width={1000}
           height={1000}

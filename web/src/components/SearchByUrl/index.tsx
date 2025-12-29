@@ -1,3 +1,4 @@
+import { CardSizeContext } from "@/provider/CardSizeProvider"
 import { LoadingContext } from "@/provider/LoadingProvider"
 import {
   useContext,
@@ -18,6 +19,7 @@ type Props = {
 const SearchByUrl: FC<Props> = ({ setVideoIds }) => {
   const [givenLink, setGivenLink] = useState<string>("")
   const { loading } = useContext(LoadingContext)
+  const { size } = useContext(CardSizeContext)
 
   const handleSearch = async () => {
     try {
@@ -33,7 +35,7 @@ const SearchByUrl: FC<Props> = ({ setVideoIds }) => {
 
   return (
     <>
-      <div>
+      <div style={{ width: size }}>
         <Label htmlFor="youtube_link_input">YouTube URL</Label>
         <Input
           id="youtube_link_input"

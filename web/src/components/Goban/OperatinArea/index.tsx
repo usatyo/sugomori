@@ -18,7 +18,7 @@ const OperationArea: FC<Props> = () => {
   const { loading } = useContext(LoadingContext)
 
   return (
-    <div className="flex justify-center items-center gap-4">
+    <div className="flex justify-center items-center gap-4 @container">
       <ButtonGroup>
         <Button
           variant="outline"
@@ -26,7 +26,7 @@ const OperationArea: FC<Props> = () => {
           disabled={!isEditable || loading}
         >
           <ChevronFirstIcon />
-          リセット
+          <span className="@max-[508px]:hidden">リセット</span>
         </Button>
         <Button
           variant="outline"
@@ -34,7 +34,7 @@ const OperationArea: FC<Props> = () => {
           disabled={!isEditable || loading}
         >
           <ChevronsLeftIcon />
-          5手戻る
+          <span className="@max-[508px]:hidden">5手戻る</span>
         </Button>
         <Button
           variant="outline"
@@ -42,7 +42,7 @@ const OperationArea: FC<Props> = () => {
           disabled={!isEditable || loading}
         >
           <ChevronLeftIcon />
-          1手戻る
+          <span className="@max-[508px]:hidden">1手戻る</span>
         </Button>
       </ButtonGroup>
       <ButtonGroup>
@@ -52,13 +52,13 @@ const OperationArea: FC<Props> = () => {
           disabled={!isEditable || loading}
         >
           <RedoIcon />
-          手抜き
+          <span>手抜き</span>
         </Button>
       </ButtonGroup>
       {!isEditable && (
         <div className="flex items-center gap-2">
           <PencilOffIcon size={16} />
-          <span className="text-sm">編集不可</span>
+          <span className="text-sm @max-[508px]:hidden">編集不可</span>
         </div>
       )}
     </div>

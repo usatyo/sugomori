@@ -1,8 +1,8 @@
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { Separator } from "@/components/ui/separator"
 import JosekiProvider from "@/provider/JosekiProvider"
 import type { FC } from "react"
 import GobanPagination from "./GobanPagination"
-import { Separator } from "@/components/ui/separator"
 
 type Props = {
   videoId: string
@@ -13,11 +13,14 @@ type Props = {
 const SheetItem: FC<Props> = ({ videoId, title, authorName }) => {
   return (
     <ScrollArea className="h-full">
-      <div className="p-12">
-        <iframe
-          src={`https://www.youtube.com/embed/${videoId}`}
-          className="aspect-video"
-        />
+      <div className="px-6 py-12 lg:px-12 max-w-screen">
+        <div>
+          <iframe
+            src={`https://www.youtube.com/embed/${videoId}`}
+            sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-top-navigation"
+            className="aspect-video"
+          />
+        </div>
         <h3 className="text-left text-xl font-bold line-clamp-2 text-ellipsis mt-4">
           {title}
         </h3>
