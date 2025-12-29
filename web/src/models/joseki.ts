@@ -57,16 +57,15 @@ export class Joseki {
     this.stoneList = []
   }
 
-  popStone() {
-    if (this.stoneList.length > 0) {
-      this.stoneList.pop()
-    }
+  popStone(): StoneColor {
+    return this.stoneList.pop()?.color ?? "black"
   }
 
-  popStones(count: number) {
-    for (let i = 0; i < count; i++) {
+  popStones(count: number): StoneColor {
+    for (let i = 0; i < count - 1; i++) {
       this.popStone()
     }
+    return this.popStone()
   }
 }
 

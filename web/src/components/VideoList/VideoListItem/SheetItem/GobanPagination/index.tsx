@@ -81,7 +81,7 @@ const GobanPagination: FC<Props> = ({ videoId }) => {
           <Button
             onClick={onStartAdding}
             className="grow"
-            disabled={josekiList.length === 10 || loading}
+            disabled={josekiList.length === 5 || loading}
           >
             定石を新規追加
           </Button>

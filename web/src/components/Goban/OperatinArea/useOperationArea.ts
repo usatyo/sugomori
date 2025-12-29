@@ -13,19 +13,19 @@ const useOperationArea = () => {
   const backFive = () => {
     setJoseki((prev) => {
       const newJoseki = new Joseki([...prev.stoneList])
-      newJoseki.popStones(5)
+      const color = newJoseki.popStones(5)
+      setNextColor(color)
       return newJoseki
     })
-    setNextColor((prev) => reversedColor(prev))
   }
 
   const back = () => {
     setJoseki((prev) => {
       const newJoseki = new Joseki([...prev.stoneList])
-      newJoseki.popStone()
+      const color = newJoseki.popStone()
+      setNextColor(color)
       return newJoseki
     })
-    setNextColor((prev) => reversedColor(prev))
   }
 
   const pass = () => {
