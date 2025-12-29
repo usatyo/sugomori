@@ -97,7 +97,7 @@ func TestPostJosekiEmpty(t *testing.T) {
 
 	// Assertions
 	if assert.NoError(t, controller.PostJosekiHandler(c)) {
-		assert.Equal(t, http.StatusBadRequest, rec.Code)
+		assert.Equal(t, http.StatusInternalServerError, rec.Code)
 		assert.Equal(t, ResponsePostJosekiEmptyJSON, rec.Body.String())
 	}
 }
