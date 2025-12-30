@@ -20,7 +20,7 @@ const MediaProvider: FC<PropsWithChildren> = ({ children }) => {
   useEffect(() => {
     if (
       window.matchMedia &&
-      window.matchMedia("(max-device-width: 1024px)").matches
+      window.matchMedia("(max-device-width: 640px)").matches
     ) {
       setIsMobile(true)
     } else {

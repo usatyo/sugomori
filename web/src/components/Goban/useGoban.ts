@@ -63,7 +63,7 @@ const useGoban = () => {
     return joseki.stoneList.length >= 30
   }
 
-  const { joseki, setJoseki, nextColor, setNextColor, isEditable } =
+  const { joseki, setJoseki, nextColor, setNextColor, isEditable, isZooming } =
     useContext(JosekiContext)
   const [stoneMatrix, setStoneMatrix] = useState<Array<Array<Stone>>>(
     generateEmptyMatrix()
@@ -94,6 +94,7 @@ const useGoban = () => {
     stoneMatrix,
     onClickStone,
     setJoseki,
+    isZooming,
   }
 }
 
