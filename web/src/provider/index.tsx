@@ -3,9 +3,9 @@ import MediaProvider from "./MediaProvider"
 
 const Provider = ({ children }: { children: React.ReactNode }) => {
   return (
-    <LoadingProvider>
-      <MediaProvider>{children}</MediaProvider>
-    </LoadingProvider>
+    <MediaProvider>
+      <LoadingProvider>{children}</LoadingProvider>
+    </MediaProvider>
   )
 }
 

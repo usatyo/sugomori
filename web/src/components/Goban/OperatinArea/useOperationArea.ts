@@ -3,7 +3,8 @@ import { JosekiContext } from "@/provider/JosekiProvider"
 import { useContext } from "react"
 
 const useOperationArea = () => {
-  const { setJoseki, setNextColor, isEditable } = useContext(JosekiContext)
+  const { setJoseki, setNextColor, isEditable, isZooming, setIsZooming } =
+    useContext(JosekiContext)
 
   const clear = () => {
     setJoseki(new Joseki([]))
@@ -33,7 +34,7 @@ const useOperationArea = () => {
     setNextColor((prev) => reversedColor(prev))
   }
 
-  return { clear, backFive, back, pass, isEditable }
+  return { clear, backFive, back, pass, isZooming, setIsZooming, isEditable }
 }
 
 export default useOperationArea

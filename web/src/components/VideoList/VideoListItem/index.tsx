@@ -51,7 +51,7 @@ const VideoListItem: React.FC<Props> = ({ videoId }) => {
       </SheetTrigger>
       <SheetContent
         side={isMobile ? "bottom" : "right"}
-        className="max-w-none! h-2/3 w-screen sm:h-screen sm:w-[640px] rounded-l-md"
+        className="max-w-none h-2/3 w-screen sm:h-screen sm:max-w-[750px] sm:w-7/8 rounded-l-md"
       >
         <SheetItem videoId={videoId} title={title} authorName={authorName} />
       </SheetContent>
