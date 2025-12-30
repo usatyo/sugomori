@@ -6,7 +6,8 @@ import useGoban from "./useGoban"
 type Props = {}
 
 const Goban: FC<Props> = () => {
-  const { canvasRef, drawGoban, stoneMatrix, onClickStone } = useGoban()
+  const { canvasRef, drawGoban, stoneMatrix, onClickStone, isZooming } =
+    useGoban()
   const { size, setSize } = useContext(CardSizeContext)
   const ref = useRef<HTMLDivElement>(null)
   useEffect(() => {
@@ -18,11 +19,14 @@ const Goban: FC<Props> = () => {
 
   return (
     <div
-      className="self-stretch grow"
+      className="self-stretch grow overflow-clip"
       ref={ref}
       style={{ height: size, width: size }}
     >
-      <div className="relative w-full aspect-square touch-pinch-zoom">
+      <div
+        className="relative w-full aspect-square touch-pinch-zoom origin-top-left"
+        style={{ scale: isZooming ? 1.55 : 1 }}
+      >
         <canvas
           width={1000}
           height={1000}
