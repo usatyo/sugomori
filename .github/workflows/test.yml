@@ -1,0 +1,55 @@
+name: Logic Test
+
+on:
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  frontend_test:
+    name: Run Frontend Logic Tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./web
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Get dependencies
+        run: pnpm i --frozen-lockfile
+
+      - name: Run tests
+        run: pnpm test
+
+  backend_test:
+    name: Run Backend Logic Tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.24"
+
+      - name: Get dependencies
+        run: go mod tidy
+
+      - name: Run tests
+        run: go test -v ./...
