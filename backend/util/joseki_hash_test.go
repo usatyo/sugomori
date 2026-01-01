@@ -76,3 +76,14 @@ func TestDifferentJosekiHash(t *testing.T) {
 		assert.NotEqual(t, joseki1.Stones[len(joseki1.Stones)-1].Hash, joseki2.Stones[len(joseki2.Stones)-1].Hash)
 	}
 }
+
+func TestHashNonZero(t *testing.T) {
+	table := util.GenerateArray()
+	for i := range model.BoardSize + 1 {
+		for j := range model.BoardSize + 1 {
+			for k := range model.All * 2 {
+				assert.NotEqual(t, uint64(0), table[i][j][k])
+			}
+		}
+	}
+}
