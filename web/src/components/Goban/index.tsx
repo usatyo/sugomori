@@ -24,7 +24,7 @@ const Goban: FC<Props> = () => {
       style={{ height: size, width: size }}
     >
       <div
-        className="relative w-full aspect-square touch-pinch-zoom origin-top-left"
+        className="relative w-full aspect-square origin-top-left"
         style={{ scale: isZooming ? 1.55 : 1 }}
       >
         <canvas
