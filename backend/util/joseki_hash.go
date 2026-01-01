@@ -6,9 +6,9 @@ import (
 	"github.com/usatyo/sugomori/model"
 )
 
-var table = generateArray()
-
-func generateArray() [][][]int64 {
+var table = GenerateArray()
+	
+func GenerateArray() [][][]int64 {
 	random := rand.New(rand.NewSource(0))
 	ret := make([][][]int64, model.BoardSize+1)
 	for i := range model.BoardSize + 1 {
