@@ -1,5 +1,15 @@
 import Goban from "@/components/Goban"
 import OperationArea from "@/components/Goban/OperatinArea"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogPortal,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
 import {
   Pagination,
@@ -70,14 +80,38 @@ const GobanPagination: FC<Props> = ({ videoId }) => {
               ))}
             </PaginationContent>
           </Pagination>
-          <Button
-            variant="destructive"
-            onClick={onDeleteJoseki}
-            className="grow"
-            disabled={josekiList.length === 0 || loading}
-          >
-            この定石を削除
-          </Button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button
+                variant="destructive"
+                className="grow"
+                disabled={josekiList.length === 0 || loading}
+              >
+                この定石を削除
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogPortal>
+              <AlertDialogContent>
+                <AlertDialogTitle>
+                  表示中の定石手順を削除しますか？
+                </AlertDialogTitle>
+                <AlertDialogDescription>
+                  この操作は取り消せません。本当に削除してもよろしいですか？
+                </AlertDialogDescription>
+                <div className="flex gap-4">
+                  <AlertDialogCancel className="grow">
+                    キャンセル
+                  </AlertDialogCancel>
+                  <AlertDialogAction
+                    className="grow bg-destructive text-white hover:bg-destructive/90"
+                    onClick={onDeleteJoseki}
+                  >
+                    削除する
+                  </AlertDialogAction>
+                </div>
+              </AlertDialogContent>
+            </AlertDialogPortal>
+          </AlertDialog>
           <Button
             onClick={onStartAdding}
             className="grow"

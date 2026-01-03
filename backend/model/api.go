@@ -34,8 +34,8 @@ type RankingData struct {
 
 type StoneData struct {
 	Color *int `json:"color" validate:"required,oneof=0 1"`
-	X     *int `json:"x" validate:"required,min=-1,max=18"`
-	Y     *int `json:"y" validate:"required,min=-1,max=18"`
+	X     *int `json:"x" validate:"required,min=0,max=18"`
+	Y     *int `json:"y" validate:"required,min=0,max=18"`
 }
 
 type JosekiData struct {
