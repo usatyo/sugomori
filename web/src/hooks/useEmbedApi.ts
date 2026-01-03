@@ -1,3 +1,4 @@
+import { checkVideoId } from "@/utils/videoId"
 import { useState } from "react"
 import { toast } from "sonner"
 
@@ -13,8 +14,7 @@ const useEmbedApi = () => {
 
   const setParams = (videoId: string): boolean => {
     setEmbedUrl(new URL(embedBaseUrl))
-    const regexp = /^[a-zA-Z0-9_-]{11}$/
-    if (!regexp.test(videoId)) {
+    if (!checkVideoId(videoId)) {
       toast.error("無効な動画リンクです")
       return false
     }
