@@ -106,7 +106,7 @@ const GobanPagination: FC<Props> = ({ videoId }) => {
                     className="grow bg-destructive text-white hover:bg-destructive/90"
                     onClick={onDeleteJoseki}
                   >
-                    削除します
+                    削除する
                   </AlertDialogAction>
                 </div>
               </AlertDialogContent>

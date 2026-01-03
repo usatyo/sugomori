@@ -48,6 +48,8 @@ func convertToJoseki(res *neo4j.EagerResult) model.Joseki {
 
 func convertToPathMap(joseki model.Joseki) []map[string]any {
 	var result []map[string]any
+
+	// 先頭ノードはデータベース上にのみ存在する
 	prev := model.Stone{X: -1, Y: -1, Color: -1, Hash: 0}
 	for _, stone := range joseki.Stones {
 		result = append(result, map[string]any{

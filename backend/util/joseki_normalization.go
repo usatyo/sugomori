@@ -1,26 +1,59 @@
 package util
 
-import "github.com/usatyo/sugomori/model"
+import (
+	"slices"
+
+	"github.com/usatyo/sugomori/model"
+)
 
 // 向き・白黒を正規化（辞書順）
 // 最初の手抜きを削除
 
 func GetNormalizedJoseki(joseki model.Joseki) model.Joseki {
-	joseki = removeFirstPass(joseki)
-	var options []model.Joseki = []model.Joseki{
-		joseki,
-		getReversedJoseki(joseki),
-		getSymmetricJoseki(joseki),
-		getReversedJoseki(getSymmetricJoseki(joseki)),
+	if len(joseki.Stones) == 0 {
+		return joseki
 	}
-	var minJoseki model.Joseki = joseki
-	for _, option := range options {
-		minJoseki = min(minJoseki, option)
-		minJoseki = min(minJoseki, getRotatedJoseki(option))
-		minJoseki = min(minJoseki, getRotatedJoseki(getRotatedJoseki(option)))
-		minJoseki = min(minJoseki, getRotatedJoseki(getRotatedJoseki(getRotatedJoseki(option))))
+	if joseki.Stones[0].Color == model.White {
+		joseki = getReversedJoseki(joseki)
 	}
-	return minJoseki
+
+	for variant := range 8 {
+		joseki = min(joseki, GetVariousJoseki(joseki, variant))
+	}
+
+	for i := range len(joseki.Stones) {
+		if isSymmetric(joseki.Stones[:i+1]) {
+			originalJoseki := model.Joseki{Stones: joseki.Stones[i+1:]}
+			backJoseki := min(originalJoseki, getSymmetricJoseki(originalJoseki))
+			joseki = model.Joseki{
+				Stones: append(joseki.Stones[:i+1], backJoseki.Stones...),
+			}
+		}
+	}
+	
+	return joseki
+}
+
+func isSymmetric(stones []model.Stone) bool {
+	for _, stone := range stones {
+		if stone.X == stone.Y {
+			continue
+		}
+		if !slices.Contains(stones, model.Stone{Color: stone.Color, X: stone.Y, Y: stone.X}) {
+			return false
+		}
+	}
+	return true
+}
+
+func GetVariousJoseki(joseki model.Joseki, variant int) model.Joseki {
+	if variant < 4 {
+		joseki = getSymmetricJoseki(joseki)
+	}
+	for range variant % 4 {
+		joseki = getRotatedJoseki(joseki)
+	}
+	return joseki
 }
 
 func getSymmetricJoseki(joseki model.Joseki) model.Joseki {
@@ -94,17 +127,4 @@ func toArray(joseki model.Joseki) []int {
 		array = append(array, int(stone.Color), int(stone.X), int(stone.Y))
 	}
 	return array
-}
-
-func removeFirstPass(joseki model.Joseki) model.Joseki {
-	var stones []model.Stone
-	for _, stone := range joseki.Stones {
-		if stone.X == -1 && stone.Y == -1 {
-			continue
-		}
-		stones = append(stones, stone)
-	}
-	return model.Joseki{
-		Stones: stones,
-	}
 }
