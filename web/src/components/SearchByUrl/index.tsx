@@ -1,5 +1,6 @@
 import { CardSizeContext } from "@/provider/CardSizeProvider"
 import { LoadingContext } from "@/provider/LoadingProvider"
+import { pickUpVideoId } from "@/utils/videoId"
 import {
   useContext,
   useEffect,
@@ -23,14 +24,9 @@ const SearchByUrl: FC<Props> = ({ setVideoIds }) => {
   const { size } = useContext(CardSizeContext)
 
   const handleSearch = async () => {
-    try {
-      setVideoIds(null)
-      const url = new URL(givenLink)
-      const videoId = url.searchParams.get("v")
-      setVideoIds(videoId !== null ? [videoId] : [])
-    } catch (e) {
-      setVideoIds([])
-    }
+    setVideoIds(null)
+    const videoId = pickUpVideoId(givenLink)
+    setVideoIds(videoId !== null ? [videoId] : [])
   }
 
   useEffect(() => {
@@ -42,10 +38,6 @@ const SearchByUrl: FC<Props> = ({ setVideoIds }) => {
       const url = new URL(givenLink)
       if (url.hostname !== "www.youtube.com" && url.hostname !== "youtu.be") {
         setErrorMessage("YouTubeのURLを入力してください")
-        return
-      }
-      if (url.searchParams.get("v") === null) {
-        setErrorMessage("動画を再生することのできるURLを入力してください")
         return
       }
     } catch (e) {
