@@ -28,9 +28,7 @@ func JosekiHash(joseki *model.Joseki) {
 	stones := &((*joseki).Stones)
 	val := int64(0)
 	for i := range *stones {
-		if (*stones)[i].X == -1 && (*stones)[i].Y == -1 {
-			val = val ^ table[model.BoardSize][model.BoardSize][i]
-		} else if (*stones)[i].Color == model.Black {
+		if (*stones)[i].Color == model.Black {
 			val = val ^ table[(*stones)[i].X][(*stones)[i].Y][i]
 		} else {
 			val = val ^ table[(*stones)[i].X][(*stones)[i].Y][i+model.All]

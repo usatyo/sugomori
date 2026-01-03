@@ -103,7 +103,6 @@ func DeleteJosekiHandler(c echo.Context) error {
 	if err := c.Validate(&request); err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError)
 	}
-	println("DeleteJosekiHandler called with request:", request.Video.Id)
 	service.DeleteJoseki(request.Joseki, request.Video)
 	return c.JSON(http.StatusOK, model.MessageResponse{
 		Message: "Joseki deleted",
